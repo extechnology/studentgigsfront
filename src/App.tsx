@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
+import { Toaster } from "react-hot-toast"
 
 
 
@@ -83,6 +84,8 @@ function App() {
         </Routes>
 
         {!Hide && <Footer />}
+
+        <Toaster position="top-center" />
 
       </Suspense>
 
