@@ -155,7 +155,7 @@ export default function Auth() {
 
       if (errors) {
 
-        Object.entries(errors).forEach(([key, value]) => {
+        Object.entries(errors).forEach(([value]) => {
 
           if (Array.isArray(value)) {
             value.forEach((message: string) => {
