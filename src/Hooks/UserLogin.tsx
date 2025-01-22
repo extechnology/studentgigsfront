@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import { RegisterUser , LoginUser} from "@/Service/AllApi"
+import { RegisterUser, LoginUser, GoogleLogin } from "@/Service/AllApi"
 
 
 
@@ -10,12 +10,24 @@ export const UserRegister = () => {
 
         mutationFn: async (data: any) => {
 
-            const Response = await RegisterUser(data)
+            try {
 
-            return Response
-        },
+                const Response = await RegisterUser(data)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+
 
     })
+
 
 }
 
@@ -28,9 +40,46 @@ export const UserLogin = () => {
 
         mutationFn: async (data: any) => {
 
-            const Response = await LoginUser(data)
+            try {
 
-            return Response
+                const Response = await LoginUser(data)
+
+                return Response
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+
+    })
+
+}
+
+
+
+
+// Google Auth
+export const GoogleAuth = () => {
+
+    return useMutation({
+
+        mutationFn: async (data: any) => {
+
+            try {
+
+                const Response = await GoogleLogin(data)
+
+                return Response
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+
         },
 
     })
