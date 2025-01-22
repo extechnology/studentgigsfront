@@ -3,10 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Building, CircleUserRound, Contact, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
 import {
   Dialog,
-  DialogPanel,
   Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
   Popover,
   PopoverButton,
   PopoverGroup,
@@ -14,7 +11,6 @@ import {
   Transition
 } from '@headlessui/react'
 import {
-  Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
