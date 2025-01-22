@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react"
-import { Route, Routes, useLocation } from "react-router-dom"
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
 
 
@@ -23,12 +23,18 @@ const JobDeatils = lazy(() => import("./Pages/JobDeatils.tsx"))
 
 function App() {
 
+
+
   // To get the current path
   const location = useLocation()
 
 
+
+
   // To hide the header and footer
   const [Hide, SetHide] = useState(false)
+
+
 
 
   // To hide the header and footer
@@ -47,12 +53,38 @@ function App() {
 
 
 
+
+
+  // Utility to Check JWT Authentication
+  const isAuthenticated = () => {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) return false;
+
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1])); // Decode payload
+      return payload.exp * 1000 > Date.now(); // Check expiration
+    } catch {
+      return false; // Invalid token
+    }
+
+  };
+
+
+
+  // Protected Route Component
+  const ProtectedRoute = ({ children } : any) => {
+
+    return isAuthenticated() ? children : <Navigate to="/auth" />
+
+  };
+
+
   return (
 
 
     <>
-
-
 
       <Suspense fallback={<Loader />}>
 
@@ -66,13 +98,13 @@ function App() {
 
           <Route path="/contact" element={<Contact />} />
 
-          <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/userprofile" element={ <ProtectedRoute> <UserProfile /> </ProtectedRoute>} />
 
           <Route path="/employerlist" element={<EmployerList />} />
 
           <Route path="/employerdeatils" element={<EmployerDeatils />} />
 
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings" element={ <ProtectedRoute> <Settings /> </ProtectedRoute>} />
 
           <Route path="/auth" element={<Auth />} />
 

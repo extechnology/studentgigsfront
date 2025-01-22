@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 export default function Footer() {
@@ -8,6 +9,8 @@ export default function Footer() {
 
       <footer className="bg-gray-900 text-white py-10 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+
+
           {/* Left Section */}
           <div>
             <h3 className="text-lg font-bold mb-4">Inspiring Statement</h3>
@@ -17,29 +20,31 @@ export default function Footer() {
             </p>
           </div>
 
+
+
           {/* Middle Section */}
           <div>
             <h3 className="text-lg font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/explore-gigs" className="hover:text-gray-400">
+                <Link to="/jobfilter" className="hover:text-gray-400">
                   Explore Gigs
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/hire-talent" className="hover:text-gray-400">
+                <Link to={'/'} className="hover:text-gray-400">
                   Hire Talent
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about-us" className="hover:text-gray-400">
-                  About Us
-                </a>
+                <Link to={'/employerlist'} className="hover:text-gray-400">
+                  Companies
+                </Link>
               </li>
               <li>
-                <a href="/contact-us" className="hover:text-gray-400">
+                <Link to={'/contact'} className="hover:text-gray-400">
                   Contact Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

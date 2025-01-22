@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <main className="w-full h-screen overflow-hidden">
 
-      <div className='px-0 md:px-32 pt-24 h-full'>
+      <div className='px-0 md:px-32 pt-20 sm:pt-24 h-full'>
 
         <div className="grid sm:grid-cols-2 grid-cols-1 h-full gap-x-1">
 
