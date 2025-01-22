@@ -62,10 +62,10 @@ export default function JobFilter() {
 
 
                 {/* Filter section */}
-                <div className="w-full max-w-6xl mx-auto p-4 -mt-20">
+                <div className="w-full max-w-6xl mx-auto p-2 sm:-mt-20 -mt-24">
 
-                    <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg border border-gray-50">
 
+                    <div className="flex flex-col md:flex-row bg-white rounded-lg sm:shadow-lg shadow-xl border sm:border-gray-50 border-gray-300 px-2 py-3 sm:py-0 sm:px-0">
 
 
                         {/* Keywords Input */}
@@ -117,7 +117,7 @@ export default function JobFilter() {
 
 
                         {/* Search Button */}
-                        <button className="bg-emerald-500 text-white px-8 py-3 rounded-r-lg hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2">
+                        <button className="bg-emerald-500 text-white px-8 py-3 rounded-lg sm:rounded-r-lg hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2">
                             <SearchIcon size={20} />
                             <span>Search</span>
                         </button>
@@ -131,7 +131,7 @@ export default function JobFilter() {
 
 
                 {/* Job Card */}
-                <section className='px-2 md:px-32 py-16'>
+                <section className='px-2 md:px-32 py-8'>
 
                     <div className='grid sm:grid-cols-3 gap-4 grid-cols-1'>
 

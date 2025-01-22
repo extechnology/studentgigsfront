@@ -334,7 +334,7 @@ export default function Auth() {
                   </div>
 
 
-                  <button onClick={() => GoogleLogin()} className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent hover:bg-black hover:text-white"><img className="mr-2 h-5" src="https://static.cdnlogo.com/logos/g/35/google-icon.svg" alt="google-icon" /> Log in with Google</button>
+                  <button onClick={() => GoogleLogin()} className="-2 shadow-md  mt-8 flex items-center justify-center rounded-md border px-4 py-2 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent hover:bg-black hover:text-white"><img className="mr-2 h-5" src="https://static.cdnlogo.com/logos/g/35/google-icon.svg" alt="google-icon" /> Log in with Google</button>
 
 
                   <div className="py-12 text-center">
@@ -349,7 +349,6 @@ export default function Auth() {
                 :
 
                 // Register Section
-
                 <div className="lg:w-[28rem] w-[19rem] mx-auto my-auto flex flex-col justify-center pt-8 md:justify-start md:px-6 md:pt-0">
 
                   <p className="text-left text-3xl font-bold">Register Here</p>

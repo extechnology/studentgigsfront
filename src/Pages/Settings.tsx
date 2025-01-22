@@ -1,12 +1,20 @@
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon, UserCircleIcon } from "lucide-react";
+import { UserFormModel } from "@/Hooks/UserProfile";
 
 
 export default function Settings() {
 
 
   // Scroll to top when page is loaded
-  window.scrollTo({ top: 0, behavior: 'smooth', });
+  window.scrollTo({ top: 0, behavior: 'smooth', })
+
+
+  const { data } = UserFormModel()
+
+  console.log(data);
+
+
 
   return (
     <>

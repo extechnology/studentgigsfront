@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { CircleUserRound, GraduationCap, House, KeyRound, LogOut, Search, Settings, User } from 'lucide-react';
+import { Building, CircleUserRound, Contact, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
 import {
   Dialog,
   DialogPanel,
@@ -11,28 +11,43 @@ import {
   PopoverButton,
   PopoverGroup,
   PopoverPanel,
+  Transition
 } from '@headlessui/react'
 import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import toast from "react-hot-toast";
 
 
 export default function Header() {
 
+
+  // Set Login and logout status
+  const [LoginStatus, SetLoginStatus] = useState(false)
+
+
+
   // To check if the user is scrolled
   const [scrolled, setScrolled] = useState(false);
 
+
+
   // To open and close the mobile menu
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+
 
   // To Set the text color
   const [color, setcolor] = useState(false);
 
 
+
   // To get the current path
   const location = useLocation();
+
+
 
 
   // Add a scroll event listener
@@ -53,6 +68,21 @@ export default function Header() {
 
     };
 
+    const handleCheck = () => {
+
+      if (!localStorage.getItem("token")) {
+
+        SetLoginStatus(true)
+
+      } else {
+
+        SetLoginStatus(false)
+
+      }
+
+    }
+
+    handleCheck()
 
     window.addEventListener("scroll", handleScroll);
 
@@ -64,6 +94,15 @@ export default function Header() {
   }, [location]);
 
 
+
+  // Logout
+  const HandleLogOut = () => {
+
+    localStorage.removeItem("token");
+    toast.success("Logout Successful...!")
+    SetLoginStatus(true)
+
+  }
 
 
   return (
@@ -79,8 +118,7 @@ export default function Header() {
 
         <header className="">
 
-          <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between sm:p-0 p-3 lg:px-8">
-
+          <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-8">
 
             <div className="flex lg:flex-1">
               <Link to={'/'} className="-m-1.5 p-1.5">
@@ -95,6 +133,16 @@ export default function Header() {
             </div>
 
 
+            {/* Find Student Talents for mobile view */}
+            <Link to={'/'}>
+
+              <button className={`bg-orange-500 text-white font-semibold text-xs px-2 py-2 flex items-center gap-x-2 sm:hidden`}>
+                <GraduationCap size={16} /> Find Student Talents
+              </button>
+
+            </Link>
+
+
             <div className="flex lg:hidden">
               <button
                 type="button"
@@ -102,7 +150,9 @@ export default function Header() {
                 className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 ${color ? "text-white" : ""}`}
               >
                 <span className="sr-only">Open main menu</span>
-                <Bars3Icon aria-hidden="true" className="size-6" />
+
+                <Text aria-hidden="true" className="size-6" />
+
               </button>
 
             </div>
@@ -113,27 +163,31 @@ export default function Header() {
             <PopoverGroup className="hidden lg:flex lg:gap-x-4 items-center">
 
 
+              {/* Explore Gigs */}
               <Link to={'/jobfilter'}>
 
-                <button className={`bg-blue-500 ms-2 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
-                  Explore Gigs
+                <button className={` flex items-center gap-x-2 bg-blue-500 ms-2 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                  Explore Gigs <Telescope size={24} />
                 </button>
 
               </Link>
 
 
+              {/* Find Student Talents */}
               <Link to={'/'}>
 
-                <button className={`bg-orange-500 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
-                  Find Student Talents
+                <button className={`flex items-center gap-x-2 bg-orange-500 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                  Find Student Talents <GraduationCap size={24} />
                 </button>
 
               </Link>
 
 
+              {/* Home */}
               <Link to={'/'} className={`text-md font-semibold text-gray-400 hover:text-green-600 ${color ? "text-white" : ""}`}>
-                <House size={30}  />
+                <House size={30} />
               </Link>
+
 
 
               {/* Profile items */}
@@ -154,6 +208,8 @@ export default function Header() {
 
                   <div className="p-4">
 
+
+                    {/* {/* Profile */}
                     <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-100" >
 
                       <div className="flex-auto">
@@ -173,6 +229,7 @@ export default function Header() {
 
 
 
+                    {/* Settings */}
                     <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
 
                       <div className="flex-auto">
@@ -184,46 +241,52 @@ export default function Header() {
 
                         </Link>
 
-
-                      </div>
-
-                    </div>
-
-
-                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
-
-                      <div className="flex-auto">
-
-                        <Link to={'/auth'} className="font-semibold text-gray-900 flex items-center">
-
-                          <KeyRound size={20} className="me-2" />
-                          Login
-
-
-                        </Link>
-
                       </div>
 
                     </div>
 
 
 
-                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
 
-                      <div className="flex-auto">
+                    {/* Login Logout */}
+                    {
 
-                        <Link to={'/login'} className=" font-semibold text-gray-900 flex items-center">
-
-                          <LogOut size={20} className="me-2" />
-                          Logout
+                      LoginStatus ?
 
 
-                        </Link>
 
+                        <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
 
-                      </div>
+                          <div className="flex-auto">
 
-                    </div>
+                            <Link to={'/auth'} className="font-semibold text-gray-900 flex items-center">
+
+                              <KeyRound size={20} className="me-2" />
+                              Login
+
+                            </Link>
+
+                          </div>
+
+                        </div>
+
+                        :
+
+                        <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
+
+                          <div className="flex-auto">
+
+                            <p className=" font-semibold text-gray-900 flex items-center cursor-pointer" onClick={HandleLogOut}>
+
+                              <LogOut size={20} className="me-2" />
+                              Logout
+                            </p>
+
+                          </div>
+
+                        </div>
+
+                    }
 
                   </div>
 
@@ -232,6 +295,8 @@ export default function Header() {
               </Popover>
 
 
+
+              {/* Search */}
               <div className="flex items-center border rounded-full px-2 overflow-hidden">
                 <input
                   type="text"
@@ -242,14 +307,11 @@ export default function Header() {
                   to={'/search'}
                   className={`p-2 flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
                 >
-                  <Search  className={`${color ? 'text-white' : 'text-gray-900'}`} />
+                  <Search className={`${color ? 'text-white' : 'text-gray-900'}`} />
                 </Link>
               </div>
 
             </PopoverGroup>
-
-
-            
 
 
           </nav>
@@ -257,145 +319,224 @@ export default function Header() {
 
 
           {/* Mobile Nav */}
-          <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+          <Transition show={mobileMenuOpen} as={Fragment}>
 
-            <div className="fixed inset-0 z-10" />
-
-            <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <Dialog onClose={setMobileMenuOpen} className="lg:hidden relative z-50">
 
 
-
-              {/* Logo */}
-              <div className="flex items-center justify-between">
-
-
-                <a href="#" className="-m-1.5 p-1.5">
-                  <span className="sr-only">Your Company</span>
-                  <img
-                    alt="nav-icon"
-                    src="/Nav-Logo.png"
-                    loading="lazy"
-                    className="h-24 w-auto"
-                  />
-                </a>
+              {/* Backdrop */}
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+              </Transition.Child>
 
 
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="-m-2.5 rounded-md p-2.5 text-gray-700"
-                >
-                  <span className="sr-only">Close menu</span>
-                  <XMarkIcon aria-hidden="true" className="size-6" />
-                </button>
+              {/* Sliding panel */}
+              <Transition.Child
+                as={Fragment}
+                enter="transform transition ease-in-out duration-300"
+                enterFrom="translate-x-full"
+                enterTo="translate-x-0"
+                leave="transform transition ease-in-out duration-300"
+                leaveFrom="translate-x-0"
+                leaveTo="translate-x-full"
+              >
 
 
-              </div>
+                <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-slate-50 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+
+                  {/* Logo Section */}
+                  <div className="flex items-center justify-between">
 
 
-              <div className="mt-6 flow-root">
+                    <a href="#" className="-m-1.5 p-1.5">
+                      <span className="sr-only">Your Company</span>
+                      <img
+                        alt="nav-icon"
+                        src="/Nav-Logo.png"
+                        loading="lazy"
+                        className="h-20 w-auto"
+                      />
+                    </a>
 
-                <div className="-my-6 divide-y divide-gray-500/10">
-
-                  <div className="space-y-2 py-6">
-
-                    {/* Profile */}
-                    <Disclosure as="div" className="-mx-3">
-                      <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                        Profile
-                        <ChevronDownIcon aria-hidden="true" className="size-5 flex-none group-data-[open]:rotate-180" />
-                      </DisclosureButton>
-
-
-                      <DisclosurePanel className="mt-2 space-y-2">
-
-
-                        <Link to="/userprofile" onClick={() => setMobileMenuOpen(false)}>
-                          <DisclosureButton
-
-                            className="flex rounded-lg py-2 pl-6 pr-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                          >
-                            <User size={20} className="me-2" /> Profile
-                          </DisclosureButton>
-                        </Link>
-
-
-                        <Link to="/settings" onClick={() => setMobileMenuOpen(false)}>
-                          <DisclosureButton
-
-                            className="flex rounded-lg py-2 pl-6 pr-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                          >
-                            <Settings size={20} className="me-2" /> Settings
-                          </DisclosureButton>
-                        </Link>
-
-                        <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
-                          <DisclosureButton
-
-                            className="flex rounded-lg py-2 pl-6 pr-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                          >
-                            <KeyRound size={20} className="me-2" />  Login
-                          </DisclosureButton>
-                        </Link>
-
-
-                        <Link to="/profile" onClick={() => setMobileMenuOpen(false)}>
-                          <DisclosureButton
-
-                            className="flex rounded-lg py-2 pl-6 pr-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                          >
-                            <LogOut size={20} className="me-2" /> LogOut
-                          </DisclosureButton>
-                        </Link>
-
-
-                      </DisclosurePanel>
-
-
-                    </Disclosure>
-
-
-                    <Link to="/jobfilter"
+                    <button
+                      type="button"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                      className="-m-2.5 rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-all duration-200"
                     >
-                      Search Gig Jobs
-                    </Link>
-
-
-                    <Link to={'/'}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                    >
-                      Contact
-                    </Link>
-
-
-                    <Link to={'/employerlist'}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                    >
-                      Company
-                    </Link>
-
-                  </div>
-
-
-                  <div className="py-6" onClick={() => setMobileMenuOpen(false)}>
-
-                    <button className="flex items-center bg-gradient-to-r from-green-400 to-green-600 text-white font-semibold text-lg px-3 py-2 rounded-lg shadow-md hover:from-green-500 hover:to-green-700 hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out">
-                      Hire Students     <GraduationCap size={24} className="ms-2" color="#fff" />
+                      <span className="sr-only">Close menu</span>
+                      <XMarkIcon className="size-8" />
                     </button>
 
+
                   </div>
 
-                </div>
-              </div>
-
-            </DialogPanel>
 
 
-          </Dialog>
+                  {/* Menu Content */}
+                  <Transition.Child
+                    as={Fragment}
+                    enter="transition ease-out duration-200 delay-75"
+                    enterFrom="opacity-0 translate-y-1"
+                    enterTo="opacity-100 translate-y-0"
+                    leave="transition ease-in duration-150"
+                    leaveFrom="opacity-100 translate-y-0"
+                    leaveTo="opacity-0 translate-y-1"
+                  >
+
+                    <div className="mt-6 flow-root">
+
+
+                      <div className="-my-6 divide-y divide-gray-500/10">
+
+
+                        <div className="space-y-2 py-6">
+
+
+                          {/* Menu Dropdown */}
+                          <Disclosure as="div" className="-mx-3">
+
+                            {({ open }) => (
+                              <>
+                                <Disclosure.Button
+                                  className="flex w-full items-center justify-between px-3 py-5 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                                >
+                                  <span>Menu</span>
+                                  <ChevronDownIcon
+                                    className={`h-5 w-5 transition-transform duration-200 ${open ? 'rotate-180' : ''
+                                      }`}
+                                  />
+                                </Disclosure.Button>
+
+                                <Disclosure.Panel className="mt-2 space-y-1">
+
+
+                                  {/* Profile */}
+                                  <Link
+                                    to="/userprofile"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                                  >
+                                    <div className="flex items-center space-x-2">
+                                      <User className="h-5 w-5" />
+                                      <span>Profile</span>
+                                    </div>
+                                  </Link>
+
+
+
+                                  {/* Settings */}
+                                  <Link
+                                    to="/settings"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                                  >
+                                    <div className="flex items-center space-x-2">
+                                      <Settings className="h-5 w-5" />
+                                      <span>Settings</span>
+                                    </div>
+                                  </Link>
+
+                                  {/* Login/Logout */}
+                                  {LoginStatus ? (
+                                    <Link
+                                      to="/auth"
+                                      className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                                    >
+                                      <div className="flex items-center space-x-2">
+                                        <KeyRound className="h-5 w-5" />
+                                        <span>Login</span>
+                                      </div>
+                                    </Link>
+                                  ) : (
+                                    <button
+                                      onClick={HandleLogOut}
+                                      className="w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                                    >
+                                      <div className="flex items-center space-x-2">
+                                        <LogOut className="h-5 w-5" />
+                                        <span>Logout</span>
+                                      </div>
+                                    </button>
+                                  )}
+
+
+                                </Disclosure.Panel>
+                              </>
+                            )}
+                          </Disclosure>
+
+                          {/* Search Gigs */}
+                          <Link
+                            to="/jobfilter"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <Telescope className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
+                            <span>Search Gig Jobs</span>
+                          </Link>
+
+
+
+                          {/* Find Student Talents */}
+                          <Link
+                            to="/jobfilter"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <GraduationCap className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
+                            <span>Find Student Talents</span>
+                          </Link>
+
+
+                          {/* Contact */}
+                          <Link
+                            to="/"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <Contact className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
+                            <span>Contact</span>
+                          </Link>
+
+
+                          {/* Companies */}
+                          <Link
+                            to="/employerlist"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <Building className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
+                            <span>Companies</span>
+                          </Link>
+
+
+
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </Transition.Child>
+
+
+                </Dialog.Panel>
+
+
+              </Transition.Child>
+
+
+            </Dialog>
+
+
+          </Transition>
 
 
         </header>

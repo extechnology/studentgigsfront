@@ -25,7 +25,7 @@ export default function JobCard({ company, logo, postedTime, jobType, salary, po
             <section>
 
 
-                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="bg-white rounded-lg p-6 sm:shadow-sm shadow-md border border-gray-200 hover:shadow-md transition-shadow">
 
                     <Link to={herf}>
 
@@ -60,7 +60,7 @@ export default function JobCard({ company, logo, postedTime, jobType, salary, po
 
 
                         {/* Position & Location */}
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 border-t pt-7 border-gray-200/55">
 
                             <div className="w-12 h-12 p-2 overflow-hidden shadow-md border border-gray-50 rounded-md">
                                 <img
