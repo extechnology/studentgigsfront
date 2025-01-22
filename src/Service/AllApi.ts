@@ -19,3 +19,12 @@ export const LoginUser = async (data: any) => {
     return await CommonApi("POST", `${Base_Url}/api/employee/api/token/`, data, "")
 
 }
+
+
+
+// Google Auth
+export const GoogleLogin = async (data: any) => {
+
+    return await CommonApi("POST", `${Base_Url}/api/employee/api/google-auth/`, data, "")
+
+}

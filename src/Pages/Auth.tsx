@@ -1,9 +1,9 @@
-import { UserRegister, UserLogin } from "@/Hooks/UserLogin";
+import { UserRegister, UserLogin, GoogleAuth } from "@/Hooks/UserLogin";
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
-
+import { useGoogleLogin } from "@react-oauth/google";
 
 
 export default function Auth() {
@@ -40,6 +40,9 @@ export default function Auth() {
   const { mutate: mutateLogin } = UserLogin()
 
 
+  // Mutate for Google Login
+  const { mutate: mutateGoogleLogin } = GoogleAuth()
+
 
 
   // Submit Register
@@ -73,7 +76,7 @@ export default function Auth() {
 
           reset()
 
-          handleErrors(response.response.data);
+          handleErrors(response?.response?.data);
 
         }
 
@@ -142,7 +145,7 @@ export default function Auth() {
 
           console.log(response)
 
-          handleErrors(response.response.data);
+          handleErrors(response?.response?.data);
 
         }
 
@@ -179,6 +182,88 @@ export default function Auth() {
 
 
 
+  // Google Login
+  const GoogleLogin = useGoogleLogin({
+
+    onSuccess: async (tokenResponse) => {
+
+
+      try {
+
+        const AccessToken = tokenResponse.access_token
+
+
+        // Getting User Info Form Google
+        const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+          headers: {
+            Authorization: `Bearer ${AccessToken}`,
+          },
+        });
+
+
+        if (!userInfoResponse.ok) {
+
+          toast.error("Something went wrong. Please try again.")
+
+          throw new Error('Failed to fetch user info');
+
+
+        }
+        else {
+
+          const userInfo = await userInfoResponse.json();
+
+          const formdata = new FormData()
+
+          formdata.append("username", userInfo.name)
+          formdata.append("email", userInfo.email)
+
+
+          // Mutate
+          mutateGoogleLogin(formdata, {
+
+            onSuccess: (response) => {
+
+              if (response.status >= 200 && response.status <= 300) {
+
+                localStorage.setItem("token", response.data.access)
+
+                toast.success("Login Successfull..!")
+
+                Navigate("/")
+
+              }
+              else {
+
+                console.log(response)
+
+                toast.error("Something went wrong. Please try again.")
+
+              }
+
+            }
+
+          })
+
+        }
+
+      } catch (err) {
+
+        console.log(err);
+
+      }
+
+    },
+    onError(errorResponse) {
+
+      console.log(errorResponse);
+
+      toast.error("Google Login Failed. Please try again.")
+
+    },
+
+  })
+
 
   return (
 
@@ -190,7 +275,6 @@ export default function Auth() {
 
 
         <div className="flex flex-wrap">
-
 
 
           <div className="flex w-full flex-col md:w-1/2">
@@ -250,7 +334,7 @@ export default function Auth() {
                   </div>
 
 
-                  <button className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent hover:bg-black hover:text-white"><img className="mr-2 h-5" src="https://static.cdnlogo.com/logos/g/35/google-icon.svg" alt="google-icon" /> Log in with Google</button>
+                  <button onClick={() => GoogleLogin()} className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent hover:bg-black hover:text-white"><img className="mr-2 h-5" src="https://static.cdnlogo.com/logos/g/35/google-icon.svg" alt="google-icon" /> Log in with Google</button>
 
 
                   <div className="py-12 text-center">
