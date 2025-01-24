@@ -1,6 +1,6 @@
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon, UserCircleIcon } from "lucide-react";
-import { UserFormModel } from "@/Hooks/UserProfile";
+import { useState } from "react";
 
 
 export default function Settings() {
@@ -10,13 +10,21 @@ export default function Settings() {
   window.scrollTo({ top: 0, behavior: 'smooth', })
 
 
-  const { data } = UserFormModel()
+  const [previewImage, setPreviewImage] = useState("");
 
-  console.log(data);
 
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log("gile");
+      setPreviewImage(URL.createObjectURL(file));
+
+    }
+  };
 
 
   return (
+
     <>
 
 
@@ -61,8 +69,6 @@ export default function Settings() {
 
             </div>
 
-
-
           </div>
 
 
@@ -72,144 +78,40 @@ export default function Settings() {
 
         <form className="mx-auto md:max-w-7xl w-full  px-6 md:px-20 py-10 border mb-10">
 
+
           <div className="space-y-12 container ">
 
 
             <div className="border-b border-gray-900/10 pb-12">
 
 
-              <h2 className="text-2xl pb-3 font-semibold text-gray-900">Profile</h2>
-
-
-              <p className="mt-1 text-sm/6 text-gray-600">
-                This information will be displayed publicly so be careful what you
-                share.
-              </p>
-
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-                <div className="sm:col-span-4">
-
-                  <label
-                    htmlFor="username"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Username
-                  </label>
-                  <div className="mt-2">
-                    <div className="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                      <div className="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">
-                        workcation.com/
-                      </div>
-                      <input
-                        id="username"
-                        name="username"
-                        type="text"
-                        placeholder="janesmith"
-                        className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-span-full">
-                  <label
-                    htmlFor="about"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    About
-                  </label>
-                  <div className="mt-2">
-                    <textarea
-                      id="about"
-                      name="about"
-                      rows={3}
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      defaultValue={""}
-                    />
-                  </div>
-                  <p className="mt-3 text-sm/6 text-gray-600">
-                    Write a few sentences about yourself.
-                  </p>
-                </div>
-
-                <div className="col-span-full">
-                  <label
-                    htmlFor="photo"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Photo
-                  </label>
-                  <div className="mt-2 flex items-center gap-x-3">
-                    <UserCircleIcon
-                      aria-hidden="true"
-                      className="size-12 text-gray-300"
-                    />
-                    <button
-                      type="button"
-                      className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      Change
-                    </button>
-                  </div>
-                </div>
-
-                <div className="col-span-full">
-                  <label
-                    htmlFor="cover-photo"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Cover photo
-                  </label>
-                  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                    <div className="text-center">
-                      <PhotoIcon
-                        aria-hidden="true"
-                        className="mx-auto size-12 text-gray-300"
-                      />
-                      <div className="mt-4 flex text-sm/6 text-gray-600">
-                        <label
-                          htmlFor="file-upload"
-                          className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                        >
-                          <span>Upload a file</span>
-                          <input
-                            id="file-upload"
-                            name="file-upload"
-                            type="file"
-                            className="sr-only"
-                          />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
-                      </div>
-                      <p className="text-xs/5 text-gray-600">
-                        PNG, JPG, GIF up to 10MB
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="border-b border-gray-900/10 pb-12">
-              <h2 className="text-base/7 font-semibold text-gray-900">
+              <h2 className="text-2xl pb-3 font-semibold text-gray-900">
                 Personal Information
               </h2>
+
+
+
               <p className="mt-1 text-sm/6 text-gray-600">
                 Use a permanent address where you can receive mail.
               </p>
 
+
+
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+
+                {/*  name */}
                 <div className="sm:col-span-3">
                   <label
-                    htmlFor="first-name"
+                    htmlFor="name"
                     className="block text-sm/6 font-medium text-gray-900"
                   >
-                    First name
+                    Name
                   </label>
                   <div className="mt-2">
                     <input
-                      id="first-name"
-                      name="first-name"
+                      id="name"
+                      name="name"
                       type="text"
                       autoComplete="given-name"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -217,25 +119,10 @@ export default function Settings() {
                   </div>
                 </div>
 
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="last-name"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Last name
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="last-name"
-                      name="last-name"
-                      type="text"
-                      autoComplete="family-name"
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    />
-                  </div>
-                </div>
 
-                <div className="sm:col-span-4">
+
+                {/* Email address */}
+                <div className="sm:col-span-3">
                   <label
                     htmlFor="email"
                     className="block text-sm/6 font-medium text-gray-900"
@@ -253,7 +140,108 @@ export default function Settings() {
                   </div>
                 </div>
 
+
+
+
+                {/* Phone Number */}
                 <div className="sm:col-span-3">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Phone Number
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      autoComplete="mobile tel"
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    />
+                  </div>
+                </div>
+
+
+
+                {/* Work Location */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="city-area"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Preferred Work Location
+                  </label>
+                  <div className="mt-2 grid grid-cols-1">
+                    <select
+                      id="city-area"
+                      name="city-area"
+                      autoComplete="off"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option>New York</option>
+                      <option>Los Angeles</option>
+                      <option>Chicago</option>
+                      <option>San Francisco</option>
+                      <option>Miami</option>
+                    </select>
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                    />
+                  </div>
+                </div>
+
+
+
+                {/* Available Work Hours */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="work-hours"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Available Work Hours
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="work-hours"
+                      name="work-hours"
+                      type="text"
+                      autoComplete="work-hours"
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    />
+                  </div>
+                </div>
+
+
+
+
+
+
+                {/* Languages Known */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="languages"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Languages Known
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="languages"
+                      name="languages"
+                      type="text"
+                      autoComplete="off"
+                      placeholder="Enter languages separated by commas"
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    />
+                  </div>
+                </div>
+
+
+
+                {/* Country */}
+                <div className="sm:col-span-full">
                   <label
                     htmlFor="country"
                     className="block text-sm/6 font-medium text-gray-900"
@@ -278,6 +266,8 @@ export default function Settings() {
                   </div>
                 </div>
 
+
+                {/* Address */}
                 <div className="col-span-full">
                   <label
                     htmlFor="street-address"
@@ -296,6 +286,9 @@ export default function Settings() {
                   </div>
                 </div>
 
+
+
+                {/* City */}
                 <div className="sm:col-span-2 sm:col-start-1">
                   <label
                     htmlFor="city"
@@ -314,6 +307,8 @@ export default function Settings() {
                   </div>
                 </div>
 
+
+                {/* State / Province */}
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="region"
@@ -332,6 +327,8 @@ export default function Settings() {
                   </div>
                 </div>
 
+
+                {/* ZIP / Postal code */}
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="postal-code"
@@ -349,62 +346,606 @@ export default function Settings() {
                     />
                   </div>
                 </div>
+
+
+
+
+                {/* Profile photo */}
+                <div className="col-span-full">
+                  <label
+                    htmlFor="photo"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Photo
+                  </label>
+                  <div className="mt-2 flex items-center gap-x-3">
+                    {previewImage ? (
+                      <img
+                        src={previewImage}
+                        alt="Profile Preview"
+                        className="h-12 w-12 rounded-full object-cover"
+                      />
+                    ) : (
+                      <UserCircleIcon
+                        aria-hidden="true"
+                        className="h-12 w-12 text-gray-300"
+                      />
+                    )}
+                    <div>
+                      <label
+                        htmlFor="photo-input"
+                        className="cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      >
+                        Change
+                      </label>
+                      <input
+                        id="photo-input"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+                {/* Cover photo */}
+                <div className="col-span-full">
+
+                  <label
+                    htmlFor="cover-photo"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Cover photo
+                  </label>
+
+
+                  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+
+                    <div className="text-center">
+
+                      <PhotoIcon
+                        aria-hidden="true"
+                        className="mx-auto size-12 text-gray-300"
+                      />
+
+                      <div className="mt-4 flex text-sm/6 text-gray-600">
+                        <label
+                          htmlFor="file-upload"
+                          className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                        >
+                          <span>Upload a file</span>
+                          <input
+                            id="file-upload"
+                            name="file-upload"
+                            type="file"
+                            className="sr-only"
+                          />
+                        </label>
+                        <p className="pl-1">or drag and drop</p>
+                      </div>
+
+                      <p className="text-xs/5 text-gray-600">
+                        PNG, JPG, GIF up to 10MB
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+              </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            {/* Educational Information */}
+            <div className="border-b border-gray-900/10 pb-12">
+              <h2 className="text-2xl pb-3 font-semibold text-gray-900">
+                Educational Information
+              </h2>
+
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+                {/* Current Academic Level */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="current-academic-level"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Current Academic Level
+                  </label>
+                  <div className="grid grid-cols-1">
+                    <select
+                      id="current-academic-level"
+                      name="current-academic-level"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option value="high-school">High School</option>
+                      <option value="undergraduate">Undergraduate</option>
+                      <option value="postgraduate">Postgraduate</option>
+                    </select>
+
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                    />
+                  </div>
+                </div>
+
+                {/* Field of Study */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="field-of-study"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Field of Study
+                  </label>
+                  <input
+                    id="field-of-study"
+                    name="field-of-study"
+                    type="text"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="e.g., Computer Science, Engineering"
+                  />
+                </div>
+
+                {/* Name of Institution */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="institution-name"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Name of Institution
+                  </label>
+                  <input
+                    id="institution-name"
+                    name="institution-name"
+                    type="text"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="Enter your institution's name"
+                  />
+                </div>
+
+                {/* Expected Year of Graduation */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="expected-graduation-year"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Expected Year of Graduation
+                  </label>
+                  <input
+                    id="expected-graduation-year"
+                    name="expected-graduation-year"
+                    type="number"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="e.g., 2025"
+                  />
+                </div>
+
+                {/* Academic Achievements */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="academic-achievements"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Academic Achievements (if any)
+                  </label>
+                  <textarea
+                    id="academic-achievements"
+                    name="academic-achievements"
+                    rows={3}
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="Describe any academic achievements or honors you've received"
+                  ></textarea>
+                </div>
+
               </div>
             </div>
-            {/* Experience Section */}
+
+
+
+
+
+            {/* Work Preferences */}
+            <div className="border-b border-gray-900/10 pb-12">
+
+
+              <h2 className="text-2xl pb-3 font-semibold text-gray-900">
+                Work Preferences
+              </h2>
+
+
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+
+
+                {/* Interested Job Type */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="interested-job-type"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Interested Job Type
+                  </label>
+                  <div className="grid grid-cols-1">
+                    <select
+                      id="interested-job-type"
+                      name="interested-job-type"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option value="online">Online</option>
+                      <option value="offline">Offline</option>
+                      <option value="both">Both</option>
+                    </select>
+
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                    />
+                  </div>
+
+                </div>
+
+
+
+                {/* Preferred Categories */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="preferred-categories"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Preferred Categories
+                  </label>
+                  <input
+                    id="preferred-categories"
+                    name="preferred-categories"
+                    type="text"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="Choose from the gig categories provided"
+                  />
+                </div>
+
+
+
+                {/* expected-pay-range */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="expected-pay-range"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Expected Pay Range
+                  </label>
+                  <input
+                    id="expected-pay-range"
+                    name="expected-pay-range"
+                    type="text"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="e.g., $15-25/hour"
+                  />
+                </div>
+
+
+
+                {/* Availability */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="availability"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Availability
+                  </label>
+
+                  <div className=" grid grid-cols-1">
+                    <select
+                      id="availability"
+                      name="availability"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option value="part-time">Part-Time</option>
+                      <option value="weekends">Weekends</option>
+                      <option value="flexible">Flexible</option>
+                    </select>
+
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                    />
+                  </div>
+
+                </div>
+
+
+
+                {/* Transportation Availability */}
+                <div className="sm:col-span-full">
+                  <label
+                    htmlFor="transportation-availability"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Transportation Availability
+                  </label>
+
+                  <div className=" grid grid-cols-1">
+                    <select
+                      id="transportation-availability"
+                      name="transportation-availability"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option value="own-vehicle">Own Vehicle</option>
+                      <option value="public-transport">Public Transport</option>
+                      <option value="none">None</option>
+                    </select>
+
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                    />
+                  </div>
+
+                </div>
+
+
+
+              </div>
+
+
+            </div>
+
+
+
+            {/* Skills and Expertise */}
+            <div className="border-b border-gray-900/10 pb-12">
+              <h2 className="text-2xl pb-3 font-semibold text-gray-900">
+                Skills and Expertise
+              </h2>
+
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+                {/* Technical Skills */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="technical-skills"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Technical Skills
+                  </label>
+                  <input
+                    id="technical-skills"
+                    name="technical-skills"
+                    type="text"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="e.g., Programming, Graphic Design, Writing"
+                  />
+                </div>
+
+                {/* Soft Skills */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="soft-skills"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Soft Skills
+                  </label>
+                  <input
+                    id="soft-skills"
+                    name="soft-skills"
+                    type="text"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="e.g., Communication, Teamwork, Problem-Solving"
+                  />
+                </div>
+
+                {/* Certifications */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="certifications"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Certifications
+                  </label>
+                  <input
+                    id="certifications"
+                    name="certifications"
+                    type="text"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="e.g., Digital Marketing, Python"
+                  />
+                </div>
+
+                {/* Portfolio/LinkedIn Profile Link */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="portfolio-link"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Portfolio/LinkedIn Profile Link (optional)
+                  </label>
+                  <input
+                    id="portfolio-link"
+                    name="portfolio-link"
+                    type="url"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="Enter your portfolio or LinkedIn profile URL"
+                  />
+                </div>
+
+              </div>
+            </div>
+
+
+
+
+            {/* Experience */}
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-2xl pb-3 font-semibold text-gray-900">
                 Experience
               </h2>
-              <p className="mt-1 text-sm/6 text-gray-600">
-                Add details about your past work experiences.
-              </p>
+
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="col-span-full">
+
+                {/* Previous Work Experience */}
+                <div className="sm:col-span-3">
                   <label
-                    htmlFor="experience"
+                    htmlFor="previous-work-experience"
                     className="block text-sm/6 font-medium text-gray-900"
                   >
-                    Work Experience
+                    Previous Work Experience (optional)
                   </label>
                   <textarea
-                    id="experience"
-                    name="experience"
-                    rows={4}
+                    id="previous-work-experience"
+                    name="previous-work-experience"
+                    rows={3}
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="Describe your work experience here..."
-                  />
+                    placeholder="Describe any previous work experience (if applicable)"
+                  ></textarea>
                 </div>
-              </div>
-            </div>
-            {/* Skills Section */}
-            <div className="border-b border-gray-900/10 pb-12">
-              <h2 className="text-2xl pb-3 font-semibold text-gray-900">Skills</h2>
-              <p className="mt-1 text-sm/6 text-gray-600">
-                Highlight your professional skills.
-              </p>
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="col-span-full">
+
+                {/* Internship Experience */}
+                <div className="sm:col-span-3">
                   <label
-                    htmlFor="skills"
+                    htmlFor="internship-experience"
                     className="block text-sm/6 font-medium text-gray-900"
                   >
-                    Skills
+                    Internship Experience (if any)
                   </label>
-                  <input
-                    id="skills"
-                    name="skills"
-                    type="text"
+                  <textarea
+                    id="internship-experience"
+                    name="internship-experience"
+                    rows={3}
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="e.g., JavaScript, Python, React"
-                  />
-                  <p className="mt-2 text-sm/6 text-gray-600">
-                    Add multiple skills separated by commas.
-                  </p>
+                    placeholder="Describe any internship experience (if applicable)"
+                  ></textarea>
                 </div>
+
               </div>
             </div>
+
+
+
+
+
+            {/* Additional Information */}
+            <div className="border-b border-gray-900/10 pb-12">
+
+
+              <h2 className="text-2xl pb-3 font-semibold text-gray-900">
+                Additional Information
+              </h2>
+
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+
+
+                {/* Hobbies and Interests */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="hobbies-interests"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Hobbies and Interests (optional)
+                  </label>
+                  <textarea
+                    id="hobbies-interests"
+                    name="hobbies-interests"
+                    rows={3}
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="Describe your hobbies and interests (optional)"
+                  ></textarea>
+                </div>
+
+
+
+                {/* References or Testimonials */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="references-testimonials"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    References or Testimonials (optional)
+                  </label>
+                  <textarea
+                    id="references-testimonials"
+                    name="references-testimonials"
+                    rows={3}
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="Provide references or testimonials (optional)"
+                  ></textarea>
+                </div>
+
+
+
+
+                {/* Willingness to Relocate */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="willingness-to-relocate"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Willingness to Relocate
+                  </label>
+                  <div className="grid grid-cols-1">
+                    <select
+                      id="willingness-to-relocate"
+                      name="willingness-to-relocate"
+                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    >
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                    />
+                  </div>
+                </div>
+
+
+
+
+                {/* Upload Resume */}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="upload-resume"
+                    className="block text-sm/6 font-medium text-gray-900"
+                  >
+                    Upload Resume (PDF or DOC format)
+                  </label>
+                  <input
+                    id="upload-resume"
+                    name="upload-resume"
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    className="block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  />
+                </div>
+
+
+
+              </div>
+            </div>
+
+
           </div>
+
+
+
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button type="button" className="text-sm/6 font-semibold text-gray-900">
@@ -417,6 +958,8 @@ export default function Settings() {
               Save
             </button>
           </div>
+
+
         </form>
 
 
