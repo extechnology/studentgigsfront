@@ -28,20 +28,11 @@ const Hero = () => {
             >
               <SwiperSlide>
                 <img
-                  src="https://t3.ftcdn.net/jpg/05/71/06/76/360_F_571067620_JS5T5TkDtu3gf8Wqm78KoJRF1vobPvo6.jpg"
+                  src="https://img.freepik.com/free-photo/happy-elementary-student-playing-with-blank-sign_1098-3414.jpg?t=st=1737717729~exp=1737721329~hmac=92379401df525aef533600322f9f75ddc44bab112830b2505ca207ca239c3849&w=740"
                   alt="Banner 1"
                   className="w-full h-full object-cover"
                 />
               </SwiperSlide>
-
-              <SwiperSlide>
-                <img
-                  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTf9G3KRssGjqBsNgHGwRTjBopSQEgzkQthLmb4wN5kbg5p_h-c_vbHUVtT0hc0o019Vf_zghJAnUeqUpse2wlg1N4ICUlLpQIWn0e_LtcJQTCuf-PM1n6jf1mSmOjzNTGxWwqiFXcLf54/w1280-h720-c/mountain-landscape-abstract-4K-151.jpg"
-                  alt="Banner 2"
-                  className="w-full h-full object-cover"
-                />
-              </SwiperSlide>
-
 
             </Swiper>
 
@@ -64,20 +55,11 @@ const Hero = () => {
             >
               <SwiperSlide>
                 <img
-                  src="https://t3.ftcdn.net/jpg/05/71/06/76/360_F_571067620_JS5T5TkDtu3gf8Wqm78KoJRF1vobPvo6.jpg"
+                  src="https://img.freepik.com/free-photo/hr-reading-applicants-resume-job-interview-top-closeup-view_1163-4672.jpg?t=st=1737717772~exp=1737721372~hmac=705262941907d7d51bfcecaf2a6e6b2745b677c0fdaf2df728538c4e0a76988a&w=740"
                   alt="Banner 1"
                   className="w-full h-full object-cover"
                 />
               </SwiperSlide>
-
-              <SwiperSlide>
-                <img
-                  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTf9G3KRssGjqBsNgHGwRTjBopSQEgzkQthLmb4wN5kbg5p_h-c_vbHUVtT0hc0o019Vf_zghJAnUeqUpse2wlg1N4ICUlLpQIWn0e_LtcJQTCuf-PM1n6jf1mSmOjzNTGxWwqiFXcLf54/w1280-h720-c/mountain-landscape-abstract-4K-151.jpg"
-                  alt="Banner 2"
-                  className="w-full h-full object-cover"
-                />
-              </SwiperSlide>
-
 
             </Swiper>
 
