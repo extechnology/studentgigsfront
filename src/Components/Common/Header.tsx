@@ -114,7 +114,7 @@ export default function Header() {
 
         <header className="">
 
-          <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-8">
+          <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-0 md:px-8">
 
             <div className="flex lg:flex-1">
               <Link to={'/'} className="-m-1.5 p-1.5">

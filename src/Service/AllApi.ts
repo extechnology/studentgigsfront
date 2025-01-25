@@ -28,10 +28,19 @@ export const GoogleLogin = async (data: any) => {
 }
 
 
-// User Profile Form
-export const ProfileForm = async (header:object) => {
+//GET User Profile Form
+export const GetProfileForm = async (header: object) => {
 
-    return await CommonApi("GET", `${Base_Url}/form-model/`,"", header)
+    return await CommonApi("GET", `${Base_Url}/employees/`, "", header)
+
+}
+
+
+
+// Add User Profile Form
+export const AddProfileForm = async (data:any,header: object) => {
+
+    return await CommonApi("GET", `${Base_Url}/employees/`, data, header)
 
 }
 

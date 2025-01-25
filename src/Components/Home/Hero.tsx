@@ -28,7 +28,7 @@ const Hero = () => {
             >
               <SwiperSlide>
                 <img
-                  src="https://img.freepik.com/free-photo/happy-elementary-student-playing-with-blank-sign_1098-3414.jpg?t=st=1737717729~exp=1737721329~hmac=92379401df525aef533600322f9f75ddc44bab112830b2505ca207ca239c3849&w=740"
+                  src="https://img.freepik.com/free-photo/teenager-holding-textbooks_23-2147669090.jpg?uid=R148571391&ga=GA1.1.193612807.1732337220&semt=ais_hybrid"
                   alt="Banner 1"
                   className="w-full h-full object-cover"
                 />
@@ -55,7 +55,7 @@ const Hero = () => {
             >
               <SwiperSlide>
                 <img
-                  src="https://img.freepik.com/free-photo/hr-reading-applicants-resume-job-interview-top-closeup-view_1163-4672.jpg?t=st=1737717772~exp=1737721372~hmac=705262941907d7d51bfcecaf2a6e6b2745b677c0fdaf2df728538c4e0a76988a&w=740"
+                  src="https://img.freepik.com/free-photo/architects-making-thumbs-up-gesture_23-2147702466.jpg?uid=R148571391&ga=GA1.1.193612807.1732337220&semt=ais_hybrid"
                   alt="Banner 1"
                   className="w-full h-full object-cover"
                 />

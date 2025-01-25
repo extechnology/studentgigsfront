@@ -1,13 +1,19 @@
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon, UserCircleIcon } from "lucide-react";
 import { useState } from "react";
-
+import { GetUserProfile } from "@/Hooks/UserProfile";
 
 export default function Settings() {
 
 
   // Scroll to top when page is loaded
   window.scrollTo({ top: 0, behavior: 'smooth', })
+
+
+
+  const { data } = GetUserProfile();
+
+  console.log(data)
 
 
   const [previewImage, setPreviewImage] = useState("");
@@ -76,12 +82,15 @@ export default function Settings() {
 
 
 
+
+        {/* User Profile Form */}
         <form className="mx-auto md:max-w-7xl w-full  px-6 md:px-20 py-10 border mb-10">
 
 
           <div className="space-y-12 container ">
 
 
+            {/* Personal Information */}
             <div className="border-b border-gray-900/10 pb-12">
 
 
@@ -214,10 +223,6 @@ export default function Settings() {
                 </div>
 
 
-
-
-
-
                 {/* Languages Known */}
                 <div className="sm:col-span-3">
                   <label
@@ -237,7 +242,6 @@ export default function Settings() {
                     />
                   </div>
                 </div>
-
 
 
                 {/* Country */}
@@ -265,6 +269,7 @@ export default function Settings() {
                     />
                   </div>
                 </div>
+
 
 
                 {/* Address */}
@@ -346,7 +351,6 @@ export default function Settings() {
                     />
                   </div>
                 </div>
-
 
 
 
@@ -450,16 +454,17 @@ export default function Settings() {
 
 
 
-
-
-
             {/* Educational Information */}
             <div className="border-b border-gray-900/10 pb-12">
+
+
               <h2 className="text-2xl pb-3 font-semibold text-gray-900">
                 Educational Information
               </h2>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+
 
                 {/* Current Academic Level */}
                 <div className="sm:col-span-3">
@@ -487,6 +492,9 @@ export default function Settings() {
                   </div>
                 </div>
 
+
+
+
                 {/* Field of Study */}
                 <div className="sm:col-span-3">
                   <label
@@ -503,6 +511,9 @@ export default function Settings() {
                     placeholder="e.g., Computer Science, Engineering"
                   />
                 </div>
+
+
+
 
                 {/* Name of Institution */}
                 <div className="sm:col-span-3">
@@ -521,6 +532,9 @@ export default function Settings() {
                   />
                 </div>
 
+
+
+
                 {/* Expected Year of Graduation */}
                 <div className="sm:col-span-3">
                   <label
@@ -537,6 +551,8 @@ export default function Settings() {
                     placeholder="e.g., 2025"
                   />
                 </div>
+
+
 
                 {/* Academic Achievements */}
                 <div className="sm:col-span-3">
@@ -555,7 +571,9 @@ export default function Settings() {
                   ></textarea>
                 </div>
 
+
               </div>
+
             </div>
 
 
@@ -711,11 +729,15 @@ export default function Settings() {
 
             {/* Skills and Expertise */}
             <div className="border-b border-gray-900/10 pb-12">
+
+
               <h2 className="text-2xl pb-3 font-semibold text-gray-900">
                 Skills and Expertise
               </h2>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+
 
                 {/* Technical Skills */}
                 <div className="sm:col-span-3">
@@ -734,6 +756,8 @@ export default function Settings() {
                   />
                 </div>
 
+
+
                 {/* Soft Skills */}
                 <div className="sm:col-span-3">
                   <label
@@ -750,6 +774,8 @@ export default function Settings() {
                     placeholder="e.g., Communication, Teamwork, Problem-Solving"
                   />
                 </div>
+
+
 
                 {/* Certifications */}
                 <div className="sm:col-span-3">
@@ -768,6 +794,9 @@ export default function Settings() {
                   />
                 </div>
 
+
+
+
                 {/* Portfolio/LinkedIn Profile Link */}
                 <div className="sm:col-span-3">
                   <label
@@ -785,7 +814,11 @@ export default function Settings() {
                   />
                 </div>
 
+
+
               </div>
+
+
             </div>
 
 
@@ -793,11 +826,15 @@ export default function Settings() {
 
             {/* Experience */}
             <div className="border-b border-gray-900/10 pb-12">
+
+
               <h2 className="text-2xl pb-3 font-semibold text-gray-900">
                 Experience
               </h2>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+
 
                 {/* Previous Work Experience */}
                 <div className="sm:col-span-3">
@@ -815,6 +852,8 @@ export default function Settings() {
                     placeholder="Describe any previous work experience (if applicable)"
                   ></textarea>
                 </div>
+
+
 
                 {/* Internship Experience */}
                 <div className="sm:col-span-3">
