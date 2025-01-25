@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { ProfileForm } from "@/Service/AllApi";
+import { GetProfileForm } from "@/Service/AllApi";
 
 
 
-export const UserFormModel = () => {
+export const GetUserProfile = () => {
 
     return useQuery({
 
-        queryKey: ["form-model"],
+        queryKey: ["userprofile"],
 
         queryFn: async () => {
 
@@ -15,7 +15,7 @@ export const UserFormModel = () => {
 
             const headers = { Authorization: `Bearer ${token}` }
 
-            const Response = await ProfileForm(headers)
+            const Response = await GetProfileForm(headers)
 
             return Response
 
