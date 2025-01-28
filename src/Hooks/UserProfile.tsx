@@ -17,7 +17,7 @@ export const GetUserProfile = () => {
 
             const Response = await GetProfileForm(headers)
 
-            return Response
+            return Response.data
 
         },
 
