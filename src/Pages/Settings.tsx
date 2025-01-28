@@ -59,7 +59,7 @@ export default function Settings() {
 
 
   // Form State
-  const { register, handleSubmit, formState: { errors }, control, setValue, reset } = useForm<Inputs>();
+  const { register, handleSubmit, formState: { errors }, control, setValue } = useForm<Inputs>();
 
 
 
@@ -186,6 +186,11 @@ export default function Settings() {
     }
   };
 
+
+  console.log(previewImage);
+
+  handleImageChange("hello")
+  
 
 
   const ProfileSubmit = (data: any) => {
