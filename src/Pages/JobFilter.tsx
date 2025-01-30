@@ -35,12 +35,12 @@ export default function JobFilter() {
                         />
 
 
-                        <div className="relative z-10 px-4 py-24 sm:px-6 lg:px-8 sm:h-[55vh] h-[50v] flex flex-col justify-center">
+                        <div className="relative z-10 px-4 py-24 sm:px-6 lg:px-8 sm:h-[55vh] h-[50v] flex flex-col justify-center maz-w-xl mx-auto">
 
                             {/* Main heading */}
-                            <h1 className="text-center text-2xl font-bold tracking-tight text-white sm:text-4xl mb-8">
-                                Job Vacancies
-                            </h1>
+                            <p className="text-center text-2xl font-bold tracking-tight text-white sm:text-3xl mb-8">
+                                “Your profile is your gateway to independence and practical learning. Build it to showcase your skills, explore opportunities, and prepare for the challenges of tomorrow.” 
+                            </p>
 
                         </div>
 
@@ -75,7 +75,7 @@ export default function JobFilter() {
 
                             <input
                                 type="text"
-                                placeholder="Search your Keywords"
+                                placeholder="Search your Jobs..."
                                 className="w-full outline-none text-gray-600"
                                 value={keyword}
                                 onChange={(e) => setKeyword(e.target.value)}
