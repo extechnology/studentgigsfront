@@ -1,4 +1,5 @@
 import { Settings } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 export default function UserProfile() {
@@ -59,7 +60,9 @@ export default function UserProfile() {
                                 </div>
 
                                 <div className="flex sm:mt-3 mt-2 me-2">
-                                    <Settings size={46} className="text-black bg-green-100 rounded-full p-2" />
+                                    <Link to={'/settings'}>
+                                        <Settings size={46} className="text-black bg-green-100 rounded-full p-2" />
+                                    </Link>
                                 </div>
 
 

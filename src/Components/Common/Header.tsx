@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Building, CircleUserRound, Contact, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
+import { Building, Contact, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
 import {
   Dialog,
   Disclosure,
@@ -22,7 +22,6 @@ export default function Header() {
 
   // Set Login and logout status
   const [LoginStatus, SetLoginStatus] = useState(false)
-
 
 
   // To check if the user is scrolled
@@ -49,7 +48,7 @@ export default function Header() {
   // Add a scroll event listener
   useEffect(() => {
 
-    setcolor(location.pathname === "/employerlist" || location.pathname === "/employerdeatils" || location.pathname === "/jobfilter" || location.pathname === "/jobdeatils" ? true : false)
+    setcolor(location.pathname === "/employerlist" || location.pathname === "/employerdeatils" || location.pathname === "/jobfilter" || location.pathname === "/jobdeatils" || location.pathname === "/" ? true : false)
 
     const handleScroll = () => {
 
@@ -59,7 +58,7 @@ export default function Header() {
 
       } else {
         setScrolled(false);
-        setcolor(location.pathname === "/employerlist" || location.pathname === "/employerdeatils" || location.pathname === "/jobfilter" || location.pathname === "/jobdeatils" ? true : false)
+        setcolor(location.pathname === "/employerlist" || location.pathname === "/employerdeatils" || location.pathname === "/jobfilter" || location.pathname === "/jobdeatils" || location.pathname === "/" ? true : false)
       }
 
     };
@@ -107,51 +106,94 @@ export default function Header() {
 
     <>
 
-      <main className={` z-10 fixed top-0 left-0 w-full transition-colors duration-300 ${scrolled ? "bg-white shadow-md" : "bg-transparent"
+      <main className={` z-50 fixed top-0 left-0 w-full transition-colors duration-300 ${scrolled ? "bg-white shadow-md" : "bg-transparent"
         }`}>
-
-
 
         <header className="">
 
-          <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-0 md:px-8">
+          <nav aria-label="Global" className="mx-auto flex flex-col sm:flex-row max-w-7xl items-center justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-0 md:px-8">
 
-            <div className="flex lg:flex-1">
-              <Link to={'/'} className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
-                <img
-                  alt="nav-icon"
-                  src="/Nav-Logo.png"
-                  loading="lazy"
-                  className="sm:h-24 sm:w-56 h-16 w-36"
-                />
+
+            <div className="flex items-center justify-between">
+
+              <div className="flex lg:flex-1">
+                <Link to={'/'} className="-m-1.5 p-1.5">
+                  <span className="sr-only">Your Company</span>
+                  <img
+                    alt="nav-icon"
+                    src="/Nav-Logo.png"
+                    loading="lazy"
+                    className="sm:h-24 sm:w-56 h-16 w-36"
+                  />
+                </Link>
+              </div>
+
+
+              {/* Home for mobile view */}
+              <Link to={'/'} className={`ms-1 text-md font-semibold text-gray-400 hover:text-green-600 sm:hidden block ${color ? "text-white" : ""}`}>
+                <House size={24} />
               </Link>
+
+              {/* Search  for mobile view */}
+              <div className="flex items-center border rounded-full px-1 overflow-hidden  sm:hidden mx-1">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className={`w-full px-2 py-1 text-xs focus:outline-none  ${color ? 'bg-transparent text-white placeholder-white' : 'text-gray-900'}`}
+                />
+                <Link
+                  to={'/search'}
+                  className={`p-2 flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
+                >
+                  <Search size={16} className={`${color ? 'text-white' : 'text-gray-900'}`} />
+
+                </Link>
+              </div>
+
+
+              <div className="flex lg:hidden">
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(true)}
+                  className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 ${color ? "text-white" : "text-black"}`}
+                >
+                  <span className="sr-only">Open main menu</span>
+
+                  <Text aria-hidden="true" className="size-6" />
+
+                </button>
+
+              </div>
+
             </div>
 
 
-            {/* Find Student Talents for mobile view */}
-            <Link to={'/'}>
 
-              <button className={`bg-orange-500 text-white font-semibold text-xs px-2 py-2 flex items-center gap-x-2 sm:hidden`}>
-                <GraduationCap size={16} /> Find Student Talents
-              </button>
+            {/* Buttons */}
+            <div className='flex justify-center items-center gap-x-1 mb-2 sm:hidden'>
 
-            </Link>
+              {/* Find Student Talents for mobile view */}
+              <Link to={'/'}>
+
+                <button className={`bg-orange-500 text-white font-semibold text-xs px-5 py-2 flex items-center sm:hidden`}>
+                  <GraduationCap size={16} /> Find Student Talents
+                </button>
+
+              </Link>
 
 
-            <div className="flex lg:hidden">
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(true)}
-                className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 ${color ? "text-white" : ""}`}
-              >
-                <span className="sr-only">Open main menu</span>
+              {/* Explore Gigs */}
+              <Link to={'/jobfilter'}>
 
-                <Text aria-hidden="true" className="size-6" />
+                <button className={` flex items-center gap-x-2 bg-blue-500 ms-2 text-white font-semibold text-xs px-5 py-2  sm:hidden`}>
+                  Explore Gigs <Telescope size={16} />
+                </button>
 
-              </button>
+              </Link>
+
 
             </div>
+
 
 
 
@@ -190,12 +232,16 @@ export default function Header() {
               <Popover className="relative">
 
 
-                <PopoverButton className={`flex items-center gap-x-1 text-sm/6 font-semibold text-gray-400 ${color ? "text-white" : ""}`}>
-
-                  <CircleUserRound size={30} />
-
+                <PopoverButton
+                  className={`flex items-center gap-x-1 text-sm/6 font-semibold text-gray-400 ${color ? "text-white" : ""}`}
+                >
+                  <img
+                    src="https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg?s=612x612&w=0&k=20&c=tyLvtzutRh22j9GqSGI33Z4HpIwv9vL_MZw_xOE19NQ="
+                    loading="lazy"
+                    alt="User profile"
+                    className="w-[30px] h-[30px] rounded-full object-cover"
+                  />
                 </PopoverButton>
-
 
                 <PopoverPanel
                   transition
@@ -297,7 +343,7 @@ export default function Header() {
                 <input
                   type="text"
                   placeholder="Search..."
-                  className={`w-full px-4 py-2 text-md focus:outline-none  ${color ? 'bg-transparent text-white' : 'text-gray-900'}`}
+                  className={`w-full px-4 py-2 text-md focus:outline-none  ${color ? 'bg-transparent text-white placeholder-white' : 'text-gray-900 bg-transparent'}`}
                 />
                 <Link
                   to={'/search'}
@@ -314,7 +360,7 @@ export default function Header() {
 
 
 
-          {/* Mobile Nav */}
+          {/* Mobile Nav sidebar */}
           <Transition show={mobileMenuOpen} as={Fragment}>
 
             <Dialog onClose={setMobileMenuOpen} className="lg:hidden relative z-50">

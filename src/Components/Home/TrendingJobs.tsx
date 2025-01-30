@@ -43,7 +43,7 @@ export default function TrendingJobs() {
 
         <>
 
-            <div className="px-2 md:px-32  py-14">
+            <div className="px-2 md:px-32  py-20">
 
                 <BlurFade delay={0.25} duration={0.5} inView>
 

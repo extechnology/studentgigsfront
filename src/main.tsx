@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
 
       <BrowserRouter>
 
-        <GoogleOAuthProvider clientId='497499738943-or63o18djrrdokq8mjh80p711cktfkmo.apps.googleusercontent.com'>
+        <GoogleOAuthProvider clientId='15124092057-q7saopofjt97svqnsd47t12n7ckn29qi.apps.googleusercontent.com'>
 
           <App />
 

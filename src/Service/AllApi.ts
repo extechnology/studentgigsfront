@@ -1,7 +1,7 @@
 import { CommonApi } from "./CommonApi";
 
 
-const Base_Url = "http://server.studentsgigs.com/api/employee"
+const Base_Url = "https://server.studentsgigs.com/api/employee"
 
 
 // User Register
@@ -29,7 +29,7 @@ export const GoogleLogin = async (data: any) => {
 
 
 //GET User Profile Form
-export const GetProfileForm = async (header: object) => {
+export const GetUserPersonalInfo = async (header: object) => {
 
     return await CommonApi("GET", `${Base_Url}/employees/`, "", header)
 
@@ -38,9 +38,11 @@ export const GetProfileForm = async (header: object) => {
 
 
 // Add User Profile Form
-export const AddProfileForm = async (data:any,header: object) => {
+export const EditUserPersonalInfo = async (data:any,header: object , id:any) => {
 
-    return await CommonApi("GET", `${Base_Url}/employees/`, data, header)
+    const params = new URLSearchParams({ pk: id })
+
+    return await CommonApi("PUT", `${Base_Url}/employees/?${params.toString()}`, data, header)
 
 }
 

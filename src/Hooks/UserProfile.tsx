@@ -1,13 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import { GetProfileForm } from "@/Service/AllApi";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { GetUserPersonalInfo, EditUserPersonalInfo } from "@/Service/AllApi";
 
 
 
-export const GetUserProfile = () => {
+// Get User Personal Information
+export const GetPersonalInfo = () => {
 
     return useQuery({
 
-        queryKey: ["userprofile"],
+        queryKey: ["userpersonalinfo"],
 
         queryFn: async () => {
 
@@ -15,11 +16,51 @@ export const GetUserProfile = () => {
 
             const headers = { Authorization: `Bearer ${token}` }
 
-            const Response = await GetProfileForm(headers)
+            const Response = await GetUserPersonalInfo(headers)
 
             return Response.data
 
         },
+
+    })
+
+}
+
+
+// Edit User Personal Information
+export const EditPersonalInfo = () => {
+
+    interface MutationParams {
+        formData: FormData;
+        id: string;
+    }
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async ({ formData, id }: MutationParams) => {
+
+            const token = localStorage.getItem("token")
+
+            const headers = { Authorization: `Bearer ${token}` }
+
+            const Response = await EditUserPersonalInfo(formData, headers, id)
+
+            return Response
+
+        },
+
+        onError: (error) => {
+            console.error("Failed to add client data:", error);
+        },
+
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
+
+        }
+
 
     })
 
