@@ -59,11 +59,11 @@ export default function About() {
 
 
                                 <blockquote className="border-l-4 border-gray-400 pl-4 italic text-gray-600 mb-6 text-md">
-                                    <p>“Our mission is to make students independent”</p>
-                                    <p>
-                                        Responsible, and equipped with practical exposure while learning. By connecting them with
-                                        meaningful gigs, we aim to reduce the gap between academic knowledge and real-world skills,
-                                        preparing them for a smarter future.
+                                    <p>“Empowering Students”</p>
+                                    <p>Bridging Education with Real-World Experience Our mission is to make students
+                                        independent, responsible, and equipped with practical exposure while learning. By
+                                        connecting them with meaningful gigs, we aim to reduce the gap between academic knowledge
+                                        and real-world skills, preparing them for a smarter future.
                                     </p>
                                 </blockquote>
 

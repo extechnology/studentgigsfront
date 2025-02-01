@@ -48,7 +48,7 @@ export default function Header() {
   // Add a scroll event listener
   useEffect(() => {
 
-    setcolor(location.pathname === "/employerlist" || location.pathname === "/employerdeatils" || location.pathname === "/jobfilter" || location.pathname === "/jobdeatils" || location.pathname === "/" ? true : false)
+    setcolor(location.pathname === "/employerlist" || location.pathname === "/employerdeatils" || location.pathname === "/jobfilter" || location.pathname === "/jobdeatils" || location.pathname === "/" || location.pathname === "/findgigs" ? true : false)
 
     const handleScroll = () => {
 
@@ -58,7 +58,7 @@ export default function Header() {
 
       } else {
         setScrolled(false);
-        setcolor(location.pathname === "/employerlist" || location.pathname === "/employerdeatils" || location.pathname === "/jobfilter" || location.pathname === "/jobdeatils" || location.pathname === "/" ? true : false)
+        setcolor(location.pathname === "/employerlist" || location.pathname === "/employerdeatils" || location.pathname === "/jobfilter" || location.pathname === "/jobdeatils" || location.pathname === "/" || location.pathname === "/findgigs" ? true : false)
       }
 
     };
@@ -173,7 +173,7 @@ export default function Header() {
             <div className='flex justify-center items-center gap-x-1 mb-2 sm:hidden'>
 
               {/* Find Student Talents for mobile view */}
-              <Link to={'/'}>
+              <Link to={'/findgigs'}>
 
                 <button className={`bg-orange-500 text-white font-semibold text-xs px-5 py-2 flex items-center sm:hidden`}>
                   <GraduationCap size={16} /> Find Student Talents
@@ -212,7 +212,7 @@ export default function Header() {
 
 
               {/* Find Student Talents */}
-              <Link to={'/'}>
+              <Link to={'/findgigs'}>
 
                 <button className={`flex items-center gap-x-2 bg-orange-500 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
                   Find Student Talents <GraduationCap size={24} />

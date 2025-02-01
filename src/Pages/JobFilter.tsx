@@ -35,10 +35,10 @@ export default function JobFilter() {
                         />
 
 
-                        <div className="relative z-10 px-4 py-24 sm:px-6 lg:px-8 sm:h-[55vh] h-[50v] flex flex-col justify-center maz-w-xl mx-auto">
+                        <div className="relative z-10 px-4 py-28 sm:px-6 lg:px-8 sm:h-[55vh] h-[50v] flex flex-col justify-center maz-w-xl mx-auto">
 
                             {/* Main heading */}
-                            <p className="text-center text-2xl font-bold tracking-tight text-white sm:text-3xl mb-8">
+                            <p className="text-center text-2xl font-bold tracking-tight text-white sm:text-3xl mb-8 mt-5">
                                 “Your profile is your gateway to independence and practical learning. Build it to showcase your skills, explore opportunities, and prepare for the challenges of tomorrow.” 
                             </p>
 

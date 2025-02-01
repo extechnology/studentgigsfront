@@ -1,5 +1,7 @@
 import { ChevronDownIcon } from "lucide-react";
 import PersonalInfromation from "@/Components/UserForm/PersonalInfromation";
+import Education from "@/Components/UserForm/Education";
+import Languages from "@/Components/UserForm/Languages";
 
 
 
@@ -7,8 +9,7 @@ import PersonalInfromation from "@/Components/UserForm/PersonalInfromation";
 
 
 
-
-export default function Settings() { 
+export default function Settings() {
 
 
   return (
@@ -70,136 +71,16 @@ export default function Settings() {
 
           <div className="space-y-12 container ">
 
-
-
             {/* Personal Information */}
-            <PersonalInfromation/>
+            <PersonalInfromation />
 
 
-            {/* Educational Information */}
-            <div className="border-b border-gray-900/10 pb-12">
+            {/* Languages */}
+            <Languages />
 
 
-              <h2 className="text-2xl pb-3 font-semibold text-gray-900">
-                Educational Information
-              </h2>
-
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-
-
-                {/* Current Academic Level */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="current-academic-level"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Current Academic Level
-                  </label>
-                  <div className="grid grid-cols-1">
-                    <select
-                      id="current-academic-level"
-                      name="current-academic-level"
-                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    >
-                      <option value="high-school">High School</option>
-                      <option value="undergraduate">Undergraduate</option>
-                      <option value="postgraduate">Postgraduate</option>
-                    </select>
-
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                    />
-                  </div>
-                </div>
-
-
-
-
-                {/* Field of Study */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="field-of-study"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Field of Study
-                  </label>
-                  <input
-                    id="field-of-study"
-                    name="field-of-study"
-                    type="text"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="e.g., Computer Science, Engineering"
-                  />
-                </div>
-
-
-
-
-                {/* Name of Institution */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="institution-name"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Name of Institution
-                  </label>
-                  <input
-                    id="institution-name"
-                    name="institution-name"
-                    type="text"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="Enter your institution's name"
-                  />
-                </div>
-
-
-
-
-                {/* Expected Year of Graduation */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="expected-graduation-year"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Expected Year of Graduation
-                  </label>
-                  <input
-                    id="expected-graduation-year"
-                    name="expected-graduation-year"
-                    type="number"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="e.g., 2025"
-                  />
-                </div>
-
-
-
-                {/* Academic Achievements */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="academic-achievements"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Academic Achievements (if any)
-                  </label>
-                  <textarea
-                    id="academic-achievements"
-                    name="academic-achievements"
-                    rows={3}
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="Describe any academic achievements or honors you've received"
-                  ></textarea>
-                </div>
-
-
-              </div>
-
-            </div>
-
-
-
+            {/* Education Form */}
+            <Education />
 
 
             {/* Skills and Expertise */}
@@ -590,7 +471,7 @@ export default function Settings() {
 
           </div>
 
-         
+
 
         </div>
 
@@ -601,5 +482,5 @@ export default function Settings() {
     </>
 
   )
-  
+
 }
