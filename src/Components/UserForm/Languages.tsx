@@ -57,7 +57,7 @@ export default function Languages() {
 
 
     // Form State
-    const { register, handleSubmit, formState: { errors }, control, reset } = useForm<Inputs>();
+    const { handleSubmit, control, reset } = useForm<Inputs>();
 
 
 
@@ -104,7 +104,7 @@ export default function Languages() {
                                     <Controller
                                         name="language"
                                         control={control}
-                                        render={({ field: { onChange, value, ref } }) => (
+                                        render={({ field: { onChange, ref } }) => (
                                             <CreatableSelect
                                                 ref={ref}
                                                 options={languages}
@@ -135,7 +135,7 @@ export default function Languages() {
                                     <Controller
                                         name="level"
                                         control={control}
-                                        render={({ field: { onChange, value, ref } }) => (
+                                        render={({ field: { onChange, ref } }) => (
                                             <CreatableSelect
                                                 ref={ref}
                                                 options={Levels}
