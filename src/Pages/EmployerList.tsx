@@ -27,10 +27,10 @@ export default function EmployerList() {
                         />
 
 
-                        <div className="relative z-10 px-4 py-24 sm:px-6 lg:px-8 sm:h-[55vh] h-[50v] flex flex-col justify-center">
+                        <div className="relative z-10 px-4 py-32 sm:px-6 lg:px-8 sm:h-[55vh] h-[50v] flex flex-col justify-center">
 
                             {/* Main heading */}
-                            <h1 className="text-center text-2xl font-bold tracking-tight text-white sm:text-4xl mb-8">
+                            <h1 className="text-center text-2xl font-bold tracking-tight text-white sm:text-4xl mb-8 mt-8">
                                 Employers / Companies
                             </h1>
 

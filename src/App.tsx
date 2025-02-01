@@ -17,6 +17,7 @@ const NotFound = lazy(() => import("./Pages/NotFound.tsx"))
 const Auth = lazy(() => import("./Pages/Auth.tsx"))
 const JobFilter = lazy(() => import("./Pages/JobFilter.tsx"))
 const JobDeatils = lazy(() => import("./Pages/JobDeatils.tsx"))
+const SamplePage = lazy(() => import("./Pages/SamplePage.tsx"))
 
 
 
@@ -111,6 +112,8 @@ function App() {
           <Route path="/jobfilter" element={<JobFilter />} />
 
           <Route path="/jobdeatils" element={<JobDeatils />} />
+
+          <Route path="/findgigs" element={<SamplePage />} />
 
 
         </Routes>

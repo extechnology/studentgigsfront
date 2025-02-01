@@ -1,7 +1,7 @@
 import { CommonApi } from "./CommonApi";
 
 
-const Base_Url = "https://server.studentsgigs.com/api/employee"
+const Base_Url = "http://localhost:8000/api/employee"
 
 
 // User Register
@@ -28,7 +28,18 @@ export const GoogleLogin = async (data: any) => {
 }
 
 
-//GET User Profile Form
+//GET University List
+export const GetUniversityList = async (search: string) => {
+
+    const params = new URLSearchParams({ name: search })
+
+    return await CommonApi("GET", `http://universities.hipolabs.com/search?${params.toString()}`, "", "")
+
+}
+
+
+
+//GET User Personal Information
 export const GetUserPersonalInfo = async (header: object) => {
 
     return await CommonApi("GET", `${Base_Url}/employees/`, "", header)
@@ -37,8 +48,8 @@ export const GetUserPersonalInfo = async (header: object) => {
 
 
 
-// Add User Profile Form
-export const EditUserPersonalInfo = async (data:any,header: object , id:any) => {
+// Edit User Personal Information
+export const EditUserPersonalInfo = async (data: any, header: object, id: string) => {
 
     const params = new URLSearchParams({ pk: id })
 
@@ -46,3 +57,30 @@ export const EditUserPersonalInfo = async (data:any,header: object , id:any) => 
 
 }
 
+
+//GET User Education Information
+export const GetUserEducationInfo = async (header: object) => {
+
+    return await CommonApi("GET", `${Base_Url}/employee-education/`, "", header)
+
+}
+
+
+
+// Edit User Education Information
+export const AddUserEducationInfo = async (data: FormData, header: object) => {
+
+    return await CommonApi("POST", `${Base_Url}/employee-education/`, data, header)
+
+}
+
+
+
+// Edit User Education Information
+export const DeleteUserEducationInfo = async (id: string, header: object) => {
+
+    const params = new URLSearchParams({ pk: id })
+
+    return await CommonApi("DELETE", `${Base_Url}/employee-education/?${params.toString()}`, "", header)
+
+}
