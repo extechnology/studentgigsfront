@@ -1,13 +1,13 @@
 import { useForm, Controller } from "react-hook-form"
 import { DeleteEducationInfo, GetEducationInfo } from "@/Hooks/UserProfile";
-import { UniversityList } from "@/Hooks/Utils";
+import { UniversityList, FeildOfStudyList } from "@/Hooks/Utils";
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AddEducationInfo } from "@/Hooks/UserProfile";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2, Calendar, GraduationCap, Trash2 } from "lucide-react";
+import { BookOpenText, Building2, ChevronRight, GraduationCap, History, Medal, Trash2 } from "lucide-react";
 
 
 interface Inputs {
@@ -102,33 +102,30 @@ export default function Education() {
     const [Search, setSearch] = useState("")
 
 
-    // edit id 
-    const [Id, Setid] = useState('')
+
+    // Get Feild of Study Options
+    const { data: FeildList, isLoading: FeildLoading } = FeildOfStudyList()
 
 
 
-
-    // Mutate for user Education
+    // Add user Education
     const { mutate } = AddEducationInfo()
 
 
 
-    // Mutate for user Education
+    // Delete user Education
     const { mutate: Delete } = DeleteEducationInfo()
 
 
 
-
     // Get Education infotmation data 
-    const { data = [], isLoading, isError } = GetEducationInfo()
+    const { data = [], isLoading, isError , isPending  } = GetEducationInfo()
 
 
 
 
     // Get University List
     const { data: universities, isLoading: uniloading } = UniversityList(Search)
-
-
 
 
 
@@ -139,29 +136,8 @@ export default function Education() {
 
 
 
-    // Set id 
-    useEffect(() => {
-
-        if (data && data.length > 0) {
-
-            const selected = data[0];
-
-            Setid(selected.employee)
-
-        }
-
-    }, [data])
-
-
-
     // Submit Education Information
     const SubmitEducation = (data: Inputs) => {
-
-
-        // if (!data || !Id) {
-        //     toast.error("User data is not available. Please try again.");
-        //     return;
-        // }
 
         const formdata = new FormData()
 
@@ -170,7 +146,6 @@ export default function Education() {
         formdata.append("expected_graduation_year", data.expected_graduation_year)
         formdata.append("achievement_name", data.achievement_name)
         formdata.append("name_of_institution", data.name_of_institution)
-        formdata.append("employee", Id)
 
 
         mutate({ formData: formdata }, {
@@ -179,9 +154,9 @@ export default function Education() {
 
                 if (response.status >= 200 && response.status < 300) {
                     reset();
-                    toast.success("Personal Information Updated Successfully");
+                    toast.success("Education Information Added Successfully");
                 } else {
-                    toast.error("Something went wrong. Please try again.");
+                    toast.error("Something went wrong. Please try again Later.");
                 }
             },
             onError: (error) => {
@@ -205,7 +180,7 @@ export default function Education() {
                     reset();
                     toast.success("Education Information Deleted Successfully");
                 } else {
-                    toast.error("Something went wrong. Please try again.");
+                    toast.error("Something went wrong. Please try again Later.");
                 }
             },
             onError: (error) => {
@@ -216,6 +191,8 @@ export default function Education() {
 
 
     }
+
+
 
 
     return (
@@ -230,7 +207,7 @@ export default function Education() {
 
                 {
 
-                    isLoading || isError ?
+                    isLoading || isError || isPending ?
 
 
                         // Loading Skeleton
@@ -265,11 +242,11 @@ export default function Education() {
                                 <div className=" pb-12">
 
 
-                                    <h2 className="text-2xl pb-3 font-semibold text-gray-900">
-                                        Educational Information
+                                    <h2 className="text-2xl pb-3 font-semibold text-gray-900 flex items-center">
+                                        Educational Information <BookOpenText size={24} className="ml-2" />
                                     </h2>
 
-                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                    <div className=" mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
 
 
@@ -326,14 +303,16 @@ export default function Education() {
                                                     render={({ field: { onChange, value, ref } }) => (
                                                         <CreatableSelect
                                                             ref={ref}
-                                                            options={data[0]?.field_of_studies ?? []}
-                                                            value={value ? universities?.find((option: any) => option.value === value) : null}
+                                                            options={FeildList}
+                                                            value={value ? FeildList?.find((option: any) => option.value === value) : null}
                                                             onChange={(option) => { onChange(option?.value) }}
                                                             placeholder={"Search Your Field of Study"}
                                                             isSearchable={true}
                                                             className="basic-single"
                                                             isClearable={true}
                                                             classNamePrefix="select"
+                                                            isLoading={FeildLoading}
+                                                            loadingMessage={() => "Loading ..."}
                                                         />
                                                     )}
                                                 />
@@ -419,39 +398,48 @@ export default function Education() {
                                                 htmlFor="university"
                                                 className="block text-sm/6 font-medium text-gray-900"
                                             >
-                                                Academic Achivements
+                                                Academic Achievements
                                             </label>
                                             <div className="">
                                                 <Controller
                                                     name="achievement_name"
                                                     control={control}
                                                     rules={{ required: "This field is required" }}
-                                                    render={({ field: { onChange, ref } }) => (
+                                                    render={({ field }) => (
                                                         <CreatableSelect
-                                                            ref={ref}
-                                                            options={[]}
-                                                            onChange={(selectedOptions) => {
-                                                                const newValues = selectedOptions.map((option: any) => option.value);
-                                                                onChange(newValues);
+                                                            {...field}
+                                                            value={field.value ?
+
+                                                                (field.value as unknown as string[]).map((achievement) => ({
+                                                                    label: achievement,
+                                                                    value: achievement
+                                                                }))
+                                                                : []
+                                                            }
+                                                            onChange={(newValue) => {
+
+                                                                field.onChange(newValue ? newValue.map(item => item.value) : []);
                                                             }}
-                                                            placeholder="Add Your Academic Achivements"
+                                                            placeholder="Add Your Academic Achievements"
                                                             isSearchable={true}
                                                             className="basic-single"
                                                             isClearable={true}
                                                             isMulti
-                                                            noOptionsMessage={() => "Create Your Academic Achivements"}
+                                                            noOptionsMessage={() => "Type to create an achievement"}
                                                             classNamePrefix="select"
                                                             components={animatedComponents}
-
+                                                            // Remove options prop to only allow creating new values
+                                                            formatCreateLabel={(inputValue) => `Add "${inputValue}"`}
                                                         />
                                                     )}
                                                 />
                                             </div>
-                                            {errors.expected_graduation_year && (
-                                                <span className="text-sm text-red-500">{errors.expected_graduation_year.message}</span>
+                                            {errors.achievement_name && (
+                                                <span className="text-sm text-red-500">
+                                                    {errors.achievement_name.message}
+                                                </span>
                                             )}
                                         </div>
-
 
                                     </div>
 
@@ -476,61 +464,90 @@ export default function Education() {
 
                                 data.length > 0 &&
 
-                                <div className="max-w-7xl mx-auto p-6">
+                                <div className="w-full max-w-7xl mx-auto py-0 sm:py-6 px-0 sm:px-3">
 
-                                    {data.length > 0 && <h2 className="text-2xl font-bold text-gray-800 mb-4">Education History</h2>}
+                                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 px-2 flex items-center">
+                                        Education History <History className="ml-2" />
+                                    </h2>
 
                                     <AnimatePresence>
 
-                                        {data.length > 0 ? (
-
-                                            <div className="space-y-4">
+                                        {data?.length > 0 && (
+                                            <div className="space-y-4 sm:space-y-8">
 
                                                 {data.map((item: any) => (
-
                                                     <motion.div
                                                         key={item.id}
                                                         initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         exit={{ opacity: 0, y: -20 }}
-                                                        className="flex items-center justify-between bg-white p-4 rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition-all"
+                                                        transition={{ duration: 0.3 }}
+                                                        className="group relative border-b border-gray-100 bg-gray-50/50 hover:bg-gray-50/50 transition-all duration-300"
                                                     >
-                                                        <div>
-                                                            <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-900">
-                                                                <GraduationCap className="text-blue-500" size={18} />
-                                                                {item.name_of_institution}
-                                                            </h3>
-                                                            <p className="text-gray-600 flex items-center gap-2">
-                                                                <Building2 className="text-gray-500" size={16} />
-                                                                {item.academic_level}
-                                                            </p>
-                                                            <p className="text-gray-600 flex items-center gap-2">
-                                                                <Calendar className="text-gray-500" size={16} />
-                                                                Graduation Year: {item.expected_graduation_year}
-                                                            </p>
-                                                            <p className="text-gray-600">
-                                                                <strong>Field of Study:</strong> {item.field_of_study}
-                                                            </p>
-                                                            <p className="text-gray-600">
-                                                                <strong>Achievements:</strong> {item.achievement_name}
-                                                            </p>
+                                                        <div className="px-3 py-4 sm:px-6 sm:py-8">
+                                                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-8">
+                                                                {/* Left Column - Year */}
+                                                                <div className="sm:w-24 pt-1">
+                                                                    <span className="text-sm sm:text-md font-medium text-gray-500">
+                                                                        {item.expected_graduation_year}
+                                                                    </span>
+                                                                </div>
+
+                                                                {/* Middle Column - Main Content */}
+                                                                <div className="flex-1 space-y-3">
+                                                                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                                                                        <div className="flex items-center gap-2">
+                                                                            <GraduationCap className="h-5 w-8 sm:h-5 sm:w-5 text-blue-500" />
+                                                                            <h3 className="text-base sm:text-lg font-semibold text-gray-900">
+                                                                                {item.name_of_institution}
+                                                                                <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs sm:text-sm font-semibold text-blue-700 ms-2">
+                                                                                    {item.academic_level}
+                                                                                </span>
+                                                                            </h3>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className="space-y-2">
+                                                                        <div className="flex items-center gap-2 text-gray-600">
+                                                                            <Building2 className="h-4 w-4" />
+                                                                            <span className="text-xs sm:text-sm">{item.field_of_study}</span>
+                                                                        </div>
+
+                                                                        {item.achievement_name && (
+                                                                            <div className="flex items-start gap-2 text-gray-600">
+                                                                                <Medal className="h-4 w-4 mt-0.5 text-yellow-500" />
+                                                                                <span className="text-xs sm:text-sm">
+                                                                                    {item.achievement_name.replace(/,/g, ', ')}
+                                                                                </span>
+                                                                            </div>
+
+                                                                        )}
+                                                                    </div>
+
+
+                                                                </div>
+
+                                                                {/* Right Column - Actions */}
+                                                                <div className="flex items-center gap-4 mt-2 sm:mt-0">
+                                                                    <button
+                                                                        onClick={() => HandleDelete(item.id)}
+                                                                        className="opacity-100 p-1 sm:p-2 text-red-500 transition-all duration-200"
+                                                                        aria-label="Delete education entry"
+                                                                    >
+                                                                        <Trash2 className="h-6 w-5 sm:h-5 sm:w-5" />
+                                                                    </button>
+                                                                    <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-300 group-hover:text-gray-400 transition-all duration-200" />
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <button
-                                                            onClick={() => HandleDelete(item.id)}
-                                                            className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all"
-                                                        >
-                                                            <Trash2 size={18} />
-                                                        </button>
+
+                                                        {/* Hover line indicator */}
+                                                        <div className="absolute left-0 top-0 h-full w-0.5 bg-blue-500 opacity-100 transition-all duration-200" />
                                                     </motion.div>
                                                 ))}
                                             </div>
-
-                                        ) : ""
-
-                                        }
-
+                                        )}
                                     </AnimatePresence>
-
                                 </div>
 
 

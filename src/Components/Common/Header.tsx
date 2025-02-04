@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation , useNavigate } from "react-router-dom";
 import { Building, Contact, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
 import {
   Dialog,
@@ -15,9 +15,14 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import toast from "react-hot-toast";
+import { useAuth } from "@/Context/AuthContext";
 
 
 export default function Header() {
+
+
+  const Navigate = useNavigate()
+
 
 
   // Set Login and logout status
@@ -42,6 +47,9 @@ export default function Header() {
   // To get the current path
   const location = useLocation();
 
+
+  // To use auth context logout
+  const { logout } = useAuth()
 
 
 
@@ -93,8 +101,12 @@ export default function Header() {
   // Logout
   const HandleLogOut = () => {
 
-    localStorage.removeItem("token");
+    logout()
+
     toast.success("Logout Successful...!")
+
+    Navigate("/")
+
     SetLoginStatus(true)
 
   }
