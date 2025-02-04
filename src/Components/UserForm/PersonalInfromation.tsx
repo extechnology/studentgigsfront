@@ -8,6 +8,7 @@ import Flag from 'react-world-flags';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import toast from "react-hot-toast";
+import { UserRound } from "lucide-react";
 
 
 
@@ -70,7 +71,7 @@ export default function PersonalInfromation() {
 
 
     // Get User Personal Information
-    const { data, isLoading, isError } = GetPersonalInfo();
+    const { data, isLoading, isError , isPending } = GetPersonalInfo();
 
 
     // Edit User Personal Information
@@ -210,6 +211,7 @@ export default function PersonalInfromation() {
             }
         );
     };
+    
 
 
 
@@ -226,7 +228,7 @@ export default function PersonalInfromation() {
 
                     {
 
-                        isLoading || isError ?
+                        isLoading || isError || isPending ?
 
 
                             // Loading Skeleton
@@ -257,17 +259,17 @@ export default function PersonalInfromation() {
                             // Form
                             < div className="border-b border-gray-900/10 pb-12">
 
-                                <h2 className="text-2xl pb-3 font-semibold text-gray-900">
-                                    Personal Information
+                                <h2 className="text-2xl pb-3 font-semibold text-gray-900 flex items-center">
+                                    Personal Information <UserRound size={24}  className="ml-2"/>
                                 </h2>
 
 
-                                <p className="mt-1 text-sm/6 text-gray-600">
+                                <p className="mt-1 text-sm/6 text-gray-600 ">
                                     Use a permanent address where you can receive mail.
                                 </p>
 
 
-                                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                <div className="sm:mt-10 mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
 
                                     {/*  name */}

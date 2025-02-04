@@ -2,8 +2,9 @@ import { UserRegister, UserLogin, GoogleAuth } from "@/Hooks/UserLogin";
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 import toast from 'react-hot-toast';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useAuth } from "@/Context/AuthContext";
 
 
 export default function Auth() {
@@ -18,6 +19,10 @@ export default function Auth() {
 
 
   const Navigate = useNavigate()
+
+
+  // Get the current path
+  const location = useLocation();
 
 
   // Login and register status
@@ -42,6 +47,10 @@ export default function Auth() {
 
   // Mutate for Google Login
   const { mutate: mutateGoogleLogin } = GoogleAuth()
+
+
+  // login Provider
+  const { login } = useAuth()
 
 
 
@@ -132,12 +141,18 @@ export default function Auth() {
 
           toast.success("User Register Successfully")
 
+          // Get previous route or default to home
+          const from = location.state?.from?.pathname || "/";
+
+
           reset()
 
-          localStorage.setItem("token", response.data.access)
+
+          login(response.data.access)
 
 
-          Navigate("/")
+          Navigate(from, { replace: true })
+
 
 
         }
@@ -226,11 +241,14 @@ export default function Auth() {
 
               if (response.status >= 200 && response.status <= 300) {
 
-                localStorage.setItem("token", response.data.access)
+                // Get previous route or default to home
+                const from = location.state?.from?.pathname || "/";
+
+                login(response.data.access)
 
                 toast.success("Login Successfull..!")
 
-                Navigate("/")
+                Navigate(from, { replace: true })
 
               }
               else {

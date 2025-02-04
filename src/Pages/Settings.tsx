@@ -2,7 +2,9 @@ import { ChevronDownIcon } from "lucide-react";
 import PersonalInfromation from "@/Components/UserForm/PersonalInfromation";
 import Education from "@/Components/UserForm/Education";
 import Languages from "@/Components/UserForm/Languages";
-
+import Skills from "@/Components/UserForm/Skills";
+import SoftSkills from "@/Components/UserForm/SoftSkills";
+import WorkPreferences from "@/Components/UserForm/WorkPreferences";
 
 
 
@@ -17,7 +19,7 @@ export default function Settings() {
     <>
 
 
-      <main className="w-full h-auto pt-20">
+      <main className="w-full h-auto pt-20 bg-slate-50/5">
 
 
         <section className=" w-full m-auto px-1 sm:px-20">
@@ -84,227 +86,17 @@ export default function Settings() {
 
 
             {/* Skills and Expertise */}
-            <div className="border-b border-gray-900/10 pb-12">
+            <Skills />
 
 
-              <h2 className="text-2xl pb-3 font-semibold text-gray-900">
-                Skills and Expertise
-              </h2>
-
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-
-
-                {/* Technical Skills */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="technical-skills"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Technical Skills
-                  </label>
-                  <input
-                    id="technical-skills"
-                    name="technical-skills"
-                    type="text"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="e.g., Programming, Graphic Design, Writing"
-                  />
-                </div>
-
-
-
-                {/* Soft Skills */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="soft-skills"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Soft Skills
-                  </label>
-                  <input
-                    id="soft-skills"
-                    name="soft-skills"
-                    type="text"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="e.g., Communication, Teamwork, Problem-Solving"
-                  />
-                </div>
-
-
-
-                {/* Certifications */}
-                <div className="col-span-full">
-                  <label
-                    htmlFor="certifications"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Certifications
-                  </label>
-                  <input
-                    id="certifications"
-                    name="certifications"
-                    type="text"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="e.g., Digital Marketing, Python"
-                  />
-                </div>
-
-
-
-              </div>
-
-
-            </div>
-
-
-
+            {/* Soft Skills */}
+            <SoftSkills />
 
 
             {/* Work Preferences */}
-            <div className="border-b border-gray-900/10 pb-12">
+            <WorkPreferences />
 
 
-              <h2 className="text-2xl pb-3 font-semibold text-gray-900">
-                Work Preferences
-              </h2>
-
-
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-
-
-                {/* Interested Job Type */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="interested-job-type"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Interested Job Type
-                  </label>
-                  <div className="grid grid-cols-1">
-                    <select
-                      id="interested-job-type"
-                      name="interested-job-type"
-                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    >
-                      <option value="online">Online</option>
-                      <option value="offline">Offline</option>
-                      <option value="both">Both</option>
-                    </select>
-
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                    />
-                  </div>
-
-                </div>
-
-
-
-                {/* Preferred Categories */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="preferred-categories"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Preferred Categories
-                  </label>
-                  <input
-                    id="preferred-categories"
-                    name="preferred-categories"
-                    type="text"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="Choose from the gig categories provided"
-                  />
-                </div>
-
-
-
-                {/* expected-pay-range */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="expected-pay-range"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Expected Pay Range
-                  </label>
-                  <input
-                    id="expected-pay-range"
-                    name="expected-pay-range"
-                    type="text"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="e.g., $15-25/hour"
-                  />
-                </div>
-
-
-
-                {/* Availability */}
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="availability"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Availability
-                  </label>
-
-                  <div className=" grid grid-cols-1">
-                    <select
-                      id="availability"
-                      name="availability"
-                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    >
-                      <option value="part-time">Part-Time</option>
-                      <option value="weekends">Weekends</option>
-                      <option value="flexible">Flexible</option>
-                    </select>
-
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                    />
-                  </div>
-
-                </div>
-
-
-
-                {/* Transportation Availability */}
-                <div className="sm:col-span-full">
-                  <label
-                    htmlFor="transportation-availability"
-                    className="block text-sm/6 font-medium text-gray-900"
-                  >
-                    Transportation Availability
-                  </label>
-
-                  <div className=" grid grid-cols-1">
-                    <select
-                      id="transportation-availability"
-                      name="transportation-availability"
-                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    >
-                      <option value="own-vehicle">Own Vehicle</option>
-                      <option value="public-transport">Public Transport</option>
-                      <option value="none">None</option>
-                    </select>
-
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                    />
-                  </div>
-
-                </div>
-
-
-
-              </div>
-
-
-            </div>
 
 
 

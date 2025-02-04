@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react"
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
-
+import { useAuth } from "./Context/AuthContext.tsx"
 
 
 const Landing = lazy(() => import("./Pages/Landing.tsx"))
@@ -30,6 +30,9 @@ function App() {
   const location = useLocation()
 
 
+  // To check if the user is authenticated
+  const {isAuthenticated} = useAuth()
+    
 
 
   // To hide the header and footer
@@ -55,29 +58,10 @@ function App() {
 
 
 
-
-  // Utility to Check JWT Authentication
-  const isAuthenticated = () => {
-
-    const token = localStorage.getItem("token");
-
-    if (!token) return false;
-
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1])); // Decode payload
-      return payload.exp * 1000 > Date.now(); // Check expiration
-    } catch {
-      return false; // Invalid token
-    }
-
-  };
-
-
-
   // Protected Route Component
   const ProtectedRoute = ({ children } : any) => {
 
-    return isAuthenticated() ? children : <Navigate to="/auth" />
+    return isAuthenticated ? children : <Navigate to="/auth" state={{ from: location }} />
 
   };
 
