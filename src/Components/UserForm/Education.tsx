@@ -119,7 +119,7 @@ export default function Education() {
 
 
     // Get Education infotmation data 
-    const { data = [], isLoading, isError , isPending  } = GetEducationInfo()
+    const { data = [], isLoading, isError , isPending , isFetching  } = GetEducationInfo()
 
 
 
@@ -207,7 +207,7 @@ export default function Education() {
 
                 {
 
-                    isLoading || isError || isPending ?
+                    isLoading || isError || isPending || isFetching ?
 
 
                         // Loading Skeleton

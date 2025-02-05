@@ -71,7 +71,7 @@ export default function PersonalInfromation() {
 
 
     // Get User Personal Information
-    const { data, isLoading, isError , isPending } = GetPersonalInfo();
+    const { data, isLoading, isError , isPending , isFetching} = GetPersonalInfo();
 
 
     // Edit User Personal Information
@@ -228,7 +228,7 @@ export default function PersonalInfromation() {
 
                     {
 
-                        isLoading || isError || isPending ?
+                        isLoading || isError || isPending || isFetching ?
 
 
                             // Loading Skeleton
@@ -620,7 +620,7 @@ export default function PersonalInfromation() {
                                         type="submit"
                                         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                     >
-                                        Save
+                                        Save Changes
                                     </button>
                                 </div>
 

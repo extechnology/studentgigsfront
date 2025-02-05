@@ -16,7 +16,6 @@ interface Inputs {
 }
 
 
-
 // Animation
 const animatedComponents = makeAnimated();
 
@@ -25,7 +24,7 @@ export default function SoftSkills() {
 
 
     // Get User Soft Skills
-    const { data, isLoading, isError , isPending } = GetSoftSkills()
+    const { data, isLoading, isError , isPending , isFetching } = GetSoftSkills()
 
 
     // Add Soft Skills 
@@ -119,7 +118,7 @@ export default function SoftSkills() {
 
                 {
 
-                    isLoading || isError || isPending ?
+                    isLoading || isError || isPending || isFetching ?
 
 
 

@@ -33,7 +33,7 @@ export default function Skills() {
 
 
     // Get User Tech Skills
-    const { data, isLoading, isError , isPending } = GetTechSkills()
+    const { data, isLoading, isError , isPending  , isFetching} = GetTechSkills()
 
 
 
@@ -132,7 +132,7 @@ export default function Skills() {
 
                 {
 
-                    isLoading || isError || isPending ?
+                    isLoading || isError || isPending || isFetching ?
 
 
 
