@@ -33,7 +33,7 @@ export const GetUniversityList = async (search: string) => {
 
     const params = new URLSearchParams({ name: search })
 
-    return await CommonApi("GET", `http://universities.hipolabs.com/search?${params.toString()}`, "", "")
+    return await CommonApi("GET", `${Base_Url}/university/?${params.toString()}`, "", "")
 
 }
 
@@ -239,5 +239,26 @@ export const DeleteUserJobCategory = async (id: string, header: object) => {
     const params = new URLSearchParams({ pk: id })
 
     return await CommonApi("DELETE", `${Base_Url}/employee-preferred-job-category/?${params.toString()}`, "", header)
+
+}
+
+
+
+
+//GET User Profile picture
+export const GetUserProfilePicture = async (header: object) => {
+
+    return await CommonApi("GET", `${Base_Url}/employee-profile-photos/`, "", header)
+
+}
+
+
+
+// Edit User Profile picture
+export const EditUserProfilePicture = async (data: any, header: object, id: string) => {
+
+    const params = new URLSearchParams({ pk: id })
+
+    return await CommonApi("PUT", `${Base_Url}/employee-profile-photos/?${params.toString()}`, data, header)
 
 }

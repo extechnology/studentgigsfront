@@ -39,7 +39,7 @@ export default function Languages() {
 
 
     // Get User Languages
-    const { data, isLoading, isError , isPending } = GetLanguageInfo()
+    const { data, isLoading, isError , isPending , isFetching } = GetLanguageInfo()
 
 
     // Add User Languages
@@ -155,7 +155,7 @@ export default function Languages() {
 
                 {
 
-                    isLoading || isError || isPending ?
+                    isLoading || isError || isPending || isFetching ?
 
 
                         // Loading Skeleton

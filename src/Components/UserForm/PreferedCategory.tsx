@@ -24,7 +24,7 @@ export default function PreferedCategory() {
 
 
     // Get User jOB Categories
-    const { data, isLoading, isError, isPending } = GetPreferredCategories()
+    const { data, isLoading, isError, isPending, isFetching } = GetPreferredCategories()
 
 
 
@@ -110,7 +110,7 @@ export default function PreferedCategory() {
 
                 {
 
-                    isLoading || isError || isPending ?
+                    isLoading || isError || isPending || isFetching ?
 
 
 
@@ -208,35 +208,39 @@ export default function PreferedCategory() {
 
 
                             {/* Skills display */}
-                            <div className=" py-5 rounded-lg  space-y-6">
+                            {data?.length > 0 &&
+                            
+                                <div className=" py-5 rounded-lg  space-y-6">
 
-                                <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
 
-                                    <div className="flex flex-wrap gap-2">
+                                        <div className="flex flex-wrap gap-2">
 
-                                        {data?.map((item: any, idx: number) => (
-                                            <span
-                                                key={idx}
-                                                className="flex items-center px-3 py-1 bg-orange-300 text-black rounded-full text-sm font-medium shadow-sm"
-                                            >
-                                                {item?.preferred_job_category}
-
-                                                <button
-                                                    onClick={() => HandleDelete(item?.id)}
-                                                    className="text-red-500 ms-2"
-                                                    aria-label="Delete"
+                                            {data?.map((item: any, idx: number) => (
+                                                <span
+                                                    key={idx}
+                                                    className="flex items-center px-3 py-1 bg-orange-300 text-black rounded-full text-sm font-medium shadow-sm"
                                                 >
-                                                    <X size={18} />
-                                                </button>
+                                                    {item?.preferred_job_category}
 
-                                            </span>
-                                        ))}
+                                                    <button
+                                                        onClick={() => HandleDelete(item?.id)}
+                                                        className="text-red-500 ms-2"
+                                                        aria-label="Delete"
+                                                    >
+                                                        <X size={18} />
+                                                    </button>
+
+                                                </span>
+                                            ))}
+
+                                        </div>
 
                                     </div>
 
                                 </div>
 
-                            </div>
+                            }
 
                         </div>
 

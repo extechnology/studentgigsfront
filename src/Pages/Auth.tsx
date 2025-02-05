@@ -2,7 +2,7 @@ import { UserRegister, UserLogin, GoogleAuth } from "@/Hooks/UserLogin";
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 import toast from 'react-hot-toast';
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/Context/AuthContext";
 
@@ -298,7 +298,7 @@ export default function Auth() {
           <div className="flex w-full flex-col md:w-1/2">
 
             <div className="flex justify-center pt-12 md:-mb-24 md:justify-start md:pl-12">
-              <a href="#" className="border-b-gray-700 border-b-4 pb-2 text-2xl font-bold text-gray-900 sm:mb-28 mb-3"> StudentsGig </a>
+              <Link to="/"  className="border-b-gray-700 border-b-4 pb-2 text-2xl font-bold text-gray-900 sm:mb-28 mb-3"> StudentsGig </Link>
             </div>
 
 

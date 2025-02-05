@@ -4,7 +4,7 @@ import {
     DeleteUserEducationInfo, GetUserLanguageInfo, AddUserLanguageInfo, DeleteUserLanguageInfo,
     GetUserTechSkills, AddUserTechSkills, DeleteUserTechSkills, GetUserSoftSkills, AddUserSoftSkills,
     DeleteUserSoftSkills, EditUserWorkPerference, GetUserWorkPerference, GetUserJobCategory, AddUserJobCategory,
-    DeleteUserJobCategory
+    DeleteUserJobCategory, GetUserProfilePicture, EditUserProfilePicture
 } from "@/Service/AllApi";
 
 
@@ -94,6 +94,7 @@ export const EditPersonalInfo = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilepicture"] });
 
         }
 
@@ -834,7 +835,7 @@ export const AddPreferredCategory = () => {
 
 
 
-// Delete User Soft Skills
+// Delete User Preferred Categories
 export const DeletePreferredCategory = () => {
 
     const queryclient = useQueryClient();
@@ -869,6 +870,103 @@ export const DeletePreferredCategory = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userpreferredcategories"] });
+
+        }
+
+    })
+
+}
+
+
+
+
+
+
+
+// Get User Profile pic
+export const GetProfilePicture = () => {
+
+    return useQuery({
+
+        queryKey: ["userprofilepicture"],
+        initialData: [],
+
+        queryFn: async () => {
+
+            try {
+
+                const token = localStorage.getItem("token")
+
+                if (!token) {
+                    throw new Error("Authentication token not found");
+                }
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await GetUserProfilePicture(headers)
+
+                return Response.data
+
+
+            } catch (err) {
+
+                console.log(err);
+
+
+            }
+        },
+
+    })
+
+}
+
+
+
+
+
+// Edit User Profile pic
+export const EditProfilePicture = () => {
+
+    interface MutationParams {
+        formData: FormData;
+        id: string;
+    }
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async ({ formData, id }: MutationParams) => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await EditUserProfilePicture(formData, headers, id)
+
+                return Response
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+
+
+        },
+
+        onError: (error) => {
+            console.error("Failed to Edit Profile Picture:", error);
+        },
+
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["userprofilepicture"] });
+          
 
         }
 
