@@ -1,4 +1,4 @@
-import { Building2, Calendar1, CirclePlus, Hourglass, MapPin, Trash2 } from "lucide-react";
+import { Building2, Calendar1, CirclePlus, Hourglass, Trash2 } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import CreatableSelect from 'react-select/creatable';
 import { format } from "date-fns";

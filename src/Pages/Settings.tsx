@@ -1,4 +1,3 @@
-import { ChevronDownIcon } from "lucide-react";
 import PersonalInfromation from "@/Components/UserForm/PersonalInfromation";
 import Education from "@/Components/UserForm/Education";
 import Languages from "@/Components/UserForm/Languages";
