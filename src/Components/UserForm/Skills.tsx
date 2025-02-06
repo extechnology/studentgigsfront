@@ -1,10 +1,11 @@
 import CreatableSelect from 'react-select/creatable';
-import { Laptop, X } from "lucide-react";
+import { CirclePlusIcon, Laptop, X } from "lucide-react";
 import { Controller, useForm } from 'react-hook-form';
 import Selecet from 'react-select';
 import TechSkills from '../../Data/TechSkills.json';
 import { GetTechSkills, AddTechSkills, DeleteTechSkills } from '@/Hooks/UserProfile';
 import toast from 'react-hot-toast';
+import { Button } from '../ui/button';
 
 
 
@@ -33,7 +34,7 @@ export default function Skills() {
 
 
     // Get User Tech Skills
-    const { data, isLoading, isError , isPending  , isFetching} = GetTechSkills()
+    const { data, isLoading, isError, isPending, isFetching } = GetTechSkills()
 
 
 
@@ -253,17 +254,17 @@ export default function Skills() {
                                 </div>
 
 
+
                                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                                    <button type="button" className="text-sm/6 font-semibold text-gray-900" onClick={() => { reset() }}>
+                                    <button type="button" className="text-sm/6 font-semibold text-gray-900 border px-2 py-2 rounded-md border-gray-300" onClick={() => { reset() }}>
                                         Cancel
                                     </button>
-                                    <button
-                                        type="submit"
-                                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                    >
-                                        Add
-                                    </button>
+                                    <Button type="submit" className="w-full sm:w-auto">
+                                        Add  <CirclePlusIcon size={24} />
+                                    </Button>
+
                                 </div>
+
 
 
                             </form>
@@ -274,7 +275,7 @@ export default function Skills() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
 
-                                    <div className="flex flex-wrap gap-2">                                     
+                                    <div className="flex flex-wrap gap-2">
 
                                         {data?.map((item: any, idx: number) => (
                                             <span

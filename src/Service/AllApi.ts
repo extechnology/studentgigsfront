@@ -262,3 +262,57 @@ export const EditUserProfilePicture = async (data: any, header: object, id: stri
     return await CommonApi("PUT", `${Base_Url}/employee-profile-photos/?${params.toString()}`, data, header)
 
 }
+
+
+
+
+
+
+//GET User Experience
+export const GetUserExperience = async (header: object) => {
+
+    return await CommonApi("GET", `${Base_Url}/employee-experience/`, "", header)
+
+}
+
+
+
+// Add User EXperience
+export const AddUserExperience = async (data: FormData, header: object) => {
+
+    return await CommonApi("POST", `${Base_Url}/employee-experience/`, data, header)
+
+}
+
+
+
+// Delete User EXperience
+export const DeleteUserExperience = async (id: string, header: object) => {
+
+    const params = new URLSearchParams({ pk: id })
+
+    return await CommonApi("DELETE", `${Base_Url}/employee-experience/?${params.toString()}`, "", header)
+
+}
+
+
+
+
+
+//GET User Additional Information
+export const GetUserAdditionalInfo = async (header: object) => {
+
+    return await CommonApi("GET", `${Base_Url}/employee-additional-information/`, "", header)
+
+}
+
+
+
+// Edit User Additional Information
+export const EditUserAdditionalInfo = async (data: any, header: object, id: string) => {
+
+    const params = new URLSearchParams({ pk: id })
+
+    return await CommonApi("PUT", `${Base_Url}/employee-additional-information/?${params.toString()}`, data, header)
+
+}

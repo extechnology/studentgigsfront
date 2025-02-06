@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
 import { Save } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface ImageCropperProps {
     src: string;
@@ -45,12 +46,12 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ src, onCrop, onCropComplete
                 <img ref={imageRef} src={src} alt="Cropper" className="max-w-full" />
             </div>
             <div className="mt-4 flex justify-end gap-2">
-                <button
+                <Button
                     onClick={handleCrop}
-                    className="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center"
+                    className=" text-white px-4 py-2 rounded-lg flex items-center"
                 >
                     Save Changes <Save className="ml-2" size={24} />
-                </button>
+                </Button>
             </div>
         </div>
     );
