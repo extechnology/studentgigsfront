@@ -4,7 +4,8 @@ import {
     DeleteUserEducationInfo, GetUserLanguageInfo, AddUserLanguageInfo, DeleteUserLanguageInfo,
     GetUserTechSkills, AddUserTechSkills, DeleteUserTechSkills, GetUserSoftSkills, AddUserSoftSkills,
     DeleteUserSoftSkills, EditUserWorkPerference, GetUserWorkPerference, GetUserJobCategory, AddUserJobCategory,
-    DeleteUserJobCategory, GetUserProfilePicture, EditUserProfilePicture
+    DeleteUserJobCategory, GetUserProfilePicture, EditUserProfilePicture, GetUserExperience, AddUserExperience,
+    DeleteUserExperience , EditUserAdditionalInfo , GetUserAdditionalInfo
 } from "@/Service/AllApi";
 
 
@@ -966,7 +967,239 @@ export const EditProfilePicture = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userprofilepicture"] });
-          
+
+
+        }
+
+    })
+
+}
+
+
+
+
+
+
+
+// Get User  Experience
+export const GetExperience = () => {
+
+    return useQuery({
+
+        queryKey: ["userexperience"],
+        initialData: [],
+
+        queryFn: async () => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await GetUserExperience(headers)
+
+                return Response.data
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+
+    })
+
+}
+
+
+
+
+
+// Add User Experience
+export const AddExperience = () => {
+
+    interface MutationParams {
+        formData: FormData;
+    }
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async ({ formData }: MutationParams) => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await AddUserExperience(formData, headers)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onError: (error) => {
+            console.error("Failed to add Experience:", error);
+        },
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["userexperience"] });
+
+        }
+
+    })
+
+}
+
+
+
+
+// Delete User Experience
+export const DeleteExperience = () => {
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async (id: string) => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await DeleteUserExperience(id, headers)
+
+                return Response
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+
+        onError: (error) => {
+            console.error("Failed to Delete a Experience:", error);
+        },
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["userexperience"] });
+
+        }
+
+    })
+
+}
+
+
+
+
+
+
+// Get User Additional Info
+export const GetAdditionalInfo = () => {
+
+    return useQuery({
+
+        queryKey: ["useradditionalinfo"],
+        initialData: [],
+
+        queryFn: async () => {
+
+            try {
+
+                const token = localStorage.getItem("token")
+
+                if (!token) {
+                    throw new Error("Authentication token not found");
+                }
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await GetUserAdditionalInfo(headers)
+
+                return Response.data
+
+
+            } catch (err) {
+
+                console.log(err);
+
+
+            }
+        },
+
+    })
+
+}
+
+
+
+
+
+// Edit User Additional Info
+export const EditAdditionalInfo = () => {
+
+    interface MutationParams {
+        formData: FormData;
+        id: string;
+    }
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async ({ formData, id }: MutationParams) => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await EditUserAdditionalInfo(formData, headers, id)
+
+                return Response
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+
+
+        },
+
+        onError: (error) => {
+            console.error("Failed to Edit Additional Info:", error);
+        },
+
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["useradditionalinfo"] });
+
 
         }
 

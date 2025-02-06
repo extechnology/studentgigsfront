@@ -1,10 +1,11 @@
-import { BriefcaseBusiness } from "lucide-react";
+import { BriefcaseBusiness, Save } from "lucide-react";
 import { Controller, useForm } from 'react-hook-form';
 import Selecet from 'react-select';
 import { EditWorkPerference, GetWorkPerference } from "@/Hooks/UserProfile";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import PreferedCategory from "./PreferedCategory";
+import { Button } from "../ui/button";
 
 
 
@@ -59,7 +60,7 @@ export default function WorkPreferences() {
 
 
     // Get Work Preferences
-    const { data, isLoading, isError, isPending , isFetching } = GetWorkPerference()
+    const { data, isLoading, isError, isPending, isFetching } = GetWorkPerference()
 
 
 
@@ -297,15 +298,13 @@ export default function WorkPreferences() {
 
 
                                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                                    <button type="button" className="text-sm/6 font-semibold text-gray-900" onClick={() => { reset() }}>
+                                    <button type="button" className="text-sm/6 font-semibold text-gray-900 border px-2 py-2 rounded-md border-gray-300" onClick={() => { reset() }}>
                                         Cancel
                                     </button>
-                                    <button
-                                        type="submit"
-                                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                    >
-                                        Save Changes
-                                    </button>
+                                    <Button type="submit" className="w-full sm:w-auto">
+                                        Save Changes  <Save size={24} />
+                                    </Button>
+
                                 </div>
 
                             </form>

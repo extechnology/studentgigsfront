@@ -1,9 +1,10 @@
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import toast from 'react-hot-toast';
-import { X } from 'lucide-react';
+import { CirclePlusIcon, X } from 'lucide-react';
 import { GetPreferredCategories, AddPreferredCategory, DeletePreferredCategory } from '@/Hooks/UserProfile';
 import { JObList } from '@/Hooks/Utils';
+import { Button } from '../ui/button';
 
 
 
@@ -187,29 +188,23 @@ export default function PreferedCategory() {
                                 </div>
 
 
-                                {/* Buttons */}
-                                <div className="flex items-center justify-end  sm:mt-5 gap-x-6 sm:ml-8">
-                                    <button
-                                        type="button"
-                                        className="text-sm/6 font-semibold text-gray-900"
-                                        onClick={() => { reset() }}
-                                    >
+                                <div className="mt-6 flex items-center justify-end gap-x-6">
+                                    <button type="button" className="text-sm/6 font-semibold text-gray-900 border px-2 py-2 rounded-md border-gray-300" onClick={() => { reset() }}>
                                         Cancel
                                     </button>
-                                    <button
-                                        type="submit"
-                                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                    >
-                                        Add
-                                    </button>
+                                    <Button type="submit" className="w-full sm:w-auto">
+                                        Add  <CirclePlusIcon size={24} />
+                                    </Button>
+
                                 </div>
+
 
                             </form>
 
 
                             {/* Skills display */}
                             {data?.length > 0 &&
-                            
+
                                 <div className=" py-5 rounded-lg  space-y-6">
 
                                     <div className="grid grid-cols-1 md:grid-cols-1 gap-6">

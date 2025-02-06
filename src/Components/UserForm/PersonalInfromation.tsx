@@ -8,7 +8,8 @@ import Flag from 'react-world-flags';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import toast from "react-hot-toast";
-import { UserRound } from "lucide-react";
+import { SaveIcon, UserRound } from "lucide-react";
+import { Button } from "../ui/button";
 
 
 
@@ -71,7 +72,7 @@ export default function PersonalInfromation() {
 
 
     // Get User Personal Information
-    const { data, isLoading, isError , isPending , isFetching} = GetPersonalInfo();
+    const { data, isLoading, isError, isPending, isFetching } = GetPersonalInfo();
 
 
     // Edit User Personal Information
@@ -211,7 +212,6 @@ export default function PersonalInfromation() {
             }
         );
     };
-    
 
 
 
@@ -228,7 +228,7 @@ export default function PersonalInfromation() {
 
                     {
 
-                        isLoading || isError || isPending || isFetching ?
+                        isLoading || isPending || isFetching || isError ?
 
 
                             // Loading Skeleton
@@ -260,7 +260,7 @@ export default function PersonalInfromation() {
                             < div className="border-b border-gray-900/10 pb-12">
 
                                 <h2 className="text-2xl pb-3 font-semibold text-gray-900 flex items-center">
-                                    Personal Information <UserRound size={24}  className="ml-2"/>
+                                    Personal Information <UserRound size={24} className="ml-2" />
                                 </h2>
 
 
@@ -613,15 +613,13 @@ export default function PersonalInfromation() {
 
 
                                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                                    <button type="button" className="text-sm/6 font-semibold text-gray-900" onClick={() => { reset() }}>
+                                    <button type="button" className="text-sm/6 font-semibold text-gray-900 border px-2 py-2 rounded-md border-gray-300" onClick={() => { reset() }}>
                                         Cancel
                                     </button>
-                                    <button
-                                        type="submit"
-                                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                    >
-                                        Save Changes
-                                    </button>
+                                    <Button type="submit" className="w-full sm:w-auto">
+                                        Save Changes  <SaveIcon size={24} />
+                                    </Button>
+
                                 </div>
 
 

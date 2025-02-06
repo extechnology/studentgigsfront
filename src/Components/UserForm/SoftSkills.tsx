@@ -2,9 +2,10 @@ import { Controller, useForm } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
 import { GetSoftSkills, AddSoftSkill, DeleteSoftSkills } from '@/Hooks/UserProfile';
 import toast from 'react-hot-toast';
-import { Lightbulb, X } from 'lucide-react';
+import { CirclePlusIcon, Lightbulb, X } from 'lucide-react';
 import SoftSkillData from '../../Data/SoftSkillData.json';
 import makeAnimated from 'react-select/animated';
+import { Button } from '../ui/button';
 
 
 
@@ -24,7 +25,7 @@ export default function SoftSkills() {
 
 
     // Get User Soft Skills
-    const { data, isLoading, isError , isPending , isFetching } = GetSoftSkills()
+    const { data, isLoading, isError, isPending, isFetching } = GetSoftSkills()
 
 
     // Add Soft Skills 
@@ -44,7 +45,7 @@ export default function SoftSkills() {
     }))
 
 
-    
+
 
     // Form State
     const { handleSubmit, control, reset, formState: { errors } } = useForm<Inputs>();
@@ -155,7 +156,7 @@ export default function SoftSkills() {
 
 
                                 <h2 className="text-2xl pb-3 font-semibold text-gray-900 flex items-center">
-                                    Soft Skills <Lightbulb  size={24} className='ml-2' />
+                                    Soft Skills <Lightbulb size={24} className='ml-2' />
                                 </h2>
 
                                 <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 sm:grid-rows-1">
@@ -177,7 +178,7 @@ export default function SoftSkills() {
                                                         ref={ref}
                                                         options={groupedSkills}
                                                         value={value ? groupedSkills.find((option) => option.label === value) : null}
-                                                        onChange={(option : any) => { onChange(option.label) }}
+                                                        onChange={(option: any) => { onChange(option.label) }}
                                                         placeholder={"Search Your Skill or Create New"}
                                                         isSearchable={true}
                                                         className="basic-single"
@@ -195,21 +196,17 @@ export default function SoftSkills() {
 
 
                                     {/* Buttons */}
-                                    <div className="sm:col-span-1 flex items-center justify-end sm:justify-start sm:mt-5 gap-x-6 sm:ml-8">
-                                        <button
-                                            type="button"
-                                            className="text-sm/6 font-semibold text-gray-900"
-                                            onClick={() => { reset() }}
-                                        >
+
+                                    <div className="mt-6 flex items-center justify-end gap-x-6">
+                                        <button type="button" className="text-sm/6 font-semibold text-gray-900 border px-2 py-2 rounded-md border-gray-300" onClick={() => { reset() }}>
                                             Cancel
                                         </button>
-                                        <button
-                                            type="submit"
-                                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                        >
-                                            Add
-                                        </button>
+                                        <Button type="submit" className="w-full sm:w-auto">
+                                            Add  <CirclePlusIcon size={24} />
+                                        </Button>
+
                                     </div>
+
 
 
                                 </div>

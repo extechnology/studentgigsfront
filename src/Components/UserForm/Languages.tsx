@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import { GetLanguageInfo, AddLanguageInfo, DeleteLanguageInfo } from '@/Hooks/UserProfile';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import { Globe, LanguagesIcon, Trash2 } from 'lucide-react';
+import { CirclePlus, Globe, LanguagesIcon, Trash2 } from 'lucide-react';
+import { Button } from '../ui/button';
 
 
 // Type definitions
@@ -39,7 +40,7 @@ export default function Languages() {
 
 
     // Get User Languages
-    const { data, isLoading, isError , isPending , isFetching } = GetLanguageInfo()
+    const { data, isLoading, isError, isPending, isFetching } = GetLanguageInfo()
 
 
     // Add User Languages
@@ -273,15 +274,13 @@ export default function Languages() {
                                     </div>
 
                                     <div className="mt-6 flex items-center justify-end gap-x-6">
-                                        <button type="button" className="text-sm/6 font-semibold text-gray-900" onClick={() => { reset() }}>
+                                        <button type="button" className="text-sm/6 font-semibold text-gray-900 border px-2 py-2 rounded-md border-gray-300" onClick={() => { reset() }}>
                                             Cancel
                                         </button>
-                                        <button
-                                            type="submit"
-                                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                        >
-                                            Add
-                                        </button>
+                                        <Button type="submit" className="w-full sm:w-auto">
+                                            Add  <CirclePlus size={24} />
+                                        </Button>
+
                                     </div>
 
                                 </div>

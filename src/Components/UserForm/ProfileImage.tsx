@@ -335,7 +335,7 @@ const ProfileEditor: React.FC = () => {
                                         onCrop={(croppedImage) => handleImageApply(croppedImage, 'profile')}
                                         aspectRatio={1}
                                     />
-                                    <button onClick={() => setShowProfileCropper(false)} className="bg-gray-500 text-white px-4 py-2 rounded-lg">
+                                    <button onClick={() => setShowProfileCropper(false)} className="bg-rose-600 text-white px-4 py-2 rounded-lg">
                                         Cancel
                                     </button>
                                 </div>
