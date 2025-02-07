@@ -241,7 +241,7 @@ export default function UserProfile() {
 
                                                 {/* About User */}
                                                 <p className="text-md sm:text-[1.1rem] font-[1rem] text-gray-500 leading-relaxed text-justify">
-                                                    {UserData?.about}
+                                                    {UserData?.about? UserData?.about : "Add about yourself"}
                                                 </p>
 
                                             </div>
@@ -277,7 +277,7 @@ export default function UserProfile() {
                                                                     Email:
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
-                                                                    {UserData?.email}
+                                                                    {UserData?.email? UserData?.email : "None"}
                                                                 </td>
                                                             </tr>
                                                             <tr className="border-b">
@@ -288,7 +288,7 @@ export default function UserProfile() {
                                                                     <i className="fa-solid fa-phone mr-2"></i> Phone Number:
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
-                                                                    {UserData?.phone}
+                                                                    {UserData?.phone ? UserData?.phone : "None"}
                                                                 </td>
                                                             </tr>
                                                             <tr className="border-b">
@@ -300,7 +300,7 @@ export default function UserProfile() {
                                                                     Current Address:
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
-                                                                    {UserData?.street_address} , {UserData?.city} , {UserData?.state} , {UserData?.postal_code}
+                                                                    {UserData?.street_address } , {UserData?.city} , {UserData?.state} , {UserData?.postal_code}
                                                                 </td>
                                                             </tr>
                                                             <tr className="border-b">
@@ -312,7 +312,7 @@ export default function UserProfile() {
                                                                     Preferred Work Location (City/Area):
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
-                                                                    {UserData?.preferred_work_location}
+                                                                    {UserData?.preferred_work_location ? UserData?.preferred_work_location : "None"}
                                                                 </td>
                                                             </tr>
                                                             <tr className="border-b">
@@ -324,7 +324,7 @@ export default function UserProfile() {
                                                                     Work Hours:
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
-                                                                    {UserData?.available_work_hours} Hr
+                                                                    {UserData?.available_work_hours ? UserData?.available_work_hours : "None"} Hr
                                                                 </td>
                                                             </tr>
                                                             <tr className="border-b">
@@ -349,8 +349,6 @@ export default function UserProfile() {
 
 
                                                                 </td>
-
-
 
                                                             </tr>
                                                         </tbody>
