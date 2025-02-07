@@ -173,6 +173,7 @@ const ProfileEditor: React.FC = () => {
                 } else {
 
                     setTempBannerSrc('');
+                    setBannerSrc('');
                     toast.error("Something went wrong. Please try again Later.");
                 }
 
@@ -180,6 +181,7 @@ const ProfileEditor: React.FC = () => {
             onError: (error) => {
                 toast.error("An error occurred: " + error.message);
                 setTempBannerSrc('');
+
             
             }
         })
@@ -295,7 +297,7 @@ const ProfileEditor: React.FC = () => {
                             <div className="md:pt-12 pt-8">
                                 <h1 className="font-semibold text-md md:text-lg">{data[0]?.employee_name}</h1>
                                 <p className="font-[1rem] text-md md:text-lg text-gray-400">
-                                    Software Developer
+                                    {data[0]?.job_title}
                                 </p>
                             </div>
 

@@ -962,6 +962,7 @@ export const EditProfilePicture = () => {
 
         onError: (error) => {
             console.error("Failed to Edit Profile Picture:", error);
+            queryclient.invalidateQueries({ queryKey: ["userprofilepicture"] });
         },
 
         onSuccess: () => {

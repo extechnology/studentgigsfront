@@ -547,6 +547,7 @@ export default function Education() {
                                             </div>
                                         )}
                                     </AnimatePresence>
+                                    
                                 </div>
 
 

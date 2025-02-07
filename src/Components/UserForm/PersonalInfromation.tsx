@@ -10,7 +10,7 @@ import PhoneInput from 'react-phone-number-input';
 import toast from "react-hot-toast";
 import { SaveIcon, UserRound } from "lucide-react";
 import { Button } from "../ui/button";
-
+import CreatableSelect from 'react-select/creatable';
 
 
 
@@ -29,6 +29,8 @@ type Inputs = {
     profile_photo: any
     cover_photo: any
     portfolio: string
+    job_title: string
+    about: string
     available_working_periods_start_date: string
     available_working_periods_end_date: string
 
@@ -192,8 +194,10 @@ export default function PersonalInfromation() {
         appendIfNotEmpty("state", info.state);
         appendIfNotEmpty("postal_code", info.postal_code);
         appendIfNotEmpty("portfolio", info.portfolio);
+        appendIfNotEmpty("about", info.about);
         appendIfNotEmpty("available_working_periods_start_date", info.available_working_periods_start_date);
         appendIfNotEmpty("available_working_periods_end_date", info.available_working_periods_end_date);
+        
 
         mutate(
             { formData, id: id },
@@ -607,6 +611,56 @@ export default function PersonalInfromation() {
                                             />
                                         </div>
                                     </div>
+
+
+
+
+
+                                    {/* Job Title */}
+                                    <div className="sm:col-span-3">
+                                        <label className="block text-sm/6 font-medium text-gray-900">
+                                            Job Title
+                                        </label>
+                                        <div>
+                                            <Controller
+                                                name="job_title"
+                                                control={control}
+                                                render={({ field: { onChange, value, ref } }) => (
+                                                    <CreatableSelect
+                                                        ref={ref}
+                                                        options={[]}
+                                                        value={value ? { label: value, value: value } : null}
+                                                        onChange={(option: any) => onChange(option?.label)}
+                                                        placeholder="Search Your Job Title"
+                                                        isSearchable={true}
+                                                        className="basic-single"
+                                                        isClearable={true}
+                                                        classNamePrefix="select"
+                                                    />
+                                                )}
+                                            />
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    {/* About */}
+                                    <div className="sm:col-span-3">
+                                        <label htmlFor="references-testimonials" className="block text-sm/6 font-medium text-gray-900">
+                                            About You
+                                        </label>
+                                        <textarea
+                                            id="references-testimonials"
+                                            rows={3}
+                                            {...register('about')}
+                                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            placeholder="Discribe yourself"
+                                        ></textarea>
+                                    </div>
+
+
 
                                 </div>
 
