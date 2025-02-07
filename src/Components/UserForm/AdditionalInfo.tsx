@@ -89,7 +89,7 @@ export default function AdditionalInfo() {
         if (file) {
 
             // Check file type
-            if (!['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(file.type)) {
+            if (!['application/pdf'].includes(file.type)) {
                 toast.error('Invalid file type! Only PDF, DOC, and DOCX are allowed.');
                 return;
             }
@@ -288,7 +288,7 @@ export default function AdditionalInfo() {
                                             {/* Upload Resume */}
                                             <div className="">
                                                 <label htmlFor="upload-resume" className="block text-sm font-medium text-gray-900">
-                                                    Upload Resume (PDF or DOC format)
+                                                    Upload Resume (PDF)
                                                 </label>
                                                 <div className="flex items-center">
                                                     <input
@@ -305,7 +305,7 @@ export default function AdditionalInfo() {
 
 
                                             {
-                                                data[0]?.resume && (
+                                                data[0]?.employee_resume && (
 
                                                     <div>
 
@@ -319,7 +319,7 @@ export default function AdditionalInfo() {
                                                         </button>
 
                                                         <ResumeViewer
-                                                            resumeUrl={data[0]?.resume}
+                                                            resumeUrl={data[0]?.employee_resume}
                                                             isOpen={!!isModalOpen}
                                                             onRequestClose={() => setModalOpen(false)}
                                                         />
