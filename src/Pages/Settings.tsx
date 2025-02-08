@@ -16,6 +16,11 @@ import AdditionalInfo from "@/Components/UserForm/AdditionalInfo";
 export default function Settings() {
 
 
+
+  // Scroll to top when page is loaded
+  window.scrollTo({ top: 0, behavior: 'smooth', });
+
+
   return (
 
     <>
@@ -62,7 +67,6 @@ export default function Settings() {
 
             {/* Additional Information */}
             <AdditionalInfo />
-
 
 
           </div>

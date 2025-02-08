@@ -195,6 +195,7 @@ export default function PersonalInfromation() {
         appendIfNotEmpty("postal_code", info.postal_code);
         appendIfNotEmpty("portfolio", info.portfolio);
         appendIfNotEmpty("about", info.about);
+        appendIfNotEmpty("job_title", info.job_title);
         appendIfNotEmpty("available_working_periods_start_date", info.available_working_periods_start_date);
         appendIfNotEmpty("available_working_periods_end_date", info.available_working_periods_end_date);
         

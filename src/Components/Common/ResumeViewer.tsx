@@ -8,6 +8,8 @@ interface ResumeViewerProps {
 }
 
 const ResumeViewer: React.FC<ResumeViewerProps> = ({ resumeUrl, isOpen, onRequestClose }) => {
+
+    
     const [iframeError, setIframeError] = useState(false);
 
     if (!isOpen || !resumeUrl) return null;

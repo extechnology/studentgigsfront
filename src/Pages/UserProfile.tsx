@@ -1,9 +1,10 @@
-import { Ban, BriefcaseBusiness, Building2, GraduationCap, GraduationCapIcon, Laptop, Medal, Settings, Smile } from "lucide-react";
+import { Ban, BriefcaseBusiness, Building2, CirclePlusIcon, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import PersonalInfoLoader from "@/Components/Common/PersonalInfoLoader";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/Components/ui/button";
 
 
 
@@ -144,6 +145,11 @@ export default function UserProfile() {
     }, [data])
 
 
+
+    // Scroll to top when page is loaded
+    window.scrollTo({ top: 0, behavior: 'smooth', });
+
+
     return (
 
 
@@ -230,18 +236,19 @@ export default function UserProfile() {
                                     <section className="grid grid-cols-1 md:grid-cols-2 gap-9 px-2 sm:px-10">
 
 
+                                        {/* About */}
                                         <div className="pt-10">
 
                                             <div className=" ">
 
-                                                {/* User Name */}
+
                                                 <h3 className="text-2xl  font-semibold capitalize text-gray-900 pb-5">
                                                     About Me
                                                 </h3>
 
                                                 {/* About User */}
                                                 <p className="text-md sm:text-[1.1rem] font-[1rem] text-gray-500 leading-relaxed text-justify">
-                                                    {UserData?.about? UserData?.about : "Add about yourself"}
+                                                    {UserData?.about ? UserData?.about : <Link to={'/settings'}> <Button>Add About <CirclePlusIcon /></Button> </Link>}
                                                 </p>
 
                                             </div>
@@ -250,12 +257,10 @@ export default function UserProfile() {
 
 
 
-
+                                        {/* Personal Details */}
                                         <div className="md:p-4">
 
-                                            {/* Personal Details */}
                                             <div className="max-w-full md:max-w-2xl mx-auto">
-
 
                                                 <div className="shadow-sm bg-gray-50 rounded-lg p-4 md:p-6">
 
@@ -263,12 +268,13 @@ export default function UserProfile() {
                                                         Personal Details:
                                                     </h1>
 
-
                                                     <table className="w-full text-sm text-left text-gray-600 font-semibold">
 
 
                                                         <tbody>
+
                                                             <tr className="border-b">
+
                                                                 <th
                                                                     scope="row"
                                                                     className="px-4 py-2 font-medium whitespace-nowrap text-start block md:table-cell"
@@ -277,9 +283,11 @@ export default function UserProfile() {
                                                                     Email:
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
-                                                                    {UserData?.email? UserData?.email : "None"}
+                                                                    {UserData?.email ? UserData?.email : "None"}
                                                                 </td>
                                                             </tr>
+
+
                                                             <tr className="border-b">
                                                                 <th
                                                                     scope="row"
@@ -291,6 +299,8 @@ export default function UserProfile() {
                                                                     {UserData?.phone ? UserData?.phone : "None"}
                                                                 </td>
                                                             </tr>
+
+
                                                             <tr className="border-b">
                                                                 <th
                                                                     scope="row"
@@ -300,9 +310,17 @@ export default function UserProfile() {
                                                                     Current Address:
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
-                                                                    {UserData?.street_address } , {UserData?.city} , {UserData?.state} , {UserData?.postal_code}
+
+                                                                    {UserData?.street_address || UserData?.city || UserData?.state || UserData?.postal_code ? (
+                                                                        <>
+                                                                            {UserData?.street_address}, {UserData?.city}, {UserData?.state}, {UserData?.postal_code}
+                                                                        </>
+                                                                    ) : "None"}
+
                                                                 </td>
                                                             </tr>
+
+
                                                             <tr className="border-b">
                                                                 <th
                                                                     scope="row"
@@ -315,6 +333,8 @@ export default function UserProfile() {
                                                                     {UserData?.preferred_work_location ? UserData?.preferred_work_location : "None"}
                                                                 </td>
                                                             </tr>
+
+
                                                             <tr className="border-b">
                                                                 <th
                                                                     scope="row"
@@ -324,9 +344,11 @@ export default function UserProfile() {
                                                                     Work Hours:
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
-                                                                    {UserData?.available_work_hours ? UserData?.available_work_hours : "None"} Hr
+                                                                    {UserData?.available_work_hours ? ` ${UserData?.available_work_hours} Hrs` : "None"}
                                                                 </td>
                                                             </tr>
+
+
                                                             <tr className="border-b">
                                                                 <th
                                                                     scope="row"
@@ -347,26 +369,31 @@ export default function UserProfile() {
 
                                                                     }
 
-
                                                                 </td>
-
                                                             </tr>
+
+
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
+
+
                                     </section>
 
 
 
                                     {/* Skills */}
                                     <section className="w-full py-4 px-2 sm:px-10">
-                                        <h1 className="text-2xl pt-3 pb-5 pl-2 text-start font-semibold text-gray-900">
+
+                                        <h1 className="text-2xl pt-3 pb-5 pl-2 text-start font-semibold text-gray-900 flex items-center">
                                             Technical Skills <Laptop className="inline-block ml-2" size={28} />
                                         </h1>
 
                                         <div className="flex flex-wrap justify-start">
+
+
                                             {
 
                                                 UserData?.technical_skills && UserData?.technical_skills.length > 0 ?
@@ -384,6 +411,7 @@ export default function UserProfile() {
 
                                                         return (
                                                             <div key={index} className="w-full md:w-1/2 xl:w-1/3 mb-5 px-2">
+
                                                                 <div className="flex justify-between mb-1">
                                                                     <span className="text-base font-medium text-gray-400">
                                                                         {skill.technical_skill}
@@ -397,20 +425,21 @@ export default function UserProfile() {
                                                                         style={{ width: `${skillPercentage}%` }}
                                                                     ></div>
                                                                 </div>
+
                                                             </div>
                                                         );
                                                     })
 
                                                     :
 
-                                                    <div className="flex items-center justify-center h-40 w-full">
+                                                    <div className="flex flex-col items-center justify-center h-40 w-full gap-y-4">
                                                         <p className="text-gray-500 text-lg font-semibold flex items-center">No Technical Skills Found <Ban size={28} className="ml-2" /></p>
+                                                        <Link to={'/settings'}> <Button className="ml-3">Add Skills <CirclePlusIcon size={28} className="ml-2" /></Button></Link>
                                                     </div>
 
                                             }
-
-
                                         </div>
+
                                     </section>
 
 
@@ -418,8 +447,9 @@ export default function UserProfile() {
 
                                     {/* Soft Skills */}
                                     <section className="w-full py-10 px-2 sm:px-10">
-                                        <h1 className="text-2xl pt-3 pb-5 pl-2 text-start font-semibold text-gray-900">
-                                            Soft Skills <Smile className="inline-block ml-2" size={28} />
+
+                                        <h1 className="text-2xl pt-3 pb-5 pl-2 text-start font-semibold text-gray-900 flex items-center">
+                                            Soft Skills <Lightbulb className="inline-block ml-2" size={28} />
                                         </h1>
 
                                         <div className="flex flex-wrap gap-2">
@@ -430,19 +460,21 @@ export default function UserProfile() {
                                                     </span>
                                                 ))
                                             ) : (
-                                                <div className="flex items-center justify-center h-20 w-full">
+                                                <div className="flex flex-col gap-y-4 items-center justify-center h-20 w-full">
                                                     <p className="text-gray-500 text-lg font-semibold flex items-center">
                                                         No Soft Skills Found <Ban size={28} className="ml-2" />
                                                     </p>
+                                                    <Link to={'/settings'}> <Button className="ml-3">Add Skills <CirclePlusIcon size={28} className="ml-2" /></Button></Link>
                                                 </div>
                                             )}
                                         </div>
+
                                     </section>
 
 
 
                                     {/* Experience */}
-                                    <section className="w-full pb-8 sm:px-10 px-2">
+                                    <section className="w-full pb-8 sm:px-10 px-2 py-10">
 
                                         <h1 className="text-2xl py-3 pl-2 text-start font-semibold text-gray-900 flex items-center">
                                             Experience <BriefcaseBusiness size={28} className="ml-2" />
@@ -456,8 +488,8 @@ export default function UserProfile() {
                                                         <div className="flex gap-5" key={index}>
                                                             <div>
                                                                 <img
-                                                                    className="w-14 h-14"
-                                                                    src="https://jobstack-shreethemes.vercel.app/static/media/lenovo-logo.ad2ec171d6df96c88b9e.png"
+                                                                    className="w-14 h-14 object-cover rounded-full"
+                                                                    src="https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg"
                                                                     alt="company-logo"
                                                                     loading="lazy"
                                                                 />
@@ -482,8 +514,9 @@ export default function UserProfile() {
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <div className="flex items-center justify-center h-40 w-full">
+                                                <div className="flex items-center justify-center h-40 w-full flex-col gap-y-4">
                                                     <p className="text-gray-500 text-lg font-semibold flex items-center">No Experience Found <Ban size={28} className="ml-2" /></p>
+                                                    <Link to={'/settings'}> <Button className="ml-3">Add Experience <CirclePlusIcon size={28} className="ml-2" /></Button></Link>
                                                 </div>
                                             )
                                         }
@@ -563,16 +596,20 @@ export default function UserProfile() {
 
                                                             {/* Hover line indicator */}
                                                             <div className="absolute left-0 top-0 h-full w-0.5 bg-blue-500 opacity-100 transition-all duration-200" />
+
                                                         </motion.div>
                                                     ))}
                                                 </div>
 
                                                 :
 
-                                                <div className="flex items-center justify-center h-40">
+                                                <div className="flex items-center justify-center h-40 flex-col gap-y-4">
                                                     <p className="text-gray-500 text-lg font-semibold flex items-center">No educational qualifications found <Ban size={28} className="ml-2" /></p>
+                                                    <Link to={'/settings'}> <Button className="ml-3">Add Education<CirclePlusIcon size={28} className="ml-2" /></Button></Link>
                                                 </div>
+
                                             }
+
                                         </AnimatePresence>
 
                                     </div>
