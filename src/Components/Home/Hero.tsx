@@ -4,6 +4,7 @@ import 'swiper/swiper-bundle.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { Telescope } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
 
@@ -30,18 +31,23 @@ const Hero = () => {
   return (
 
 
-    
     <main className="w-full h-screen">
+
 
       <div className='pt-0 sm:pt-0 h-[100vh]'>
 
+
+
         <div className="relative w-full h-full">
+
+
 
           <div className="absolute inset-0">
 
 
             {/* Slider */}
             <div className="relative w-full h-[105%]">
+
               <Swiper
                 modules={[Autoplay, EffectFade]}
                 spaceBetween={0}
@@ -54,24 +60,28 @@ const Hero = () => {
                 onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
                 className="w-full h-full"
               >
+
                 {slides.map((slide, index) => (
 
                   <SwiperSlide key={index}>
 
                     <div className="relative w-full h-full">
+
                       <img
                         src={slide.image}
                         alt={`Slide ${index + 1}`}
                         loading='lazy'
                         className="w-full h-full object-cover"
                       />
+
                       <div className="absolute inset-0 bg-black/40" />
 
                       <AnimatePresence mode="wait">
 
                         {activeIndex === index && (
 
-                          <div className="absolute sm:top-64 sm:left-16 top-56 left-5  text-white">
+                          // display text
+                          <div className="absolute sm:top-72 sm:left-16 top-56 left-5  text-white">
 
                             <motion.h1
                               initial={{ opacity: 0, y: 20 }}
@@ -100,16 +110,24 @@ const Hero = () => {
                               transition={{ duration: 0.5, delay: 0.4 }}
                               className="mt-8 px-8 py-3 flex justify-center items-center bg-orange-500 text-white rounded-md font-semibold hover:bg-orange-600 transition-colors"
                             >
-                              Explore <Telescope size={20} className="ml-2" />
+                              <Link to="/jobfilter" className='flex items-center'> Explore <Telescope size={20} className="ml-2" /></Link>
                             </motion.button>
 
-
                           </div>
+
                         )}
                       </AnimatePresence>
+
+
                     </div>
+
+
                   </SwiperSlide>
+
+
                 ))}
+
+
               </Swiper>
 
               {/* Slider dots */}

@@ -165,7 +165,7 @@ export default function Experience() {
                             ))}
                         </div>
 
-                        <div className="mt-6 flex items-center justify-start gap-x-6">
+                        <div className="mt-6 flex items-center justify-end gap-x-6">
                             <div className="h-10 w-20 bg-gray-200 rounded-full"></div>
                             <div className="h-10 w-24 bg-gray-200 rounded-full"></div>
                         </div>
