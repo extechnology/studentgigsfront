@@ -145,7 +145,7 @@ export default function Education() {
         formdata.append("academic_level", data.academic_level)
         formdata.append("field_of_study", data.field_of_study)
         formdata.append("expected_graduation_year", data.expected_graduation_year)
-        formdata.append("achievement_name", data.achievement_name)
+        formdata.append("achievement_name", data.achievement_name ? data.achievement_name : '')
         formdata.append("name_of_institution", data.name_of_institution)
 
 
@@ -405,7 +405,6 @@ export default function Education() {
                                                 <Controller
                                                     name="achievement_name"
                                                     control={control}
-                                                    rules={{ required: "This field is required" }}
                                                     render={({ field }) => (
                                                         <CreatableSelect
                                                             {...field}
@@ -435,11 +434,7 @@ export default function Education() {
                                                     )}
                                                 />
                                             </div>
-                                            {errors.achievement_name && (
-                                                <span className="text-sm text-red-500">
-                                                    {errors.achievement_name.message}
-                                                </span>
-                                            )}
+
                                         </div>
 
                                     </div>
@@ -488,7 +483,7 @@ export default function Education() {
                                                                 {/* Left Column - Year */}
                                                                 <div className="sm:w-24 pt-1">
                                                                     <span className="text-sm sm:text-md font-medium text-gray-500">
-                                                                        {item.expected_graduation_year}
+                                                                        {item?.expected_graduation_year}
                                                                     </span>
                                                                 </div>
 
@@ -498,9 +493,9 @@ export default function Education() {
                                                                         <div className="flex items-center gap-2">
                                                                             <GraduationCap className="h-5 w-8 sm:h-5 sm:w-5 text-blue-500" />
                                                                             <h3 className="text-base sm:text-lg font-semibold text-gray-900">
-                                                                                {item.name_of_institution}
+                                                                                {item?.name_of_institution}
                                                                                 <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs sm:text-sm font-semibold text-blue-700 ms-2">
-                                                                                    {item.academic_level}
+                                                                                    {item?.academic_level}
                                                                                 </span>
                                                                             </h3>
                                                                         </div>
@@ -509,18 +504,29 @@ export default function Education() {
                                                                     <div className="space-y-2">
                                                                         <div className="flex items-center gap-2 text-gray-600">
                                                                             <Building2 className="h-4 w-4" />
-                                                                            <span className="text-xs sm:text-sm">{item.field_of_study}</span>
+                                                                            <span className="text-xs sm:text-sm">{item?.field_of_study}</span>
                                                                         </div>
 
-                                                                        {item.achievement_name && (
+                                                                        {item?.achievement_name ?
+
                                                                             <div className="flex items-start gap-2 text-gray-600">
                                                                                 <Medal className="h-4 w-4 mt-0.5 text-yellow-500" />
                                                                                 <span className="text-xs sm:text-sm">
-                                                                                    {item.achievement_name.replace(/,/g, ', ')}
+                                                                                    {item?.achievement_name.replace(/,/g, ', ')}
                                                                                 </span>
                                                                             </div>
 
-                                                                        )}
+                                                                            :
+
+                                                                            <div className="flex items-start gap-2 text-gray-600">
+                                                                                <Medal className="h-4 w-4 mt-0.5 text-yellow-500" />
+                                                                                <span className="text-xs sm:text-sm">
+                                                                                    none
+                                                                                </span>
+                                                                            </div>
+
+                                                                        }
+
                                                                     </div>
 
 
@@ -547,7 +553,7 @@ export default function Education() {
                                             </div>
                                         )}
                                     </AnimatePresence>
-                                    
+
                                 </div>
 
 
