@@ -1,7 +1,7 @@
-import Hero from "@/Components/Home/Hero"
-import TrendingJobs from "@/Components/Home/TrendingJobs"
-import PopluarJobs from "@/Components/Home/PopluarJobs"
-import About from "@/Components/Home/About"
+import Hero from "@/Components/Home/Hero";
+import TrendingJobs from "@/Components/Home/TrendingJobs";
+import PopluarJobs from "@/Components/Home/PopluarJobs";
+import About from "@/Components/Home/About";
 import { useGoogleOneTapLogin, CredentialResponse } from '@react-oauth/google';
 import { useAuth } from "@/Context/AuthContext";
 import { GoogleAuth } from "@/Hooks/UserLogin";
@@ -15,8 +15,9 @@ export default function Landing() {
   const { mutate: mutateGoogleLogin } = GoogleAuth();
 
 
-  // context auth
-  const { login } = useAuth();
+
+  // Context auth
+  const { login, isAuthenticated } = useAuth();
 
 
 
@@ -28,12 +29,13 @@ export default function Landing() {
 
 
 
-  // One Tap Login
+  //Only call the hook at the top level
   useGoogleOneTapLogin({
-
 
     onSuccess: async (credentialResponse: CredentialResponse) => {
 
+
+      if (isAuthenticated) return; // Prevent duplicate logins
 
       try {
 
@@ -43,20 +45,23 @@ export default function Landing() {
           return;
         }
 
-        // Instead of fetching user info, decode the JWT token
+
         const token = credentialResponse.credential;
-        const tokenParts = token.split('.');
+        const tokenParts = token.split(".");
+
+
         if (tokenParts.length !== 3) {
           toast.error("Invalid token received");
           return;
         }
 
+
         const payload = JSON.parse(atob(tokenParts[1]));
+
 
         const formdata = new FormData();
         formdata.append("username", payload.name);
         formdata.append("email", payload.email);
-
 
 
         mutateGoogleLogin(formdata, {
@@ -76,42 +81,55 @@ export default function Landing() {
             }
 
           },
+
           onError: (error) => {
 
             console.error("Login mutation error:", error);
             toast.error("Login failed. Please try again.");
 
-          }
+          },
 
         })
 
       } catch (error) {
+
         console.error("One Tap login error:", error);
         toast.error("Login failed. Please try again.");
+
       }
     },
-
     onError: () => {
-      console.error("Google One Tap login failed");
-      toast.error("Google One Tap Login Failed. Please try again.");
-    },
 
+      console.error("Google One Tap login failed");
+      toast.error("Google One Tap Login Failed. Please try again.")
+
+    },
     cancel_on_tap_outside: false,
-    prompt_parent_id: "oneTap"
+    prompt_parent_id: "oneTap",
 
   })
 
-
-
   return (
+
     <>
-      <div id="oneTap" /> {/* Container for One Tap prompt */}
+
       <main className="w-full h-full">
+
+        {/* Hero */}
         <div><Hero /></div>
+
+        {/* Trending Jobs */}
         <div><TrendingJobs /></div>
+
+        {/* Popluar Jobs */}
         <div><PopluarJobs /></div>
+
+        {/* About */}
         <div><About /></div>
+
       </main>
+
+      
     </>
   );
 }

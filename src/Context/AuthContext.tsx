@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+
+
 // Context Type
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -7,8 +9,12 @@ interface AuthContextType {
     logout: () => void;
 }
 
+
+
 // Context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+
 
 // Helper function to check if token is valid
 const checkAuth = (): boolean => {
@@ -23,17 +29,40 @@ const checkAuth = (): boolean => {
     }
 };
 
+
+
 // Provider
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    // ✅ Initialize authentication state with checkAuth()
+
+
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(checkAuth());
 
-    // ✅ Ensure state updates on changes (optional, but useful if token is removed)
+
+
+    //Update `isAuthenticated` when localStorage changes (real-time)
     useEffect(() => {
+
+
         const syncAuth = () => setIsAuthenticated(checkAuth());
-        window.addEventListener("storage", syncAuth); // Listen for token changes in localStorage
-        return () => window.removeEventListener("storage", syncAuth);
+
+        window.addEventListener("storage", syncAuth);
+
+        // Also update state whenever localStorage changes inside the same tab
+        const originalSetItem = localStorage.setItem;
+        localStorage.setItem = function (key, value) {
+            originalSetItem.call(this, key, value);
+            if (key === "token") syncAuth(); // Update state immediately when token is set
+        };
+
+        return () => {
+            window.removeEventListener("storage", syncAuth);
+            localStorage.setItem = originalSetItem; // Reset original behavior on unmount
+        };
+
+
     }, []);
+
+
 
     // Login
     const login = (token: string) => {
@@ -41,18 +70,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setIsAuthenticated(true);
     };
 
+
+
     // Logout
     const logout = () => {
         localStorage.removeItem("token");
         setIsAuthenticated(false);
     };
 
+
+
     return (
         <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
+
+
 };
+
+
 
 // Custom hook to use auth context
 export const useAuth = () => {
