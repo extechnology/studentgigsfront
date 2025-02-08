@@ -1,4 +1,4 @@
-import { Ban, BriefcaseBusiness, Building2, Circle, CirclePlus, CirclePlusIcon, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Plus, Settings, Smile } from "lucide-react";
+import { Ban, BriefcaseBusiness, Building2, CirclePlusIcon, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import PersonalInfoLoader from "@/Components/Common/PersonalInfoLoader";

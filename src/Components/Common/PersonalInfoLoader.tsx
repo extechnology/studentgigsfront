@@ -1,4 +1,3 @@
-import { Smile } from "lucide-react";
 
 
 export default function PersonalInfoLoader() {
