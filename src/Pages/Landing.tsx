@@ -104,6 +104,7 @@ export default function Landing() {
       toast.error("Google One Tap Login Failed. Please try again.")
 
     },
+    disabled: isAuthenticated,
     cancel_on_tap_outside: false,
     prompt_parent_id: "oneTap",
 
