@@ -1,10 +1,12 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { RegisterUser, LoginUser, GoogleLogin } from "@/Service/AllApi"
 
 
 
 // Register User 
 export const UserRegister = () => {
+
+    const queryclient = useQueryClient();
 
     return useMutation({
 
@@ -23,7 +25,16 @@ export const UserRegister = () => {
 
             }
 
-        }
+        },
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
+
+        },
+        onError: (error) => {
+            console.error("Failed to Resister User:", error);
+            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
+        },
 
 
     })
@@ -35,6 +46,8 @@ export const UserRegister = () => {
 
 // Login User 
 export const UserLogin = () => {
+
+    const queryclient = useQueryClient();
 
     return useMutation({
 
@@ -53,6 +66,15 @@ export const UserLogin = () => {
             }
 
         },
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
+
+        },
+        onError: (error) => {
+            console.error("Failed to Login User:", error);
+            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
+        },
 
     })
 
@@ -63,6 +85,8 @@ export const UserLogin = () => {
 
 // Google Auth
 export const GoogleAuth = () => {
+
+    const queryclient = useQueryClient();
 
     return useMutation({
 
@@ -80,6 +104,15 @@ export const GoogleAuth = () => {
 
             }
 
+        },
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
+
+        },
+        onError: (error) => {
+            console.error("Failed to Login User:", error);
+            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
         },
 
     })
