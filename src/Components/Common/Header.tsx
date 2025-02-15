@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import { Link, useLocation , useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Building, Contact, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
 import {
   Dialog,
@@ -16,6 +16,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import toast from "react-hot-toast";
 import { useAuth } from "@/Context/AuthContext";
+import { GetPersonalInfo } from "@/Hooks/UserProfile";
 
 
 export default function Header() {
@@ -23,6 +24,10 @@ export default function Header() {
 
   const Navigate = useNavigate()
 
+
+
+  // Get User Personal Information
+  const { data } = GetPersonalInfo()
 
 
   // Set Login and logout status
@@ -248,7 +253,7 @@ export default function Header() {
                   className={`flex items-center gap-x-1 text-sm/6 font-semibold text-gray-400 ${color ? "text-white" : ""}`}
                 >
                   <img
-                    src="https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg?s=612x612&w=0&k=20&c=tyLvtzutRh22j9GqSGI33Z4HpIwv9vL_MZw_xOE19NQ="
+                    src={data[0]?.profile?.profile_img ? data[0]?.profile?.profile_img : "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"}
                     loading="lazy"
                     alt="User profile"
                     className="w-[30px] h-[30px] rounded-full object-cover"

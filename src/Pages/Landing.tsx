@@ -6,7 +6,7 @@ import { useGoogleOneTapLogin, CredentialResponse } from '@react-oauth/google';
 import { useAuth } from "@/Context/AuthContext";
 import { GoogleAuth } from "@/Hooks/UserLogin";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Landing() {
 
@@ -29,85 +29,119 @@ export default function Landing() {
 
 
 
-  //Only call the hook at the top level
-  useGoogleOneTapLogin({
+  // Track if the popup has been shown using localStorage
+  const [hasShownPopup, setHasShownPopup] = useState(() => {
 
-    onSuccess: async (credentialResponse: CredentialResponse) => {
+    return localStorage.getItem('hasShownGooglePopup') === 'true';
 
-      if (isAuthenticated) return; 
-
-      try {
+  });
 
 
-        if (!credentialResponse.credential) {
-          toast.error("Login failed - no credentials received");
-          return;
-        }
+
+  // Function to mark popup as shown
+  const markPopupAsShown = () => {
+    setHasShownPopup(true);
+    localStorage.setItem('hasShownGooglePopup', 'true');
+  };
 
 
-        const token = credentialResponse.credential;
-        const tokenParts = token.split(".");
+
+  // Function to reset popup state
+  const resetPopupState = () => {
+    setHasShownPopup(false);
+    localStorage.removeItem('hasShownGooglePopup');
+  };
 
 
-        if (tokenParts.length !== 3) {
-          toast.error("Invalid token received");
-          return;
-        }
 
 
-        const payload = JSON.parse(atob(tokenParts[1]));
+  // Handle successful login
+  const handleLoginSuccess = async (credentialResponse: CredentialResponse) => {
 
 
-        const formdata = new FormData();
-        formdata.append("username", payload.name);
-        formdata.append("email", payload.email);
+    if (isAuthenticated) return;
+
+    try {
 
 
-        mutateGoogleLogin(formdata, {
+      if (!credentialResponse.credential) {
+        toast.error("Login failed - no credentials received");
+        return;
+      }
 
-          onSuccess: (response) => {
+      const token = credentialResponse.credential;
+      const tokenParts = token.split(".");
 
-            if (response.status >= 200 && response.status <= 300) {
+      if (tokenParts.length !== 3) {
+        toast.error("Invalid token received");
+        return;
+      }
 
-              login(response.data.access);
-              toast.success("Login Successful!");
+      const payload = JSON.parse(atob(tokenParts[1]));
 
-            } else {
+      const formdata = new FormData();
+      formdata.append("username", payload.name);
+      formdata.append("email", payload.email);
 
-              console.error("Login failed:", response);
-              toast.error("Login failed. Please try again.");
+      mutateGoogleLogin(formdata, {
 
-            }
+        onSuccess: (response) => {
 
-          },
+          if (response.status >= 200 && response.status <= 300) {
 
-          onError: (error) => {
+            login(response.data.access);
+            toast.success("Login Successful!");
+            markPopupAsShown();
 
-            console.error("Login mutation error:", error);
+          } else {
+
+            console.error("Login failed:", response);
             toast.error("Login failed. Please try again.");
 
-          },
+          }
 
-        })
+        },
+        onError: (error) => {
 
-      } catch (error) {
+          console.error("Login mutation error:", error);
+          toast.error("Login failed. Please try again.");
 
-        console.error("One Tap login error:", error);
-        toast.error("Login failed. Please try again.");
+        },
+      });
 
-      }
-    },
+    } catch (error) {
+
+      console.error("One Tap login error:", error);
+      toast.error("Login failed. Please try again.");
+
+    }
+  }
+
+
+
+  // Reset popup state when user logs out
+  useEffect(() => {
+    if (!isAuthenticated) {
+      resetPopupState();
+    }
+  }, [isAuthenticated]);
+
+
+
+
+  // Initialize Google One Tap
+  useGoogleOneTapLogin({
+    onSuccess: handleLoginSuccess,
     onError: () => {
-
       console.error("Google One Tap login failed");
-      toast.error("Google One Tap Login Failed. Please try again.")
-
+      toast.error("Google One Tap Login Failed. Please try again.");
+      markPopupAsShown(); // Mark popup as shown even on error
     },
-    
     cancel_on_tap_outside: false,
-    prompt_parent_id: "oneTap",
+    prompt_parent_id: 'oneTap',
+    disabled: isAuthenticated || hasShownPopup,
+  });
 
-  })
 
   return (
 
@@ -129,7 +163,7 @@ export default function Landing() {
 
       </main>
 
-      
+
     </>
   );
 }

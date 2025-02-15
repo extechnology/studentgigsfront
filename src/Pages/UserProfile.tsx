@@ -158,10 +158,10 @@ export default function UserProfile() {
             <main className="pt-20 sm:pt-12">
 
 
-                <div className="container">
+                <div className="">
 
 
-                    <div className=" w-full m-auto px-1 sm:px-16">
+                    <div className=" w-full m-auto px-1 sm:px-16 md:px-5 lg:px-14">
 
                         {
 
@@ -180,7 +180,7 @@ export default function UserProfile() {
 
 
                                         {/* Banner Image */}
-                                        <div className="relative group h-[25vh] md:h-[25vh] lg:h-[45vh] rounded-lg  md:rounded-2xl lg:rounded-3xl ">
+                                        <div className="relative group h-[20vh] md:h-[25vh] lg:h-[40vh] rounded-lg  md:rounded-2xl lg:rounded-3xl">
                                             <img
                                                 src={UserData?.profile?.cover_img || "https://www.paxus.com.au/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbk1HIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0725fc0328bc750a0fcc18a18ffde9bcca5b8dff/img-placeholder.jpg"}
                                                 alt="banner"
@@ -193,9 +193,9 @@ export default function UserProfile() {
 
 
                                         {/* Profile Image */}
-                                        <div className="flex justify-between -mt-6 sm:-mt-10 sm:ms-8 sm:me-10 ms-2">
+                                        <div className="flex justify-between -mt-7 sm:-mt-10 sm:ms-8 sm:me-10 ms-2">
 
-                                            <div className="flex justify-between space-x-4">
+                                            <div className="flex justify-between space-x-2">
 
                                                 <div className="flex items-center gap-4">
                                                     <div className="relative group">
@@ -206,12 +206,11 @@ export default function UserProfile() {
                                                                 loading="lazy"
                                                                 className="w-full h-full rounded-full object-cover border-4 border-white shadow-lg"
                                                             />
-
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div className="md:pt-12 pt-10">
+                                                <div className="md:pt-12 pt-9">
                                                     <h1 className="font-semibold text-md md:text-lg">{UserData?.name}</h1>
                                                     <p className="font-[1rem] text-md md:text-lg text-gray-400">
                                                         {UserData?.job_title}
@@ -233,7 +232,7 @@ export default function UserProfile() {
 
 
 
-                                    <section className="grid grid-cols-1 md:grid-cols-2 gap-9 px-2 sm:px-10">
+                                    <section className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-9 px-2 sm:px-10">
 
 
                                         {/* About */}
@@ -256,11 +255,10 @@ export default function UserProfile() {
                                         </div>
 
 
-
                                         {/* Personal Details */}
                                         <div className="md:p-4">
 
-                                            <div className="max-w-full md:max-w-2xl mx-auto">
+                                            <div className="max-w-full md:w-full lg:max-w-2xl mx-auto">
 
                                                 <div className="shadow-sm bg-gray-50 rounded-lg p-4 md:p-6">
 

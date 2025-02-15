@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { GetUniversityList, GetFeildOfStudy  , GetJobList} from "@/Service/AllApi";
+import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider } from "@/Service/AllApi";
 
 
 
@@ -86,6 +86,38 @@ export const JObList = () => {
                 const headers = { Authorization: `Bearer ${token}` }
 
                 const Response = await GetJobList(headers)
+
+                return Response.data
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        staleTime: 1000 * 60 * 10,
+
+    })
+
+}
+
+
+
+
+
+// Get Home Slider
+export const HomeSlider = () => {
+
+    return useQuery({
+
+        queryKey: ["HomeSlider"],
+
+        queryFn: async () => {
+
+            try {
+
+                const Response = await GetHomeSlider()
 
                 return Response.data
 
