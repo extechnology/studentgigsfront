@@ -316,3 +316,13 @@ export const EditUserAdditionalInfo = async (data: any, header: object, id: stri
     return await CommonApi("PUT", `${Base_Url}/employee-additional-information/?${params.toString()}`, data, header)
 
 }
+
+
+
+
+// Get Home Slider
+export const GetHomeSlider = async () => {
+
+    return await CommonApi("GET", `${Base_Url}/home-slider-employee/`, "", "")
+
+}
