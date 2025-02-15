@@ -1,65 +1,95 @@
 import { Briefcase, BriefcaseBusiness, Calendar1, IndianRupee, MapPin, MousePointerClick } from "lucide-react";
 import { Link } from "react-router-dom";
+import { PostedJobList } from '@/Hooks/JobHook';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+
+
+type Country = {
+    value: string;
+    label: string;
+    flag: string;
+};
+
+type Company = {
+    id: number;
+    company_name: string;
+    company_info: string;
+    logo: string;
+    email: string;
+    phone_number: string;
+    street_address: string;
+    city: string;
+    state: string;
+    postal_code: string;
+    country: Country;
+    user: number;
+};
+
+type Job = {
+    id: number;
+    company: Company;
+    job_title: string;
+    job_description: string;
+    category: string;
+    age_requirement_min: number;
+    age_requirement_max: number;
+    preferred_academic_courses: string;
+    pay_structure: string;
+    salary_type: string;
+    job_location: string;
+    posted_date: string;
+    job_type: string;
+    street_address: string;
+    city: string;
+    state: string;
+    postal_code: string;
+    country: string;
+
+};
+
+
 
 
 export default function JobDeatils() {
 
 
+    // Get Job ID
+    const { id } = useParams<{ id: string }>();
+
+
+
+    // Get Jobs
+    const { data, isLoading, isFetching, isError } = PostedJobList();
+
+
+
+    // TO Set job details
+    const [jobDetails, setJobDetails] = useState<Job | null>(null);
+
+
+
+    // Filter and set job details
+    useEffect(() => {
+
+        if (data?.jobs.length > 0 && id) {
+
+            const matchingJob = data?.jobs?.find((job: Job) => job.id.toString() === id);
+
+            if (matchingJob) {
+
+                setJobDetails(matchingJob);
+
+            }
+        }
+
+    }, [data, id]);
+
+
+
     // Scroll to top when page is loaded
     window.scrollTo({ top: 0, behavior: 'smooth', });
-
-
-    const content = `
-  At ANZ, we're applying new ways technology and data can be harnessed as we work towards a common goal: to improve the financial wellbeing and sustainability of our millions of customers.
-
-  Our community of over 5,000 engineers is key to making this happen, because technology underpins every part of our business - from delivering tools, apps and services for our customers, to building a bank for the future.
-
-  About the Role
-
-  As a Frontend Android Engineer in our Customer Digital Experience Tribe (CDX), you’ll play a key role in designing, developing and delivering best of the industry Android application experience. Ability to digest complex orchestration of numerous systems while adhering to stringent performance guidelines.
-
-  The role is in an engineering ecosystem where doing the right thing with the highest quality is the norm. The role demands out of the box thinking, mentoring and more over being a great team player.
-
-  Banking is changing and we’re changing with it, giving our people great opportunities to try new things, learn and grow. Whatever your role at ANZ, you’ll be building your future, while helping to build ours.
-`;
-
-
-
-    const qualifications = {
-        Education: [
-            "Bachelor’s degree",
-        ],
-        TechnicalSkills: [
-            "Proficiency in one or more programming languages (e.g., Java, Python, C#, JavaScript).",
-            "Familiarity with software development tools and environments (e.g., IDEs, version control systems).",
-            "Basic understanding of algorithms, data structures, and object-oriented programming.",
-            "Experience with databases (SQL or NoSQL) and web technologies (HTML, CSS, JavaScript) is a plus.",
-        ],
-        SoftSkills: [
-            "Strong problem-solving skills and attention to detail.",
-            "Ability to work effectively in a team environment.",
-            "Good communication skills, both written and verbal.",
-            "Eagerness to learn and adapt to new technologies.",
-        ],
-    };
-
-
-
-    const skills = {
-        Technical: [
-            "Java",
-            "Python",
-            "C#",
-            "JavaScript",
-            "SQL",
-            "NoSQL",
-            "HTML",
-            "CSS",
-            "React",
-            "Version Control (Git)",
-            "Object-Oriented Programming",
-        ]
-    };
 
 
     return (
@@ -82,7 +112,7 @@ export default function JobDeatils() {
                             aria-hidden="true"
                         />
 
-                       
+
                         {/* Curved bottom edge */}
                         <div className="absolute bottom-0 left-0 right-0">
                             <svg
@@ -100,178 +130,246 @@ export default function JobDeatils() {
 
 
 
-                {/* Job Deatils */}
-                <div>
 
-                    <div className="-mt-14 flex flex-col sm:flex-row  md:p-8 p-5 justify-between w-[95%] md:w-3/4 m-auto border-2 shadow-sm bg-white rounded-lg relative top-[-40px] gap-5 sm:gap-0">
+                {
 
-
-                        {/* Profile Deatils */}
-                        <div className="flex items-center gap-4">
-
-                            <div>
-                                <img
-                                    src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
-                                    alt="logo"
-                                    loading="lazy"
-                                    className=" md:w-[80px] w-[70px] shadow-lg rounded-lg p-2"
-                                />
-                            </div>
+                    isLoading || isFetching || isError ?    
 
 
-                            <div className="content-center pl-3">
+                        <div className="w-[95%] md:w-3/4 m-auto border-2 shadow-sm bg-white rounded-lg p-5 md:p-8 -mt-20 relative">
 
-                                <div className="flex flex-col sm:flex-row justify-between gap-2">
-
-                                    <h2 className="font-medium text-xl text-gray-500 me-3">Software Engineer</h2>
-
-                                    <span className="px-3 py-1 bg-emerald-200 text-gray-600 font-bold rounded-full text-sm me-3">
-                                        Full Time
-                                    </span>
-
-                                    <div className="flex items-center text-gray-600 text-md">
-
-                                        {/* <DollarSign size={16} className="text-emerald-500" /> */}
-
-                                        <span className="font-semibold">$30k - $50k</span>
+                            {/* Header Skeleton */}
+                            <div className="flex flex-col sm:flex-row justify-between items-center gap-5 sm:gap-0 animate-pulse ">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-[70px] md:w-[80px] h-[70px] md:h-[80px] bg-gray-300 rounded-full" />
+                                    <div className="space-y-2">
+                                        <div className="h-6 w-40 bg-gray-300 rounded" />
+                                        <div className="h-4 w-24 bg-gray-300 rounded" />
+                                        <div className="h-4 w-48 bg-gray-300 rounded" />
                                     </div>
-
                                 </div>
-
-                                <h2 className="font-bold text-md">Google</h2>
-
-                                <div className="flex gap-1">
-                                    <i className="fas fa-map-marker-alt pt-1 text-gray-700"></i>
-                                    <p className="text-gray-700">USA</p>
-                                </div>
-
+                                <div className="w-32 h-10 bg-gray-300 rounded-full" />
                             </div>
 
+                            {/* Job Description Skeleton */}
+                            <div className="mt-8 space-y-4 animate-pulse">
+                                <div className="h-6 w-56 bg-gray-300 rounded" />
+                                <div className="h-4 w-40 bg-gray-300 rounded" />
+                                <div className="h-4 w-48 bg-gray-300 rounded" />
+                                <div className="h-4 w-64 bg-gray-300 rounded" />
+                            </div>
+
+                            {/* Description Box Skeleton */}
+                            <div className="mt-8 p-5 bg-white rounded-lg animate-pulse">
+                                <div className="h-6 w-48 bg-gray-300 rounded mb-4" />
+                                <div className="h-4 w-full bg-gray-300 rounded mb-2" />
+                                <div className="h-4 w-3/4 bg-gray-300 rounded mb-2" />
+                                <div className="h-4 w-2/3 bg-gray-300 rounded mb-2" />
+                            </div>
                         </div>
 
+                        :
 
-                        {/* Apply Button */}
-                        <div className="sm:flex md:gap-4 items-end">
+                        <div>
+
+                            {/* Job Deatils */}
                             <div>
-                                <Link to={'/applyjob'}>
-                                    <button className="flex w-full justify-center items-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 text-white font-semibold px-5 py-2 rounded-full shadow-sm transition-transform transform hover:scale-105 duration-300 ease-in-out">
-                                        Apply <MousePointerClick size={20} className='ms-2' />
-                                    </button>
-                                </Link>
-                            </div>
-                        </div>
 
-                    </div>
+                                <div className="-mt-14 flex flex-col sm:flex-row  md:p-8 p-5 justify-between w-[95%] md:w-3/4 m-auto border-2 shadow-sm bg-white rounded-lg relative top-[-40px] gap-5 sm:gap-0">
 
 
-                </div>
+                                    {/* Profile Deatils */}
+                                    <div className="flex items-center gap-4">
+
+                                        <div>
+                                            <img
+                                                src={jobDetails?.company?.logo}
+                                                alt="logo"
+                                                loading="lazy"
+                                                className=" md:w-[80px] w-[70px] shadow-lg rounded-full"
+                                            />
+                                        </div>
 
 
+                                        <div className="content-center pl-3">
 
+                                            <div className="flex flex-col sm:flex-row justify-between gap-2">
 
-                {/* Full Job Discription */}
-                <div className="w-full px-3 sm:px-0 sm:w-3/4 m-auto ">
+                                                <h2 className="font-semibold text-xl text-gray-700 me-3">{jobDetails?.job_title}</h2>
 
-                    <div className="">
-
-
-
-                        <h1 className="text-2xl font-semibold text-gray-800 pb-5">
-                            Full Job Discription
-                        </h1>
-
-
-                        <p className="text-gray-800 font-bold mb-3 flex items-center"> <BriefcaseBusiness size={18} className="me-2 text-gray-600" />  Postion : <span className="font-semibold text-gray-500 ms-2">Software Engineer</span></p>
-
-
-                        <p className="text-gray-800 font-bold mb-3 flex items-center"><MapPin size={18} className="me-2 text-gray-600" /> Location  : <span className="font-semibold text-gray-500 ms-2">USA</span></p>
-
-
-                        <p className="text-gray-800 font-bold mb-3 flex items-center"> <Briefcase size={18} className="me-2 text-gray-600" /> Job Type  : <span className="font-semibold text-gray-500 ms-2">Full Time, Part Time</span></p>
-
-
-                        <p className="text-gray-800 font-bold mb-3 flex items-center"><Calendar1 className="me-2 text-gray-600" size={18} /> Experience: <span className="font-semibold text-gray-500 ms-2">2-5 years</span></p>
-
-
-                        <p className="text-gray-800 font-bold mb-3 flex items-center"> <IndianRupee size={18} className="me-2 text-gray-600" /> Pay: <span className="font-semibold text-gray-500 ms-2">₹15,000.00 - ₹25,000.00 per month</span></p>
-
-
-                        {/* About */}
-                        <div className="text-[1rem] text-gray-500 pb-2 text-justify mt-8">
-                            {content
-                                .trim()
-                                .split("\n\n")
-                                .map((paragraph, index) => (
-                                    <p key={index} className="mb-4">
-                                        {paragraph.trim()}
-                                    </p>
-                                ))}
-                        </div>
-
-
-                        {/* Qualification */}
-                        <div className="text-[1rem] text-gray-600 mt-8 space-y-6">
-
-                            {Object.entries(qualifications).map(([category, items], index) => (
-
-                                <div key={index}>
-
-                                    {/* Heading */}
-                                    <h3 className="text-lg font-bold text-gray-800 mb-2">{category.replace(/([A-Z])/g, ' $1').trim()}</h3>
-
-                                    {/* List of items */}
-                                    <ul className="list-disc ml-6">
-                                        {items.map((item, idx) => (
-                                            <li key={idx} className="mb-1">{item}</li>
-                                        ))}
-                                    </ul>
-
-                                </div>
-
-                            ))}
-
-
-                        </div>
-
-
-
-                        {/* Skills */}
-                        <div className=" py-5 rounded-lg  space-y-6">
-
-                            <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
-
-                                {Object.entries(skills).map(([category, skillsList], index) => (
-
-                                    <div key={index} className="bg-white p-4">
-
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-3">{category} Skills</h3>
-
-                                        <div className="flex flex-wrap gap-2">
-
-                                            {skillsList.map((skill, idx) => (
-                                                <span
-                                                    key={idx}
-                                                    className="px-3 py-1 bg-green-300 text--700 rounded-full text-sm font-medium shadow-sm"
-                                                >
-                                                    {skill}
+                                                <span className="px-3 py-1 bg-emerald-200 text-gray-600 font-bold rounded-full text-sm me-3">
+                                                    {jobDetails?.job_type}
                                                 </span>
-                                            ))}
+
+                                                <div className="flex items-center text-gray-600 text-md">
+
+                                                    <IndianRupee size={16} className="text-emerald-500" />
+
+                                                    <span className="font-semibold">{jobDetails?.pay_structure} - {jobDetails?.salary_type}</span>
+                                                </div>
+
+                                            </div>
+
+                                            <h2 className="font-bold text-md">{jobDetails?.company?.company_name}</h2>
+
+                                            <div className="flex gap-1">
+                                                <i className="fas fa-map-marker-alt pt-1 text-gray-700"></i>
+                                                <p className="text-gray-700">{jobDetails?.city && jobDetails?.state && jobDetails?.country && jobDetails?.postal_code
+                                                    ? `${jobDetails.city}, ${jobDetails.state}, ${jobDetails.country} ${jobDetails.postal_code}`
+                                                    : jobDetails?.company?.country.label}
+                                                </p>
+                                            </div>
 
                                         </div>
 
                                     </div>
 
-                                ))}
+
+                                    {/* Apply Button */}
+                                    <div className="sm:flex md:gap-4 items-end">
+                                        <div>
+                                            <Link to={'/applyjob'}>
+                                                <button className="flex w-full justify-center items-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 text-white font-semibold px-5 py-2 rounded-full shadow-sm transition-transform transform hover:scale-105 duration-300 ease-in-out">
+                                                    Apply <MousePointerClick size={20} className='ms-2' />
+                                                </button>
+                                            </Link>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+                            {/* Full Job Discription */}
+                            <div className="w-full px-3 sm:px-0 sm:w-3/4 m-auto ">
+
+                                <div className="">
+
+                                    <h1 className="text-2xl font-semibold text-gray-800 pb-5">
+                                        Full Job Discription
+                                    </h1>
+
+
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center"> <BriefcaseBusiness size={18} className="me-2 text-gray-600" />  Postion : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_title}</span></p>
+
+
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center"><MapPin size={18} className="me-2 text-gray-600" /> Location  : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.city && jobDetails?.state && jobDetails?.country && jobDetails?.postal_code
+                                        ? `${jobDetails.city}, ${jobDetails.state}, ${jobDetails.country} ${jobDetails.postal_code}`
+                                        : jobDetails?.company?.country.label}</span>
+
+                                    </p>
+
+
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center"> <Briefcase size={18} className="me-2 text-gray-600" /> Job Type  : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_type}</span></p>
+
+
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center"><Calendar1 className="me-2 text-gray-600" size={18} /> Age Preference <span className="font-semibold text-gray-500 ms-2">{jobDetails?.age_requirement_min}yr - {jobDetails?.age_requirement_max}yr</span></p>
+
+
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center"> <IndianRupee size={18} className="me-2 text-gray-600" /> Pay: <span className="font-semibold text-gray-500 ms-2">₹{jobDetails?.pay_structure} - {jobDetails?.salary_type}</span></p>
+
+
+                                    {/* About */}
+                                    <div className="w-full mx-auto bg-white rounded-lg pb-10 pt-5">
+                                        <style>
+                                            {`
+          .job-description-content {
+            color: #374151;
+            line-height: 1.6;
+          }
+
+          .job-description-content h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #111827;
+          }
+
+          .job-description-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1F2937;
+          }
+
+          .job-description-content h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #374151;
+          }
+
+          .job-description-content p {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+          }
+
+          .job-description-content .section {
+            margin-bottom: 2rem;
+          }
+
+          .job-description-content ul {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            margin-left: 1.5rem;
+          }
+
+          .job-description-content ul li {
+            list-style-type: disc;
+            list-style-position: outside;
+            padding-left: 0.5rem;
+            margin-bottom: 0.5rem;
+          }
+
+          .job-description-content ol {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            margin-left: 1.5rem;
+          }
+
+          .job-description-content ol li {
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 0.5rem;
+            margin-bottom: 0.5rem;
+          }
+
+          .job-description-content strong {
+            font-weight: 600;
+            color: #1F2937;
+          }
+
+          .job-description-content .keywords {
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            font-style: italic;
+            color: #6B7280;
+          }
+
+          .job-description-content div.section + div.section {
+            margin-top: 2rem;
+          }
+        `}
+                                        </style>
+                                        <div
+                                            className="job-description-content prose prose-lg max-w-none"
+                                            dangerouslySetInnerHTML={jobDetails?.job_description ? { __html: jobDetails.job_description } : undefined}
+                                        />
+                                    </div>
+
+                                </div>
 
                             </div>
 
                         </div>
 
-
-                    </div>
-
-                </div>
-
+                }
 
             </main>
 

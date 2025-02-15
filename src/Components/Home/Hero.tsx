@@ -23,7 +23,6 @@ interface Slide {
 const Hero = () => {
 
 
-
   const [activeIndex, setActiveIndex] = useState(0);
 
 

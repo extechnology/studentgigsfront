@@ -138,9 +138,9 @@ export default function Header() {
                   <span className="sr-only">Your Company</span>
                   <img
                     alt="nav-icon"
-                    src="/Nav-Logo.png"
+                    src="./Nav-Icon.png"
                     loading="lazy"
-                    className="sm:h-24 sm:w-56 h-16 w-36"
+                    className="sm:h-20 sm:w-52 h-12 w-32"
                   />
                 </Link>
               </div>
@@ -190,19 +190,19 @@ export default function Header() {
             <div className='flex justify-center items-center gap-x-1 mb-2 sm:hidden'>
 
               {/* Find Student Talents for mobile view */}
-              <Link to={'/findgigs'}>
+              <a href={'https://gigs.studentsgigs.com/findtalent'} target="_blank">
 
-                <button className={`bg-orange-500 text-white font-semibold text-xs px-5 py-2 flex items-center sm:hidden`}>
+                <button className={`bg-[#eb8125] text-white font-semibold text-xs px-5 py-2 flex items-center sm:hidden`}>
                   <GraduationCap size={16} /> Find Student Talents
                 </button>
 
-              </Link>
+              </a>
 
 
               {/* Explore Gigs */}
               <Link to={'/jobfilter'}>
 
-                <button className={` flex items-center gap-x-2 bg-blue-500 ms-2 text-white font-semibold text-xs px-5 py-2  sm:hidden`}>
+                <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-xs px-5 py-2  sm:hidden`}>
                   Explore Gigs <Telescope size={16} />
                 </button>
 
@@ -221,7 +221,7 @@ export default function Header() {
               {/* Explore Gigs */}
               <Link to={'/jobfilter'}>
 
-                <button className={` flex items-center gap-x-2 bg-blue-500 ms-2 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
                   Explore Gigs <Telescope size={24} />
                 </button>
 
@@ -229,13 +229,13 @@ export default function Header() {
 
 
               {/* Find Student Talents */}
-              <Link to={'/findgigs'}>
+              <a href={'https://gigs.studentsgigs.com/findtalent'} target="_blank">
 
-                <button className={`flex items-center gap-x-2 bg-orange-500 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                <button className={`flex items-center gap-x-2 bg-[#eb8125] text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
                   Find Student Talents <GraduationCap size={24} />
                 </button>
 
-              </Link>
+              </ a>
 
 
               {/* Home */}
@@ -419,9 +419,9 @@ export default function Header() {
                       <span className="sr-only">Your Company</span>
                       <img
                         alt="nav-icon"
-                        src="/Nav-Logo.png"
+                        src="./Nav-Icon.png"
                         loading="lazy"
-                        className="h-20 w-auto"
+                        className="h-16 w-auto"
                       />
                     </a>
 
