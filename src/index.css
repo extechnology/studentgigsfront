@@ -118,9 +118,4 @@ html {
 
 
 
-/* Force Google One Tap Popup Dark Mode */
-#credential_picker_container {
-  background: #1a1a1a !important; /* Dark background */
-  color: white !important; /* White text */
-}
 
