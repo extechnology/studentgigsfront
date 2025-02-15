@@ -1,16 +1,74 @@
 import { Briefcase, MapPin, Calendar, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
 import JobCard from '@/Components/Common/JobCard';
+import { PostedJobList } from '@/Hooks/JobHook';
+
+
+
+
+
+
+type Country = {
+    value: string;
+    label: string;
+    flag: string;
+};
+
+type Company = {
+    id: number;
+    company_name: string;
+    company_info: string;
+    logo: string;
+    email: string;
+    phone_number: string;
+    street_address: string;
+    city: string;
+    state: string;
+    postal_code: string;
+    country: Country;
+    user: number;
+};
+
+type Job = {
+    id: number;
+    company: Company;
+    job_title: string;
+    job_description: string;
+    category: string;
+    age_requirement_min: number;
+    age_requirement_max: number;
+    preferred_academic_courses: string;
+    pay_structure: string;
+    salary_type: string;
+    job_location: string;
+    posted_date: string;
+    job_type: string;
+    street_address: string;
+    city: string;
+    state: string;
+    postal_code: string;
+    country: string;
+};
+
+
+
+
 
 export default function JobFilter() {
+
+
+
+    // Get Jobs
+    const { data, isLoading, isFetching, isError } = PostedJobList()
 
 
     const [keyword, setKeyword] = useState('');
 
 
-
     // Scroll to top when page is loaded
     window.scrollTo({ top: 0, behavior: 'smooth', });
+
+
 
     return (
 
@@ -39,7 +97,7 @@ export default function JobFilter() {
 
                             {/* Main heading */}
                             <p className="text-center text-2xl font-bold tracking-tight text-white sm:text-3xl mb-8 mt-5">
-                                “Your profile is your gateway to independence and practical learning. Build it to showcase your skills, explore opportunities, and prepare for the challenges of tomorrow.” 
+                                “Your profile is your gateway to independence and practical learning. Build it to showcase your skills, explore opportunities, and prepare for the challenges of tomorrow.”
                             </p>
 
                         </div>
@@ -133,30 +191,72 @@ export default function JobFilter() {
                 {/* Job Card */}
                 <section className='px-2 md:px-32 py-8'>
 
-                    <div className='grid sm:grid-cols-3 gap-4 grid-cols-1'>
+                    {isLoading || isFetching || isError ? (
 
-                        {Array.from({ length: 9 }, (_, index) => (
+                        // Show loading skeleton
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                            <JobCard
+                            {Array.from({ length: 6 }).map((_, index) => (
 
-                                company='Google'
-                                jobType='Full Time'
-                                location='New York'
-                                logo='https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png'
-                                position='Software Engineer'
-                                postedTime='2 days ago'
-                                salary='$50K - $100K'
-                                herf='/jobdeatils'
-                                key={index}
+                                <div key={index} className="bg-white rounded-lg p-6 sm:shadow-sm shadow-md border border-gray-200 hover:shadow-md transition-shadow animate-pulse">
 
+                                    {/* Header - Position & Time */}
+                                    <div className="mb-4">
+                                        <div className="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
+                                        <div className="flex items-center space-x-2">
+                                            <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
+                                            <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                                        </div>
+                                    </div>
 
-                            />
+                                    {/* Job Type & Salary */}
+                                    <div className="flex justify-between items-center mb-6">
+                                        <div className="h-6 bg-gray-200 rounded w-1/4"></div>
+                                        <div className="h-6 bg-gray-200 rounded w-1/3"></div>
+                                    </div>
 
-                        ))}
+                                    {/* Position & Location */}
+                                    <div className="flex items-center gap-4 border-t pt-7 border-gray-200/55">
+                                        <div className="w-14 h-14 bg-gray-200 rounded-full"></div>
+                                        <div className="space-y-2">
+                                            <div className="h-5 bg-gray-200 rounded w-32"></div>
+                                            <div className="h-4 bg-gray-200 rounded w-48"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
 
-                    </div>
+                        </div>
+
+                    ) : data?.jobs && data.jobs.length > 0 ? (
+
+                        // Show job listings
+                        <div className='grid sm:grid-cols-3 gap-4 grid-cols-1'>
+                            {data.jobs.map((item: Job, index: number) => (
+                                <JobCard
+                                    company={item.company.company_name}
+                                    salaryType={item?.salary_type}
+                                    jobType={item.job_type}
+                                    location={item?.country ? item?.country : item?.company?.country.label}
+                                    logo={item?.company?.logo}
+                                    position={item?.job_title}
+                                    postedTime={item?.posted_date}
+                                    salary={item?.pay_structure}
+                                    herf='/jobdeatils'
+                                    id={item?.id}
+                                    employer_id={item?.company?.id}
+                                    key={index}
+                                />
+                            ))}
+                        </div>
+
+                    ) : (
+                       
+                        <div className='text-center text-2xl font-semibold text-gray-600 py-4'>No Jobs Found</div>
+                    )}
 
                 </section>
+
 
             </main>
 

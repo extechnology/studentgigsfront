@@ -26,6 +26,7 @@ export const UserRegister = () => {
             }
 
         },
+
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });

@@ -319,10 +319,17 @@ export const EditUserAdditionalInfo = async (data: any, header: object, id: stri
 
 
 
-
 // Get Home Slider
 export const GetHomeSlider = async () => {
 
     return await CommonApi("GET", `${Base_Url}/home-slider-employee/`, "", "")
+
+}
+
+
+//GET Jobs
+export const GetJobs = async () => {
+
+    return await CommonApi("GET", `${Base_Url}/talents/`, "", "")
 
 }
