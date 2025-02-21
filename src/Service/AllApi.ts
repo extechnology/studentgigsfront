@@ -1,5 +1,4 @@
 import { CommonApi } from "./CommonApi";
-import { useAuth } from "@/Context/AuthContext";
 
 
 const Base_Url = "http://localhost:8000/api/employee"

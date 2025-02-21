@@ -1,54 +1,51 @@
-import CompanyCard from "@/Components/Company/CompanyCard";
-import { Employeers } from "@/Hooks/JobHook";
-import { useState } from "react";
 
 
 
 
 
-type Country = {
-    value: string;
-    label: string;
-    flag: string;
-};
+// type Country = {
+//     value: string;
+//     label: string;
+//     flag: string;
+// };
 
-type Company = {
-    id: number;
-    profile_url: string | null;
-    company_name: string;
-    company_info: string;
-    logo: string;
-    email: string;
-    phone_number: string;
-    street_address: string;
-    city: string;
-    state: string;
-    postal_code: string;
-    country: Country;
-    user: number;
-};
+// type Company = {
+//     id: number;
+//     profile_url: string | null;
+//     company_name: string;
+//     company_info: string;
+//     logo: string;
+//     email: string;
+//     phone_number: string;
+//     street_address: string;
+//     city: string;
+//     state: string;
+//     postal_code: string;
+//     country: Country;
+//     user: number;
+// };
 
-type Job = {
-    id: number;
-    job_title: string;
-    job_description: string;
-    category: string;
-    age_requirement_min: number;
-    age_requirement_max: number;
-    preferred_academic_courses: string;
-    pay_structure: string;
-    salary_type: string;
-    job_location: string | null;
-    posted_date: string;
-    job_type: string;
-    company: number;
-};
+// type Job = {
+//     id: number;
+//     job_title: string;
+//     job_description: string;
+//     category: string;
+//     age_requirement_min: number;
+//     age_requirement_max: number;
+//     preferred_academic_courses: string;
+//     pay_structure: string;
+//     salary_type: string;
+//     job_location: string | null;
+//     posted_date: string;
+//     job_type: string;
+//     company: number;
+// };
 
-type JobData = {
-    company: Company;
-    logo: string;
-    jobs: Job[];
-};
+// type JobData = {
+//     company: Company;
+//     logo: string;
+//     jobs: Job[];
+// };
 
 
 
@@ -60,11 +57,11 @@ export default function EmployerList() {
 
 
     // TO Set job details
-    const [jobDetails, setJobDetails] = useState<JobData | null>(null);
+    // const [jobDetails, setJobDetails] = useState<JobData | null>(null);
 
 
     // Get Employeer data
-    const { data } = Employeers()
+    // const { data } = Employeers()
 
 
     return (
@@ -122,8 +119,11 @@ export default function EmployerList() {
                         {Array.from({ length: 12 }, (_, index) => (
 
 
-                            <CompanyCard key={index}/>
+                            // <CompanyCard key={index}/>
 
+                            <div key={index}>
+
+                            </div>
 
                         ))}
 
