@@ -1,7 +1,9 @@
 import { CommonApi } from "./CommonApi";
+import { useAuth } from "@/Context/AuthContext";
 
 
-const Base_Url = "https://server.studentsgigs.com/api/employee"
+const Base_Url = "http://localhost:8000/api/employee"
+
 
 
 // User Register
@@ -51,9 +53,9 @@ export const GetFeildOfStudy = async (header: object) => {
 
 
 //GET Job List 
-export const GetJobList = async (header: object) => {
+export const GetJobList = async () => {
 
-    return await CommonApi("GET", `${Base_Url}/employee-job-category/`, "", header)
+    return await CommonApi("GET", `${Base_Url}/employee-job-category/`, "", "")
 
 }
 
@@ -331,5 +333,44 @@ export const GetHomeSlider = async () => {
 export const GetJobs = async () => {
 
     return await CommonApi("GET", `${Base_Url}/talents/`, "", "")
+
+}
+
+
+
+//GET Employeer
+export const GetEmployeer = async () => {
+
+    return await CommonApi("GET", `${Base_Url}/employers/`, "", "")
+
+}
+
+
+
+
+//GET Locations
+export const GetLocations = async (search: string) => {
+
+    const params = new URLSearchParams({ query: search })
+
+    return await CommonApi("GET", `${Base_Url}/locations/?${params.toString()}`, "", "")
+
+}
+
+
+
+//Search Jobs
+export const GetSearchedJobs = async (category: string, location: string, salary_type: string, header: object , isAuthenticated: boolean , page: number) => {
+
+    
+    const params = new URLSearchParams({ category: category, location: location, salary_type: salary_type , page: page.toString() })
+
+    if (isAuthenticated) {
+
+        return await CommonApi("GET", `${Base_Url}/job-search/?${params.toString()}`, "", header)
+
+    }
+
+    return await CommonApi("GET", `${Base_Url}/job-search/?${params.toString()}`, "", "")
 
 }

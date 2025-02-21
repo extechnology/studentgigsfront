@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider } from "@/Service/AllApi";
+import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider, GetLocations } from "@/Service/AllApi";
 
 
 
@@ -68,7 +68,7 @@ export const FeildOfStudyList = () => {
 
 
 
-// Get Feild of Study
+// Get job category
 export const JObList = () => {
 
     return useQuery({
@@ -79,13 +79,7 @@ export const JObList = () => {
 
             try {
 
-                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
-
-                const token = localStorage.getItem("token")
-
-                const headers = { Authorization: `Bearer ${token}` }
-
-                const Response = await GetJobList(headers)
+                const Response = await GetJobList()
 
                 return Response.data
 
@@ -132,3 +126,47 @@ export const HomeSlider = () => {
     })
 
 }
+
+
+
+
+// Get All Locations
+export const AllLocations = (search: string) => {
+
+    return useQuery({
+
+        queryKey: ["AllLocations", search],
+
+        queryFn: async () => {
+
+            try {
+
+                const response = await GetLocations(search);
+
+                return response.data.features.map((location: any) => {
+
+                    const properties = location.properties;
+                    const coordinates = location.geometry.coordinates;
+
+                    const city = properties.city || properties.name || "";
+                    const state = properties.state || "";
+                    const country = properties.country || "";
+                    const postalCode = properties.postcode || ""; // Fetching postal code
+
+                    return {
+                        value: `${coordinates[1]},${coordinates[0]}`, // lat,lng format
+                        label: [city, state, country, postalCode].filter(Boolean).join(", "), // Removing empty values
+                    };
+
+                });
+
+
+            } catch (err) {
+                console.error("Error fetching locations:", err);
+                return [];
+            }
+        },
+    });
+};
+
+

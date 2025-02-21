@@ -59,27 +59,24 @@ export default function About() {
 
 
                                 <blockquote className="border-l-4 border-gray-400 pl-4 italic text-gray-600 mb-6 text-md">
-                                    <p>“Empowering Students”</p>
-                                    <p>Bridging Education with Real-World Experience Our mission is to make students
-                                        independent, responsible, and equipped with practical exposure while learning. By
-                                        connecting them with meaningful gigs, we aim to reduce the gap between academic knowledge
-                                        and real-world skills, preparing them for a smarter future.
+                                    <p>“Empowering Students: Bridging Education with Real-World Experience”</p>
+                                    <p>Our mission is to make students independent, responsible, and equipped with practical exposure
+                                        while learning. By connecting them with meaningful gigs, we aim to reduce the gap between
+                                        academic knowledge and real-world skills, preparing them for a smarter future.
                                     </p>
                                 </blockquote>
 
-                                <ul className="text-gray-700 space-y-2 mb-6  text-md sm:text-md hidden sm:block">
 
-                                    <li className="flex items-center">
-                                        <span className="text-green-500 mr-2">&#10003;</span> Digital Marketing Solutions for Tomorrow
-                                    </li>
-                                    <li className="flex items-center">
-                                        <span className="text-green-500 mr-2">&#10003;</span> Our Talented & Experienced Marketing Agency
-                                    </li>
-                                    <li className="flex items-center">
-                                        <span className="text-green-500 mr-2">&#10003;</span> Create your own skin to match your brand
-                                    </li>
 
-                                </ul>
+                                <blockquote className="border-l-4 border-gray-400 pl-4 italic text-gray-600 mb-6 text-md">
+                                    <p>“Our Vision: Empowering India’s Students”</p>
+                                    <p>We aim to bridge the gap between academic learning and practical application
+                                        by providing students with opportunities that enhance their independence,
+                                        responsibility, and readiness for the workforce.
+                                    </p>
+                                </blockquote>
+
+
 
                                 <StyledWrapper>
                                     <Link to={'/contact'}>
@@ -111,16 +108,16 @@ export default function About() {
                                     Explore Your job now!
                                 </h3>
                                 <p className="mt-3 text-gray-600">
-                                    Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over 30000+ companies worldwide.
+                                    Explore a wide range of job opportunities tailored to your skills and interests. Browse by industry, location, or role, and discover positions that match your career goals
                                 </p>
                             </div>
 
 
                             <div className="flex gap-3 items-center mt-4 md:justify-center">
-                                <a href="javascript:void(0)" className="inline-block py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg shadow-md hover:shadow-none">
+                                <Link to={'/jobfilter'} className="inline-block py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg shadow-md hover:shadow-none">
                                     Apply Now
-                                </a>
-                                <a href="javascript:void(0)" className="inline-block py-2 px-4 text-gray-800 font-medium duration-150 border hover:bg-gray-50 active:bg-gray-100 rounded-lg">
+                                </Link>
+                                <a  className="inline-block py-2 px-4 text-gray-800 font-medium duration-150 border hover:bg-gray-50 active:bg-gray-100 rounded-lg">
                                     Learn more
                                 </a>
                             </div>

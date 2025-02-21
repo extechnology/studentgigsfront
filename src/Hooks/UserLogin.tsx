@@ -87,8 +87,6 @@ export const UserLogin = () => {
 // Google Auth
 export const GoogleAuth = () => {
 
-    const queryclient = useQueryClient();
-
     return useMutation({
 
         mutationFn: async (data: any) => {
@@ -105,16 +103,7 @@ export const GoogleAuth = () => {
 
             }
 
-        },
-        onSuccess: () => {
-
-            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
-
-        },
-        onError: (error) => {
-            console.error("Failed to Login User:", error);
-            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
-        },
+        }
 
     })
 
