@@ -21,11 +21,12 @@ export default function PopluarJobs() {
 
                     <BlurFade delay={0.25} duration={0.5} inView>
 
-                        <h2 className="pl-2 text-3xl font-semibold mb-6 text-center flex items-center justify-center">Popluar Jobs <ChartNoAxesCombined size={26} color='#16A34A' className='ms-2' /></h2>
+                        <h2 className="pl-2 text-3xl font-semibold mb-6 text-center flex items-center justify-center">Popular Jobs <ChartNoAxesCombined size={26} color='#16A34A' className='ms-2' /></h2>
 
                         <p className="pl-2 text-slate-500 mb-5 text-center  max-w-xl px-2 sm:px-0 sm:mx-auto">
-                            Search all the open positions on the web. Get your own personalized
-                            salary estimate. Read reviews on over 30000+ companies worldwide.
+                            Search all the open positions on the web. Get your personalized job concerning your skill and time
+                            Spend your time and settle your life
+
                         </p>
 
                     </BlurFade>

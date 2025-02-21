@@ -7,13 +7,19 @@ import { useAuth } from "@/Context/AuthContext";
 import { GoogleAuth } from "@/Hooks/UserLogin";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+
 
 export default function Landing() {
 
 
+  // Query client
+  const queryclient = useQueryClient();
+
+
+
   // Google AUTH
   const { mutate: mutateGoogleLogin } = GoogleAuth();
-
 
 
   // Context auth
@@ -92,6 +98,7 @@ export default function Landing() {
             login(response.data.access);
             toast.success("Login Successful!");
             markPopupAsShown();
+            queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
 
           } else {
 
@@ -99,6 +106,8 @@ export default function Landing() {
             toast.error("Login failed. Please try again.");
 
           }
+
+         
 
         },
         onError: (error) => {

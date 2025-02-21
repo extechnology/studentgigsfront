@@ -32,10 +32,11 @@ const JobTypes = [
 
 const Availability = [
 
-    { value: 'All Day', label: 'All Day' },
-    { value: 'Weekends', label: 'Weekends' },
-    { value: 'Flexible', label: 'Flexible' },
-    { value: 'Vacation Gigs', label: 'Vacation Gigs' },
+    { label: "Hourly Rate", value: "hourly" },
+    { label: "Daily Rate", value: "daily" },
+    { label: "Monthly Salary", value: "monthly" },
+    { label: "Annual Salary", value: "annual" },
+    { label: "Project Based", value: "project" }
 
 ];
 

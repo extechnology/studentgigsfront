@@ -41,12 +41,7 @@ type Job = {
     job_location: string;
     posted_date: string;
     job_type: string;
-    street_address: string;
-    city: string;
-    state: string;
-    postal_code: string;
-    country: string;
-
+   
 };
 
 
@@ -214,9 +209,8 @@ export default function JobDeatils() {
 
                                             <div className="flex gap-1">
                                                 <i className="fas fa-map-marker-alt pt-1 text-gray-700"></i>
-                                                <p className="text-gray-700">{jobDetails?.city && jobDetails?.state && jobDetails?.country && jobDetails?.postal_code
-                                                    ? `${jobDetails.city}, ${jobDetails.state}, ${jobDetails.country} ${jobDetails.postal_code}`
-                                                    : jobDetails?.company?.country.label}
+                                                <p className="text-gray-700">
+                                                    {jobDetails?.job_location}
                                                 </p>
                                             </div>
 
@@ -257,9 +251,7 @@ export default function JobDeatils() {
                                     <p className="text-gray-800 font-bold mb-3 flex items-center"> <BriefcaseBusiness size={18} className="me-2 text-gray-600" />  Postion : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_title}</span></p>
 
 
-                                    <p className="text-gray-800 font-bold mb-3 flex items-center"><MapPin size={18} className="me-2 text-gray-600" /> Location  : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.city && jobDetails?.state && jobDetails?.country && jobDetails?.postal_code
-                                        ? `${jobDetails.city}, ${jobDetails.state}, ${jobDetails.country} ${jobDetails.postal_code}`
-                                        : jobDetails?.company?.country.label}</span>
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center"><MapPin size={18} className="me-2 text-gray-600" /> Location  : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_location}</span>
 
                                     </p>
 

@@ -27,7 +27,9 @@ export const GetPersonalInfo = () => {
                 const token = localStorage.getItem("token")
 
                 if (!token) {
-                    throw new Error("Authentication token not found");
+
+                    return [];
+                    
                 }
 
                 const headers = { Authorization: `Bearer ${token}` }
@@ -40,7 +42,7 @@ export const GetPersonalInfo = () => {
             } catch (err) {
 
                 console.log(err);
-
+                return [];
 
             }
         },

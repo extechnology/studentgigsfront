@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { SaveIcon, UserRound } from "lucide-react";
 import { Button } from "../ui/button";
 import CreatableSelect from 'react-select/creatable';
+import Jobdata from "../../Data/JobData.json";
 
 
 
@@ -198,7 +199,7 @@ export default function PersonalInfromation() {
         appendIfNotEmpty("job_title", info.job_title);
         appendIfNotEmpty("available_working_periods_start_date", info.available_working_periods_start_date);
         appendIfNotEmpty("available_working_periods_end_date", info.available_working_periods_end_date);
-        
+
 
         mutate(
             { formData, id: id },
@@ -629,9 +630,9 @@ export default function PersonalInfromation() {
                                                 render={({ field: { onChange, value, ref } }) => (
                                                     <CreatableSelect
                                                         ref={ref}
-                                                        options={[]}
-                                                        value={value ? { label: value, value: value } : null}
-                                                        onChange={(option: any) => onChange(option?.label)}
+                                                        options={Jobdata}
+                                                        value={value ? Jobdata.find((option) => option.label === value) : null}
+                                                        onChange={(selectedOption) => onChange(selectedOption?.label)}
                                                         placeholder="Search Your Job Title"
                                                         isSearchable={true}
                                                         className="basic-single"

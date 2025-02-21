@@ -1,19 +1,20 @@
-import { Briefcase, MapPin, Calendar, SearchIcon } from 'lucide-react';
-import { useState } from 'react';
 import JobCard from '@/Components/Common/JobCard';
-import { PostedJobList } from '@/Hooks/JobHook';
+import NoJobFound from '@/Components/Loaders/NoJobFound';
+import FilterJob from '@/Components/JobFilter/FilterJob';
+import { useJobSearch } from '@/Context/JobSearchContext';
+import { useAuth } from '@/Context/AuthContext';
+import { Link, useLocation } from 'react-router-dom';
 
 
 
-
-
-
+// Country types
 type Country = {
     value: string;
     label: string;
     flag: string;
 };
 
+// Company types
 type Company = {
     id: number;
     company_name: string;
@@ -29,6 +30,7 @@ type Company = {
     user: number;
 };
 
+// Job types
 type Job = {
     id: number;
     company: Company;
@@ -43,11 +45,6 @@ type Job = {
     job_location: string;
     posted_date: string;
     job_type: string;
-    street_address: string;
-    city: string;
-    state: string;
-    postal_code: string;
-    country: string;
 };
 
 
@@ -56,26 +53,24 @@ type Job = {
 
 export default function JobFilter() {
 
+    // Location
+    const location = useLocation();
+
+    // Auth context
+    const { isAuthenticated } = useAuth();
 
 
-    // Get Jobs
-    const { data, isLoading, isFetching, isError } = PostedJobList()
-
-
-    const [keyword, setKeyword] = useState('');
+    // Job search
+    const { searchResults, isLoading, isError, isFetching, page, setPage, totalPages } = useJobSearch();
 
 
     // Scroll to top when page is loaded
     window.scrollTo({ top: 0, behavior: 'smooth', });
 
-
-
     return (
 
 
         <>
-
-
 
             <main className="w-full h-auto">
 
@@ -118,74 +113,8 @@ export default function JobFilter() {
                 </div>
 
 
-
-                {/* Filter section */}
-                <div className="w-full max-w-6xl mx-auto p-2 sm:-mt-20 -mt-24">
-
-
-                    <div className="flex flex-col md:flex-row bg-white rounded-lg sm:shadow-lg shadow-xl border sm:border-gray-50 border-gray-300 px-2 py-3 sm:py-0 sm:px-0">
-
-
-                        {/* Keywords Input */}
-                        <div className="flex-1 flex items-center gap-2 p-5 border-b md:border-b-0 md:border-r border-gray-200">
-
-                            <Briefcase className="text-emerald-500" size={26} />
-
-                            <input
-                                type="text"
-                                placeholder="Search your Jobs..."
-                                className="w-full outline-none text-gray-600"
-                                value={keyword}
-                                onChange={(e) => setKeyword(e.target.value)}
-                            />
-
-                        </div>
-
-
-
-                        {/* Location Dropdown */}
-                        <div className="flex-1 flex items-center gap-2 p-5 border-b md:border-b-0 md:border-r border-gray-200">
-
-                            <MapPin className="text-emerald-500" size={26} />
-
-                            <select className="w-full outline-none text-gray-600 bg-transparent p-2">
-                                <option value="" className='w-full'>Select...</option>
-                                <option value="location1">Location 1</option>
-                                <option value="location2">Location 2</option>
-                            </select>
-
-                        </div>
-
-
-
-                        {/* Category Dropdown */}
-                        <div className="flex-1 flex items-center gap-2 p-5 border-b md:border-b-0 md:border-r border-gray-200">
-
-                            <Calendar className="text-emerald-500" size={26} />
-
-                            <select className="w-full outline-none text-gray-600 bg-transparent  p-2">
-                                <option value="">Select...</option>
-                                <option value="category1">Category 1</option>
-                                <option value="category2">Category 2</option>
-                            </select>
-
-
-                        </div>
-
-
-
-                        {/* Search Button */}
-                        <button className="bg-emerald-500 text-white px-8 py-3 rounded-lg sm:rounded-r-lg hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2">
-                            <SearchIcon size={20} />
-                            <span>Search</span>
-                        </button>
-
-
-                    </div>
-
-
-                </div>
-
+                {/* search filter */}
+                <FilterJob />
 
 
                 {/* Job Card */}
@@ -228,46 +157,76 @@ export default function JobFilter() {
 
                         </div>
 
-                    ) : data?.jobs && data.jobs.length > 0 ? (
+                    ) : searchResults?.data && searchResults?.data.length > 0 ? (
 
-                        // Show job listings
-                        <div className='grid sm:grid-cols-3 gap-4 grid-cols-1'>
-                            {data.jobs.map((item: Job, index: number) => (
-                                <JobCard
-                                    company={item.company.company_name}
-                                    salaryType={item?.salary_type}
-                                    jobType={item.job_type}
-                                    location={item?.country ? item?.country : item?.company?.country.label}
-                                    logo={item?.company?.logo}
-                                    position={item?.job_title}
-                                    postedTime={item?.posted_date}
-                                    salary={item?.pay_structure}
-                                    herf='/jobdeatils'
-                                    id={item?.id}
-                                    employer_id={item?.company?.id}
-                                    key={index}
-                                />
-                            ))}
-                        </div>
+                        <>
+
+                            <div className='grid sm:grid-cols-3 gap-4 grid-cols-1'>
+                                {searchResults.data.map((item: Job, index: number) => (
+                                    <JobCard
+                                        company={item.company.company_name}
+                                        salaryType={item?.salary_type}
+                                        jobType={item.job_type}
+                                        location={item?.job_location}
+                                        logo={item?.company?.logo}
+                                        position={item?.job_title}
+                                        postedTime={item?.posted_date}
+                                        salary={item?.pay_structure}
+                                        herf='/jobdeatils'
+                                        id={item?.id}
+                                        employer_id={item?.company?.id}
+                                        key={index}
+                                    />
+                                ))}
+                            </div>
+
+                            {
+                                !isAuthenticated &&
+
+                                <div className='flex justify-center mt-8'>
+                                    <Link to={'/auth'} state={{ from: location }} >
+                                        <button className='px-4 py-2 text-white bg-green-600 rounded'>Load More Jobs</button>
+                                    </Link>
+                                </div>
+
+                            }
+
+
+                            {/* Pagination */}
+                            <div className="flex justify-center mt-6">
+                                <button
+                                    className={`px-4 py-2 mx-1 text-white bg-gray-600 rounded ${page === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-700'}`}
+                                    onClick={() => setPage(page - 1)}
+                                    disabled={page === 1}
+                                >
+                                    Previous
+                                </button>
+                                <span className="px-4 py-2 mx-2 text-gray-700">
+                                    Page {page} of {totalPages}
+                                </span>
+                                <button
+                                    className={`px-4 py-2 mx-1 text-white bg-green-600 rounded ${page === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'}`}
+                                    onClick={() => setPage(page + 1)}
+                                    disabled={page === totalPages}
+                                >
+                                    Next
+                                </button>
+                            </div>
+
+                        </>
 
                     ) : (
-                       
-                        <div className='text-center text-2xl font-semibold text-gray-600 py-4'>No Jobs Found</div>
+
+                        <NoJobFound />
                     )}
 
                 </section>
 
 
-            </main>
-
-
-
+            </main >
 
 
         </>
-
-
-
 
 
     )
