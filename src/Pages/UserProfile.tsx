@@ -1,11 +1,15 @@
-import { Ban, BriefcaseBusiness, Building2, CirclePlusIcon, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Settings } from "lucide-react";
+import { BriefcaseBusiness, Building2, FileText, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Settings} from "lucide-react";
 import { Link } from "react-router-dom";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import PersonalInfoLoader from "@/Components/Common/PersonalInfoLoader";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/Components/ui/button";
-
+import NoEducation from "@/Components/Loaders/NoEducation";
+import NoAboutMe from "@/Components/Loaders/NoAbout";
+import NoTechnicalSkills from "@/Components/Loaders/NoTech";
+import NoSoftSkills from "@/Components/Loaders/NoSoft";
+import NoExperience from "@/Components/Loaders/NoExp";
+import ResumeViewer from "@/Components/Common/ResumeViewer";
 
 
 
@@ -122,6 +126,9 @@ interface PersonalInfo {
 
 export default function UserProfile() {
 
+
+    // To open and close the modal
+    const [isOpen, setIsOpen] = useState(false);
 
 
     // Get User Personal Information
@@ -247,7 +254,7 @@ export default function UserProfile() {
 
                                                 {/* About User */}
                                                 <p className="text-md sm:text-[1.1rem] font-[1rem] text-gray-500 leading-relaxed text-justify">
-                                                    {UserData?.about ? UserData?.about : <Link to={'/settings'}> <Button>Add About <CirclePlusIcon /></Button> </Link>}
+                                                    {UserData?.about ? UserData?.about : <NoAboutMe />}
                                                 </p>
 
                                             </div>
@@ -295,26 +302,6 @@ export default function UserProfile() {
                                                                 </th>
                                                                 <td className="px-4 py-2 text-gray-800 block md:table-cell">
                                                                     {UserData?.phone ? UserData?.phone : "None"}
-                                                                </td>
-                                                            </tr>
-
-
-                                                            <tr className="border-b">
-                                                                <th
-                                                                    scope="row"
-                                                                    className="px-4 py-2 font-medium whitespace-nowrap text-start block md:table-cell"
-                                                                >
-                                                                    <i className="fa-solid fa-address-card mr-2"></i>{" "}
-                                                                    Current Address:
-                                                                </th>
-                                                                <td className="px-4 py-2 text-gray-800 block md:table-cell">
-
-                                                                    {UserData?.street_address || UserData?.city || UserData?.state || UserData?.postal_code ? (
-                                                                        <>
-                                                                            {UserData?.street_address}, {UserData?.city}, {UserData?.state}, {UserData?.postal_code}
-                                                                        </>
-                                                                    ) : "None"}
-
                                                                 </td>
                                                             </tr>
 
@@ -373,6 +360,19 @@ export default function UserProfile() {
 
                                                         </tbody>
                                                     </table>
+
+                                                    {UserData?.additional_information?.employee_resume &&
+
+                                                        <div className="w-full flex items-center justify-center py-4">
+
+                                                            <button onClick={() => { setIsOpen(true) }} className="font-bold text-md flex items-center justify-center w-52 hover:cursor-pointer bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors duration-300">
+                                                                <FileText size={24} className="mr-2" />  Download Cv
+                                                            </button>
+
+                                                        </div>
+                                                        
+                                                    }
+
                                                 </div>
                                             </div>
                                         </div>
@@ -430,10 +430,7 @@ export default function UserProfile() {
 
                                                     :
 
-                                                    <div className="flex flex-col items-center justify-center h-40 w-full gap-y-4">
-                                                        <p className="text-gray-500 text-lg font-semibold flex items-center">No Technical Skills Found <Ban size={28} className="ml-2" /></p>
-                                                        <Link to={'/settings'}> <Button className="ml-3">Add Skills <CirclePlusIcon size={28} className="ml-2" /></Button></Link>
-                                                    </div>
+                                                    <NoTechnicalSkills />
 
                                             }
                                         </div>
@@ -458,12 +455,7 @@ export default function UserProfile() {
                                                     </span>
                                                 ))
                                             ) : (
-                                                <div className="flex flex-col gap-y-4 items-center justify-center h-20 w-full">
-                                                    <p className="text-gray-500 text-lg font-semibold flex items-center">
-                                                        No Soft Skills Found <Ban size={28} className="ml-2" />
-                                                    </p>
-                                                    <Link to={'/settings'}> <Button className="ml-3">Add Skills <CirclePlusIcon size={28} className="ml-2" /></Button></Link>
-                                                </div>
+                                                <NoSoftSkills />
                                             )}
                                         </div>
 
@@ -512,10 +504,8 @@ export default function UserProfile() {
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <div className="flex items-center justify-center h-40 w-full flex-col gap-y-4">
-                                                    <p className="text-gray-500 text-lg font-semibold flex items-center">No Experience Found <Ban size={28} className="ml-2" /></p>
-                                                    <Link to={'/settings'}> <Button className="ml-3">Add Experience <CirclePlusIcon size={28} className="ml-2" /></Button></Link>
-                                                </div>
+
+                                                <NoExperience />
                                             )
                                         }
 
@@ -601,10 +591,7 @@ export default function UserProfile() {
 
                                                 :
 
-                                                <div className="flex items-center justify-center h-40 flex-col gap-y-4">
-                                                    <p className="text-gray-500 text-lg font-semibold flex items-center">No educational qualifications found <Ban size={28} className="ml-2" /></p>
-                                                    <Link to={'/settings'}> <Button className="ml-3">Add Education<CirclePlusIcon size={28} className="ml-2" /></Button></Link>
-                                                </div>
+                                                <NoEducation />
 
                                             }
 
@@ -621,6 +608,7 @@ export default function UserProfile() {
 
                 </div>
 
+                <ResumeViewer isOpen={isOpen} onRequestClose={() => setIsOpen(false)} resumeUrl={UserData?.additional_information?.employee_resume ?? null} />
 
             </main>
 
