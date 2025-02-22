@@ -172,7 +172,6 @@ export default function JobFilter() {
                                         position={item?.job_title}
                                         postedTime={item?.posted_date}
                                         salary={item?.pay_structure}
-                                        herf='/jobdeatils'
                                         id={item?.id}
                                         employer_id={item?.company?.id}
                                         key={index}
@@ -183,12 +182,28 @@ export default function JobFilter() {
                             {
                                 !isAuthenticated &&
 
-                                <div className='flex justify-center mt-8'>
-                                    <Link to={'/auth'} state={{ from: location }} >
-                                        <button className='px-4 py-2 text-white bg-green-600 rounded'>Load More Jobs</button>
+                                <div className='flex justify-center mt-8 '>
+                                    <Link to={'/auth'} state={{ from: location }}>
+                                        <button className='hover:cursor-pointer group relative px-8 py-3 text-white bg-gradient-to-br from-green-500 to-green-600 rounded-xl font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(22,163,74,0.3)] flex items-center gap-3 overflow-hidden'>
+                                            <span className="relative z-10">Load More Jobs</span>
+                                            <svg
+                                                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                                />
+                                            </svg>
+                                            <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_1s_forwards] z-20" />
+                                            <div className="absolute inset-0 bg-gradient-to-br from-green-600 to-green-700 transition-opacity duration-300 opacity-0 group-hover:opacity-100" />
+                                        </button>
                                     </Link>
                                 </div>
-
                             }
 
 

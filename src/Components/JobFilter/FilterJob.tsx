@@ -102,8 +102,8 @@ export default function FilterJob() {
                                         <Select
                                             ref={ref}
                                             options={data}
-                                            value={value ? data.find((option: Option) => option.value === value) : null}
-                                            onChange={(option: any) => { onChange(option.label) }}
+                                            value={data?.find((option: Option) => option?.value === value) || null}
+                                            onChange={(option: any) => onChange(option ? option.value : null)}
                                             placeholder="Select a Category...."
                                             isSearchable={true}
                                             isClearable={true}
@@ -113,24 +113,22 @@ export default function FilterJob() {
                                             styles={{
                                                 control: (provided) => ({
                                                     ...provided,
-                                                    border: "none",         // Remove border
-                                                    boxShadow: "none",      // Remove focus ring
-                                                    "&:hover": { border: "none" } // Ensure no border on hover
+                                                    border: "none",
+                                                    boxShadow: "none",
+                                                    "&:hover": { border: "none" },
                                                 }),
                                                 dropdownIndicator: (provided) => ({
                                                     ...provided,
-                                                    color: "#555",          // Optional: Adjust dropdown arrow color
+                                                    color: "#555",
                                                 }),
                                                 indicatorsContainer: (provided) => ({
                                                     ...provided,
-                                                    padding: "2px",         // Optional: Adjust spacing for cleaner look
+                                                    padding: "2px",
                                                 }),
-
                                             }}
                                         />
                                     )}
                                 />
-
                             </div>
 
                         </div>
@@ -154,6 +152,7 @@ export default function FilterJob() {
                                                 onInputChange={(value) => setSearch(value)}
                                                 value={value ? Location?.find((option: Option) => option?.label === value) : null}
                                                 isSearchable={true}
+                                                isClearable={true}
                                                 className="basic-single"
                                                 onChange={(option: any) => { onChange(option?.label) }}
                                                 placeholder="Search a City...."

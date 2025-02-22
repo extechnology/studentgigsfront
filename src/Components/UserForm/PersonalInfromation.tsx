@@ -1,10 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { GetPersonalInfo, EditPersonalInfo } from "@/Hooks/UserProfile";
 import { useForm, Controller } from "react-hook-form"
-import { Country, City } from 'country-state-city';
 import Select from "react-select";
-import Flag from 'react-world-flags';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import toast from "react-hot-toast";
@@ -12,6 +9,7 @@ import { SaveIcon, UserRound } from "lucide-react";
 import { Button } from "../ui/button";
 import CreatableSelect from 'react-select/creatable';
 import Jobdata from "../../Data/JobData.json";
+import { AllLocations } from "@/Hooks/Utils";
 
 
 
@@ -22,11 +20,6 @@ type Inputs = {
     phone: string
     preferred_work_location: string
     available_work_hours: string
-    country: string
-    street_address: string
-    city: string
-    state: string
-    postal_code: string
     profile_photo: any
     cover_photo: any
     portfolio: string
@@ -38,36 +31,19 @@ type Inputs = {
 }
 
 
-interface CountryOption {
+// types
+interface Option {
     value: string;
     label: string;
-    flag: string;
 }
-
-
-
-interface CityOption {
-    value: string;
-    label: string;
-    stateCode: string;
-    latitude: string;
-    longitude: string;
-}
-
 
 
 
 export default function PersonalInfromation() {
 
 
-    // Country and City
-    const [countries, setCountries] = useState<CountryOption[]>([]);
-
-    const [cities, setCities] = useState<CityOption[]>([]);
-
-    const [Selectedcities, setSelectedCities] = useState<CityOption[]>([]);
-
-    const [selectedCountry, setSelectedCountry] = useState<CountryOption | null>(null);
+    // Search keyword
+    const [Search, setSearch] = useState<string>("")
 
 
     // ID of user
@@ -78,12 +54,16 @@ export default function PersonalInfromation() {
     const { data, isLoading, isError, isPending, isFetching } = GetPersonalInfo();
 
 
+    // Get All Locations
+    const { data: Location, isLoading: LocationLoading } = AllLocations(Search)
+
+
     // Edit User Personal Information
     const { mutate } = EditPersonalInfo();
 
 
     // Form State
-    const { register, handleSubmit, formState: { errors }, control, setValue, reset } = useForm<Inputs>();
+    const { register, handleSubmit, formState: { errors }, control, reset } = useForm<Inputs>();
 
 
 
@@ -93,8 +73,6 @@ export default function PersonalInfromation() {
 
             const selectedUser = data[0];
 
-            setSelectedCountry(data[0].country);
-
             reset(selectedUser)
 
             SetId(selectedUser.id)
@@ -102,68 +80,6 @@ export default function PersonalInfromation() {
         }
     }, [data, reset]);
 
-
-
-
-
-
-    // Load countries on mount
-    useEffect(() => {
-
-        const allCountries = Country.getAllCountries();
-
-        const formattedCountries: CountryOption[] = allCountries.map(country => ({
-            value: country.isoCode,
-            label: country.name,
-            flag: country.isoCode
-        }));
-
-        formattedCountries.sort((a, b) => a.label.localeCompare(b.label));
-
-        setCountries(formattedCountries);
-
-    }, []);
-
-
-
-
-    // Load cities based on selected country
-    useEffect(() => {
-
-        if (selectedCountry) {
-
-            const countryCities = City.getCitiesOfCountry(selectedCountry.value) || [];
-
-            const formattedCities: CityOption[] = countryCities.map(city => ({
-                value: city.name,
-                label: city.name,
-                stateCode: city.stateCode,
-                latitude: city?.latitude ?? '',
-                longitude: city?.longitude ?? ''
-            }));
-
-            formattedCities.sort((a, b) => a.label.localeCompare(b.label));
-
-            setCities(formattedCities);
-
-        } else {
-            setCities([]);
-        }
-    }, [selectedCountry, data])
-
-
-
-
-    const handleCountryChange = (selectedOption: any, onChange: any) => {
-
-        setSelectedCountry(selectedOption);
-
-        onChange(selectedOption);
-
-        // Reset city when country changes
-        setValue('preferred_work_location', '', { shouldValidate: true });
-
-    };
 
 
     // Edit Information
@@ -189,11 +105,6 @@ export default function PersonalInfromation() {
         appendIfNotEmpty("phone", info.phone);
         appendIfNotEmpty("preferred_work_location", info.preferred_work_location);
         appendIfNotEmpty("available_work_hours", info.available_work_hours);
-        appendIfNotEmpty("country", info.country ? JSON.stringify(info.country) : null);
-        appendIfNotEmpty("street_address", info.street_address);
-        appendIfNotEmpty("city", info.city);
-        appendIfNotEmpty("state", info.state);
-        appendIfNotEmpty("postal_code", info.postal_code);
         appendIfNotEmpty("portfolio", info.portfolio);
         appendIfNotEmpty("about", info.about);
         appendIfNotEmpty("job_title", info.job_title);
@@ -462,43 +373,6 @@ export default function PersonalInfromation() {
 
 
 
-                                    {/* Country */}
-                                    <div className="sm:col-span-full">
-                                        <label
-                                            htmlFor="country"
-                                            className="block text-sm/6 font-medium text-gray-900"
-                                        >
-                                            Country
-                                        </label>
-                                        <div className="mt-2">
-                                            <Controller
-                                                name="country"
-                                                control={control}
-                                                render={({ field: { onChange, value, ref } }) => (
-                                                    <Select
-                                                        ref={ref}
-                                                        options={countries}
-                                                        value={countries.find(country => country.label === value) || selectedCountry || null}
-                                                        onChange={(option) => handleCountryChange(option, onChange)}
-                                                        placeholder="Select a country..."
-                                                        isSearchable={true}
-                                                        className="basic-single"
-                                                        classNamePrefix="select"
-                                                        formatOptionLabel={(option: CountryOption) => (
-                                                            <div className="flex items-center">
-                                                                <Flag code={option.flag} style={{ width: 20, height: 15, marginRight: 10 }} />
-                                                                {option.label}
-                                                            </div>
-                                                        )}
-
-                                                    />
-                                                )}
-                                            />
-                                        </div>
-                                    </div>
-
-
-
                                     {/* Work Location */}
                                     <div className="col-span-full">
                                         <label
@@ -511,109 +385,31 @@ export default function PersonalInfromation() {
                                             <Controller
                                                 name="preferred_work_location"
                                                 control={control}
-                                                render={({ field: { onChange, value, ref } }) => (
-                                                    <Select
-                                                        ref={ref}
-                                                        options={cities}
-                                                        value={cities.find(city => city.value === value) || Selectedcities || null}
-                                                        onChange={(option: any) => { setSelectedCities(option), onChange(option.value) }}
-                                                        placeholder={selectedCountry && Object.keys(selectedCountry).length > 0 ? "Select a city..." : "First select a country"}
-                                                        isSearchable={true}
-                                                        isDisabled={!selectedCountry || Object.keys(selectedCountry).length === 0}
-                                                        className="basic-single"
-                                                        classNamePrefix="select"
-                                                    />
-                                                )}
+                                                render={({ field: { onChange, value, ref } }) => {
+                                                    const selectedOption =
+                                                        Location?.find((option: Option) => option?.label === value) ||
+                                                        (value ? { label: value, value } : null);
+                                                    return (
+                                                        <Select
+                                                            ref={ref}
+                                                            options={Location}
+                                                            value={selectedOption}
+                                                            onChange={(option: any) => onChange(option?.label || null)}
+                                                            onInputChange={(searchValue) => setSearch(searchValue)}
+                                                            placeholder="Search for a location..."
+                                                            isSearchable={true}
+                                                            loadingMessage={() => "Loading..."}
+                                                            isLoading={LocationLoading}
+                                                            noOptionsMessage={() => "No Locations Found..."}
+                                                            className="basic-single"
+                                                            classNamePrefix="select"
+                                                        />
+                                                    );
+                                                }}
                                             />
+
                                         </div>
                                     </div>
-
-
-
-
-                                    {/* Address */}
-                                    <div className="col-span-full">
-                                        <label
-                                            htmlFor="street-address"
-                                            className="block text-sm/6 font-medium text-gray-900"
-                                        >
-                                            Street address
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="street-address"
-                                                type="text"
-                                                autoComplete="street-address"
-                                                {...register("street_address")}
-                                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
-
-
-
-                                    {/* ZIP / Postal code */}
-                                    <div className="sm:col-span-2 sm:col-start-1">
-                                        <label
-                                            htmlFor="postal-code"
-                                            className="block text-sm/6 font-medium text-gray-900"
-                                        >
-                                            ZIP / Postal code
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="postal-code"
-                                                type="text"
-                                                autoComplete="postal-code"
-                                                {...register("postal_code")}
-                                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
-
-
-
-                                    {/* City */}
-                                    <div className="sm:col-span-2 ">
-                                        <label
-                                            htmlFor="city"
-                                            className="block text-sm/6 font-medium text-gray-900"
-                                        >
-                                            City
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="city"
-                                                type="text"
-                                                autoComplete="address-level2"
-                                                {...register("city")}
-                                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
-
-                                    {/* State / Province */}
-                                    <div className="sm:col-span-2">
-                                        <label
-                                            htmlFor="region"
-                                            className="block text-sm/6 font-medium text-gray-900"
-                                        >
-                                            State / Province
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="region"
-                                                type="text"
-                                                autoComplete="address-level1"
-                                                {...register("state")}
-                                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
 
 
 
