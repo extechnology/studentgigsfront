@@ -4,7 +4,6 @@ import { ChartNoAxesCombined, Clock, MousePointerClick } from 'lucide-react';
 import { PopularJobsList } from '@/Hooks/JobHook';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
-import { useEffect, useState } from 'react';
 
 
 
