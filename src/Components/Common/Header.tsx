@@ -71,7 +71,7 @@ export default function Header() {
 
       } else {
         setScrolled(false);
-        setcolor(location.pathname === "/employerlist" || location.pathname.startsWith("/employerdeatils/") || location.pathname.startsWith("/jobdeatils") || location.pathname === "/jobdeatils" || location.pathname === "/" || location.pathname === "/findgigs" ? true : false)
+        setcolor(location.pathname === "/employerlist" || location.pathname.startsWith("/employerdeatils/") || location.pathname.startsWith("/jobdeatils") || location.pathname === "/jobfilter" || location.pathname === "/" || location.pathname === "/findgigs" ? true : false)
       }
 
     };
@@ -168,7 +168,7 @@ export default function Header() {
                   to={'/search'}
                   className={`p-2 flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
                 >
-                  <Search size={16} className={`${color ? 'text-white' : 'text-gray-900'}`} />
+                  <Search size={16} className={`${color ? 'text-white' : 'text-gray-400'}`} />
 
                 </Link>
               </div>
@@ -204,7 +204,6 @@ export default function Header() {
 
               </a>
 
-
               {/* Explore Gigs */}
               <Link to={'/jobfilter'}>
 
@@ -214,10 +213,7 @@ export default function Header() {
 
               </Link>
 
-
             </div>
-
-
 
 
             {/* Navbar items */}
@@ -369,10 +365,10 @@ export default function Header() {
                   className={`w-full px-4 py-2 text-md focus:outline-none  ${color ? 'bg-transparent text-white placeholder-white' : 'text-gray-900 bg-transparent'}`}
                 />
                 <Link
-                  to={'/search'}
-                  className={`p-2 flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
+                  to={'/jobfilter'}
+                  className={`p-2 flex items-center justify-center ${color ? 'bg-transparent' : ""} text-md font-semibold`}
                 >
-                  <Search className={`${color ? 'text-white' : 'text-gray-900'}`} />
+                  <Search className={`${color ? 'text-white' : 'text-gray-400'}`} />
                 </Link>
               </div>
 
@@ -551,14 +547,14 @@ export default function Header() {
 
 
                           {/* Find Student Talents */}
-                          <Link
-                            to="/jobfilter"
+                          <a
+                            href={'https://gigs.studentsgigs.com'}
                             onClick={() => setMobileMenuOpen(false)}
                             className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                           >
                             <GraduationCap className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
                             <span>Find Student Talents</span>
-                          </Link>
+                          </a>
 
 
                           {/* Contact */}

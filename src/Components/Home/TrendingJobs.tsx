@@ -2,10 +2,22 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import BlurFade from '../ui/blur-fade';
 import { TrendingUp } from 'lucide-react';
+import { TrendingJobsList } from "@/Hooks/JobHook";
+
+
+
+// Slide Types
+interface SlideTypes {
+    id: number;
+    title: string;
+    image: string;
+}
+
 
 export default function TrendingJobs() {
 
 
+    // Responsive
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
@@ -25,17 +37,8 @@ export default function TrendingJobs() {
     };
 
 
-    const services = [
-        {
-            title: "Wordpress Development",
-            img: "https://jobstack-shreethemes.vercel.app/static/media/03.c538ca3b9bc8f2a5378d.jpg",
-        },
-        { title: "Audio & Video Editing", img: "https://jobstack-shreethemes.vercel.app/static/media/01.505f19f275234d37ae32.jpg" },
-        { title: "Admin & Customer Support", img: "https://jobstack-shreethemes.vercel.app/static/media/02.b483e9502d81d8a68583.jpg" },
-        { title: "UX/UI Designer", img: "https://jobstack-shreethemes.vercel.app/static/media/03.c538ca3b9bc8f2a5378d.jpg" },
-        { title: "Digital Marketing", img: "https://jobstack-shreethemes.vercel.app/static/media/06.296e0ddb4aa6faa9d579.jpg" },
-
-    ];
+    // Get Trending Jobs Data
+    const { data, isLoading, isFetching, isError } = TrendingJobsList();
 
 
     return (
@@ -63,6 +66,7 @@ export default function TrendingJobs() {
                         infinite={true}
                         autoPlay={true}
                         autoPlaySpeed={3000}
+                        swipeable={true}
                         focusOnSelect={true}
                         keyBoardControl={true}
                         transitionDuration={5000}
@@ -72,24 +76,46 @@ export default function TrendingJobs() {
                         dotListClass="custom-dot-list-style"
                         itemClass="carousel-item-padding-40-px "
                     >
-                        {services.map((service, index) => (
-                            <div
-                                key={index}
-                                className="relative rounded-lg mx-2 overflow-hidden shadow-lg hover:scale-105 duration-300"
-                            >
-                                <img
-                                    src={service.img}
-                                    alt={service.title}
-                                    className="w-full  h-auto object-cover"
-                                    loading="lazy"
-                                />
-                                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end justify-center">
-                                    <p className="text-white font-semibold text-lg pb-10 hover:scale-105 duration-300">
-                                        {service.title}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
+
+                        {isLoading || isFetching || isError ?
+
+                            (Array(5)
+                                .fill(0)
+                                .map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative rounded-lg mx-2 overflow-hidden shadow-lg animate-pulse bg-gray-200 h-60 sm:w-60 w-80"
+                                    >
+                                        <div className="absolute inset-0 bg-gray-200 flex items-end justify-center">
+                                            <div className="w-3/4 h-6 bg-gray-300 rounded-md mb-10"></div>
+                                        </div>
+                                    </div>
+
+                                ))) : (
+
+                                data?.map((service: SlideTypes, index: number) => (
+
+                                    <div
+                                        key={index}
+                                        className="relative rounded-lg mx-2 overflow-hidden shadow-lg hover:scale-105 duration-300"
+                                    >
+                                        <img
+                                            src={service?.image}
+                                            alt={service?.title}
+                                            className="w-full  h-auto object-cover"
+                                            loading="lazy"
+                                        />
+                                        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end justify-center">
+                                            <p className="text-white font-semibold text-md pb-10 hover:scale-105 duration-300">
+                                                {service.title}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))
+
+                            )
+                        }
+
                     </Carousel>
 
                 </BlurFade>

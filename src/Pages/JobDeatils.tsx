@@ -1,6 +1,6 @@
 import { Briefcase, BriefcaseBusiness, Calendar1, IndianRupee, MapPin, MousePointerClick } from "lucide-react";
 import { Link } from "react-router-dom";
-import { PostedJobList } from '@/Hooks/JobHook';
+import { SingleJobData } from '@/Hooks/JobHook';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -41,7 +41,8 @@ type Job = {
     job_location: string;
     posted_date: string;
     job_type: string;
-   
+    applied: boolean;
+
 };
 
 
@@ -51,12 +52,12 @@ export default function JobDeatils() {
 
 
     // Get Job ID
-    const { id } = useParams<{ id: string }>();
+    const { id, jobType } = useParams<{ id: string; jobType: string }>();
 
 
 
     // Get Jobs
-    const { data, isLoading, isFetching, isError } = PostedJobList();
+    const { data, isLoading, isFetching, isError } = SingleJobData(id ?? '', jobType ?? '');
 
 
 
@@ -68,18 +69,13 @@ export default function JobDeatils() {
     // Filter and set job details
     useEffect(() => {
 
-        if (data?.jobs.length > 0 && id) {
+        if (data && id) {
 
-            const matchingJob = data?.jobs?.find((job: Job) => job.id.toString() === id);
+            setJobDetails(data);
 
-            if (matchingJob) {
-
-                setJobDetails(matchingJob);
-
-            }
         }
 
-    }, [data, id]);
+    }, [data, id , jobType]);
 
 
 
@@ -128,7 +124,7 @@ export default function JobDeatils() {
 
                 {
 
-                    isLoading || isFetching || isError ?    
+                    isLoading || isFetching || isError ?
 
 
                         <div className="w-[95%] md:w-3/4 m-auto border-2 shadow-sm bg-white rounded-lg p-5 md:p-8 -mt-20 relative">
@@ -222,9 +218,24 @@ export default function JobDeatils() {
                                     {/* Apply Button */}
                                     <div className="sm:flex md:gap-4 items-end">
                                         <div>
-                                            <Link to={'/applyjob'}>
-                                                <button className="flex w-full justify-center items-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 text-white font-semibold px-5 py-2 rounded-full shadow-sm transition-transform transform hover:scale-105 duration-300 ease-in-out">
-                                                    Apply <MousePointerClick size={20} className='ms-2' />
+                                            <Link to={`/applyjob/${id}/${jobType}`}>
+                                                <button
+                                                    disabled={jobDetails?.applied}
+                                                    className={`flex w-full justify-center items-center ${jobDetails?.applied
+                                                            ? 'bg-gray-400 cursor-not-allowed'
+                                                            : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
+                                                        } focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 text-white font-semibold px-5 py-2 rounded-full shadow-sm transition-transform transform ${!jobDetails?.applied && 'hover:scale-105'
+                                                        } duration-300 ease-in-out`}
+                                                >
+                                                    {jobDetails?.applied ? (
+                                                        <>
+                                                            Applied <span className="ms-2">✓</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            Apply <MousePointerClick size={20} className='ms-2' />
+                                                        </>
+                                                    )}
                                                 </button>
                                             </Link>
                                         </div>

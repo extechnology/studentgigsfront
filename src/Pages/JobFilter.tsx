@@ -45,6 +45,7 @@ type Job = {
     job_location: string;
     posted_date: string;
     job_type: string;
+    applied: boolean;
 };
 
 
@@ -164,9 +165,10 @@ export default function JobFilter() {
                             <div className='grid sm:grid-cols-3 gap-4 grid-cols-1'>
                                 {searchResults.data.map((item: Job, index: number) => (
                                     <JobCard
-                                        company={item.company.company_name}
+                                        company={item?.company?.company_name}
+                                        applied = {item?.applied}
                                         salaryType={item?.salary_type}
-                                        jobType={item.job_type}
+                                        jobType={item?.job_type}
                                         location={item?.job_location}
                                         logo={item?.company?.logo}
                                         position={item?.job_title}
