@@ -1,8 +1,8 @@
 import { Clock, IndianRupee, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { useNavigate , useLocation } from 'react-router-dom';
-import { useAuth } from '@/Context/AuthContext';
+import { Link } from 'react-router-dom';
+
 
 
 interface JobCardProps {
@@ -15,43 +15,12 @@ interface JobCardProps {
     location: string;
     salaryType: string;
     id: number
+    applied: boolean
     employer_id: number
 }
 
 
-export default function JobCard({ id, employer_id, salaryType, company, logo, postedTime, jobType, salary, position, location }: JobCardProps) {
-
-
-    // To check if the user is authenticated
-    const { isAuthenticated } = useAuth();
-
-
-    // To navigate
-    const navigate = useNavigate();
-
-
-    // To get the current path
-    const Location = useLocation();
-
-
-    // To handle navigation
-    const handleNavigation = () => {
-        if (isAuthenticated) {
-            navigate(`/jobdeatils/${id}`);
-        } else {
-            navigate("/auth", { state: { from: Location } });
-        }
-    }
-
-
-    // To handle navigation
-    const handleNavigationEmployer = () => {
-        if (isAuthenticated) {
-            navigate(`/employerdeatils/${employer_id}`);
-        } else {
-            navigate("/auth", { state: { from: Location } });
-        }
-    }
+export default function JobCard({ id, applied, employer_id, salaryType, company, logo, postedTime, jobType, salary, position, location }: JobCardProps) {
 
 
     // Calculate time ago
@@ -79,7 +48,7 @@ export default function JobCard({ id, employer_id, salaryType, company, logo, po
                 <div className="bg-white rounded-lg p-6 sm:shadow-sm shadow-md border border-gray-200 hover:shadow-md transition-shadow">
 
 
-                    <div className='hover:cursor-pointer' onClick={handleNavigation}>
+                    <Link to={`/jobdeatils/${id}/${jobType}`}>
 
                         {/* Header - Company & Time */}
                         <div className="block justify-between items-center mb-4">
@@ -108,7 +77,11 @@ export default function JobCard({ id, employer_id, salaryType, company, logo, po
 
                         </div>
 
-                    </div>
+                        <p className={applied ? 'text-green-600 text-sm' : 'text-gray-400 text-sm'}>
+                            {applied ? 'You have already applied ✓' : 'Not applied yet'}
+                        </p>
+
+                    </Link>
 
                     {/* Position & Location */}
                     <div className="flex items-center gap-4 border-t pt-7 border-gray-200/55">
@@ -122,9 +95,9 @@ export default function JobCard({ id, employer_id, salaryType, company, logo, po
                         </div>
 
                         <div>
-                            <div className='hover:cursor-pointer' onClick={handleNavigationEmployer}>
+                            <Link to={`/employerdeatils/${employer_id}`}>
                                 <h4 className="font-semibold text-gray-900 mb-1 hover:text-green-600 hover:cursor-pointer">{company}</h4>
-                            </div>
+                            </Link>
                             <span className="text-gray-500 flex items-center"><MapPin size={16} className='mr-1' /> {location}</span>
                         </div>
 

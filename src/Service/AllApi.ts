@@ -329,9 +329,11 @@ export const GetHomeSlider = async () => {
 
 
 //GET Jobs
-export const GetJobs = async () => {
+export const GetJobs = async (id: string, job_type: string, header: object) => {
 
-    return await CommonApi("GET", `${Base_Url}/talents/`, "", "")
+    const params = new URLSearchParams({ id: id, job_type: job_type })
+
+    return await CommonApi("GET", `${Base_Url}/jobs-indication/?${params.toString()}`, "", header)
 
 }
 
@@ -359,10 +361,10 @@ export const GetLocations = async (search: string) => {
 
 
 //Search Jobs
-export const GetSearchedJobs = async (category: string, location: string, salary_type: string, header: object , isAuthenticated: boolean , page: number) => {
+export const GetSearchedJobs = async (category: string, location: string, salary_type: string, header: object, isAuthenticated: boolean, page: number) => {
 
-    
-    const params = new URLSearchParams({ category: category, location: location, salary_type: salary_type , page: page.toString() })
+
+    const params = new URLSearchParams({ category: category, location: location, salary_type: salary_type, page: page.toString() })
 
     if (isAuthenticated) {
 
@@ -371,5 +373,31 @@ export const GetSearchedJobs = async (category: string, location: string, salary
     }
 
     return await CommonApi("GET", `${Base_Url}/job-search/?${params.toString()}`, "", "")
+
+}
+
+
+
+// Appply Job
+export const PostApplyJob = async (data: FormData, header: object) => {
+
+    return await CommonApi("POST", `${Base_Url}/job-application/`, data, header)
+
+}
+
+
+
+//GET Poplar Jobs
+export const GetPopularJobs = async () => {
+
+    return await CommonApi("GET", `${Base_Url}/popular-jobs/`, "", "")
+
+}
+
+
+//GET Trending Jobs
+export const GetTrendingJobs = async () => {
+
+    return await CommonApi("GET", `${Base_Url}/trending-job-slider/`, "", "")
 
 }

@@ -47,15 +47,16 @@ const Hero = () => {
             // Loading skelton
             <div className="relative w-full h-full animate-pulse">
 
+              {/* Background layers */}
               <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700"></div>
               <div className="absolute inset-0 bg-black/40"></div>
 
               {/* Loading text */}
-              <div className="absolute sm:top-72 sm:left-16 top-56 left-5 text-white space-y-3">
-                <div className="h-10 w-60 bg-gray-400/50 rounded-lg"></div>
-                <div className="h-5 w-96 bg-gray-400/50 rounded-lg"></div>
-                <div className="h-5 w-80 bg-gray-400/50 rounded-lg"></div>
-                <div className="mt-6 w-40 h-10 bg-orange-400/50 rounded-md"></div>
+              <div className="absolute top-48 sm:top-72 left-4 sm:left-16 text-white space-y-3 w-full max-w-xs sm:max-w-md lg:max-w-lg">
+                <div className="h-10 w-full max-w-sm bg-gray-400/50 rounded-lg"></div>
+                <div className="h-5 w-full max-w-md bg-gray-400/50 rounded-lg"></div>
+                <div className="h-5 w-full max-w-sm bg-gray-400/50 rounded-lg"></div>
+                <div className="mt-6 w-32 sm:w-40 h-10 bg-orange-400/50 rounded-md"></div>
               </div>
 
               {/* Pagination Dots */}
@@ -64,7 +65,9 @@ const Hero = () => {
                   <div key={i} className="w-2 h-2 rounded-full bg-gray-400"></div>
                 ))}
               </div>
+
             </div>
+
 
 
             :

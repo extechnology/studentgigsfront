@@ -10,13 +10,14 @@ const Header = lazy(() => import("./Components/Common/Header.tsx"))
 const Footer = lazy(() => import("./Components/Common/Footer.tsx"))
 const Contact = lazy(() => import("./Pages/Contact.tsx"))
 const UserProfile = lazy(() => import("./Pages/UserProfile.tsx"))
-const EmployerList = lazy(() => import("./Pages/EmployerList.tsx"))
+// const EmployerList = lazy(() => import("./Pages/EmployerList.tsx"))
 const EmployerDeatils = lazy(() => import("./Pages/EmployerDeatils.tsx"))
 const Settings = lazy(() => import("./Pages/Settings.tsx"))
 const NotFound = lazy(() => import("./Pages/NotFound.tsx"))
 const Auth = lazy(() => import("./Pages/Auth.tsx"))
 const JobFilter = lazy(() => import("./Pages/JobFilter.tsx"))
 const JobDeatils = lazy(() => import("./Pages/JobDeatils.tsx"))
+const ApplyJob = lazy(() => import("./Pages/ApplyJob.tsx"))
 
 
 
@@ -30,8 +31,8 @@ function App() {
 
 
   // To check if the user is authenticated
-  const {isAuthenticated} = useAuth()
-    
+  const { isAuthenticated } = useAuth()
+
 
 
   // To hide the header and footer
@@ -58,7 +59,7 @@ function App() {
 
 
   // Protected Route Component
-  const ProtectedRoute = ({ children } : any) => {
+  const ProtectedRoute = ({ children }: any) => {
 
     return isAuthenticated ? children : <Navigate to="/auth" state={{ from: location }} />
 
@@ -82,19 +83,21 @@ function App() {
 
           <Route path="/contact" element={<Contact />} />
 
-          <Route path="/userprofile" element={ <ProtectedRoute> <UserProfile /> </ProtectedRoute>} />
-
-          <Route path="/employerlist" element={<EmployerList />} />
-
-          <Route path="/employerdeatils/:id" element={<EmployerDeatils />} />
-
-          <Route path="/settings" element={ <ProtectedRoute> <Settings /> </ProtectedRoute>} />
-
           <Route path="/auth" element={<Auth />} />
 
           <Route path="/jobfilter" element={<JobFilter />} />
 
-          <Route path="/jobdeatils/:id" element={<JobDeatils />} />
+          {/* <Route path="/employerlist" element={<EmployerList />} /> */}
+
+          <Route path="/userprofile" element={<ProtectedRoute> <UserProfile /> </ProtectedRoute>} />
+
+          <Route path="/employerdeatils/:id" element={<ProtectedRoute> <EmployerDeatils /> </ProtectedRoute>} />
+
+          <Route path="/settings" element={<ProtectedRoute> <Settings /> </ProtectedRoute>} />
+
+          <Route path="/applyjob/:id/:jobType" element={<ProtectedRoute> <ApplyJob /> </ProtectedRoute>} />
+
+          <Route path="/jobdeatils/:id/:jobType" element={<ProtectedRoute> <JobDeatils /> </ProtectedRoute>} />
 
         </Routes>
 
