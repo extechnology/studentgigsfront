@@ -115,6 +115,7 @@ export default function Auth() {
         // Handle object-based errors (like field validation errors)
         Object.entries(errors).forEach(([key, value]) => {
           if (Array.isArray(value)) {
+            console.log(key);
             value.forEach((message: string) => toast.error(message));
           } else {
             toast.error(value as string);
@@ -198,6 +199,7 @@ export default function Auth() {
         // Handle object-based errors (like field validation errors)
         Object.entries(errors).forEach(([key, value]) => {
           if (Array.isArray(value)) {
+            console.log(key);
             value.forEach((message: string) => toast.error(message));
           } else {
             toast.error(value as string);
