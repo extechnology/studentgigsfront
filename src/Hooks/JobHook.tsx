@@ -214,7 +214,7 @@ export const ApplyJob = () => {
 
         },
         onError: (error) => {
-            console.error("Failed to add Job Category:", error);
+            console.error("Failed to Apply Job:", error);
         },
         onSuccess: () => {
             queryclient.invalidateQueries({ queryKey: ["postedJobs"] });

@@ -68,6 +68,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const login = (token: string) => {
         localStorage.setItem("token", token);
         setIsAuthenticated(true);
+        window.dispatchEvent(new Event("storage")); // Manually trigger storage event
     };
 
 
@@ -76,6 +77,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const logout = () => {
         localStorage.removeItem("token");
         setIsAuthenticated(false);
+        window.dispatchEvent(new Event("storage")); // Ensure logout syncs across tabs
     };
 
 
