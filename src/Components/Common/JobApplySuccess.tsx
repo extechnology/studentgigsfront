@@ -5,20 +5,6 @@ import { motion } from "framer-motion";
 
 export default function JobApplicationSuccess() {
 
-
-    // Correctly typed animation variants
-    const floatingAnimation = {
-        animate: {
-            y: [0, -10, 0],
-            transition: {
-                duration: 4,
-                repeat: Infinity,
-                repeatType: "reverse" as const,
-                ease: "easeInOut",
-            },
-        },
-    };
-
     return (
         <div className="min-h-screen    w-full bg-gradient-to-br from-blue-50 to-purple-50 relative overflow-hidden flex items-center justify-center p-4 sm:p-6">
             {/* Animated background SVG elements */}
