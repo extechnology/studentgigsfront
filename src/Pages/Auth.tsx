@@ -95,28 +95,36 @@ export default function Auth() {
 
     // Function to handle and display errors
     const handleErrors = (errors: any) => {
-
-      if (errors) {
-
-        Object.entries(errors).forEach(([key, value]) => {
-
-          if (Array.isArray(value)) {
-            value.forEach((message: string) => {
-              toast.error(`${message}`);
-            });
-          } else {
-            toast.error(`${key}: ${value}`);
-          }
-
-        })
-
-      } else {
-
-        toast.error("Something went wrong. Please try again.")
-
+      if (!errors) {
+        toast.error("Something went wrong. Please try again.");
+        return;
       }
 
-    }
+      if (typeof errors === "string") {
+        // If the error is a simple string, show it directly
+        toast.error(errors);
+      } else if (errors.detail) {
+        // Handle specific "detail" key errors
+        toast.error(errors.detail);
+      } else if (Array.isArray(errors)) {
+        // Handle an array of errors
+        errors.forEach((message: string) => {
+          toast.error(message);
+        });
+      } else if (typeof errors === "object") {
+        // Handle object-based errors (like field validation errors)
+        Object.entries(errors).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            value.forEach((message: string) => toast.error(message));
+          } else {
+            toast.error(value as string);
+          }
+        });
+      } else {
+        toast.error("An unknown error occurred.");
+      }
+    };
+
 
   }
 
@@ -170,28 +178,36 @@ export default function Auth() {
 
     // Function to handle and display errors
     const handleErrors = (errors: any) => {
-
-      if (errors) {
-
-        Object.entries(errors).forEach(([value]) => {
-
-          if (Array.isArray(value)) {
-            value.forEach((message: string) => {
-              toast.error(`${message}`);
-            });
-          } else {
-            toast.error(`${value}`);
-          }
-
-        })
-
-      } else {
-
-        toast.error("Something went wrong. Please try again.")
-
+      if (!errors) {
+        toast.error("Something went wrong. Please try again.");
+        return;
       }
 
-    }
+      if (typeof errors === "string") {
+        // If the error is a simple string, show it directly
+        toast.error(errors);
+      } else if (errors.detail) {
+        // Handle specific "detail" key errors
+        toast.error(errors.detail);
+      } else if (Array.isArray(errors)) {
+        // Handle an array of errors
+        errors.forEach((message: string) => {
+          toast.error(message);
+        });
+      } else if (typeof errors === "object") {
+        // Handle object-based errors (like field validation errors)
+        Object.entries(errors).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            value.forEach((message: string) => toast.error(message));
+          } else {
+            toast.error(value as string);
+          }
+        });
+      } else {
+        toast.error("An unknown error occurred.");
+      }
+    };
+
 
   }
 
@@ -298,7 +314,7 @@ export default function Auth() {
           <div className="flex w-full flex-col md:w-1/2">
 
             <div className="flex justify-center pt-12 md:-mb-24 md:justify-start md:pl-12">
-              <Link to="/"  className="border-b-gray-700 border-b-4 pb-2 text-2xl font-bold text-gray-900 sm:mb-28 mb-3"> StudentsGig </Link>
+              <Link to="/" className="border-b-gray-700 border-b-4 pb-2 text-2xl font-bold text-gray-900 sm:mb-28 mb-3"> StudentsGig </Link>
             </div>
 
 

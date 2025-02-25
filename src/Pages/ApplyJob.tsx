@@ -203,12 +203,12 @@ const JobApplicationForm = () => {
     };
 
 
-
+    window.scrollTo({ top: 0, behavior: 'smooth', });
 
     return (
 
 
-        <div className="min-h-screen to-white p-0 sm:p-6 mt-24 sm:mt-16 bg-slate-50/10">
+        <div className="min-h-screen to-white p-0 sm:py-3 mt-24 sm:mt-16 bg-slate-50/10">
 
             {
 
