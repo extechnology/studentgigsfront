@@ -401,3 +401,21 @@ export const GetTrendingJobs = async () => {
     return await CommonApi("GET", `${Base_Url}/trending-job-slider/`, "", "")
 
 }
+
+
+//GET Job Title
+export const GetJobTitle = async () => {
+
+    return await CommonApi("GET", `${Base_Url}/job-title/`, "", "")
+
+}
+
+
+//Post new Job Title
+export const PostNewJobTitle = async (job_title: string) => {
+
+    const params = new URLSearchParams({ job_title: job_title })
+
+    return await CommonApi("POST", `${Base_Url}/job-title/?${params.toString()}`, "", "")
+
+}

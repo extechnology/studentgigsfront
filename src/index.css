@@ -40,7 +40,7 @@ html {
 
 /* For WebKit browsers */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
   /* width of the scrollbar */
 }
 

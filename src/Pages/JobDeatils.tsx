@@ -75,7 +75,7 @@ export default function JobDeatils() {
 
         }
 
-    }, [data, id , jobType]);
+    }, [data, id, jobType]);
 
 
 
@@ -174,7 +174,7 @@ export default function JobDeatils() {
 
                                         <div>
                                             <img
-                                                src={jobDetails?.company?.logo}
+                                                src={jobDetails?.company?.logo ? jobDetails?.company?.logo : 'https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg'}
                                                 alt="logo"
                                                 loading="lazy"
                                                 className=" md:w-[80px] w-[70px] shadow-lg rounded-full"
@@ -201,7 +201,9 @@ export default function JobDeatils() {
 
                                             </div>
 
-                                            <h2 className="font-bold text-md">{jobDetails?.company?.company_name}</h2>
+                                            <Link to={`/employerdeatils/${jobDetails?.company?.id}`} className="hover:text-emerald-600">
+                                                <h2 className="font-bold text-md">{jobDetails?.company?.company_name}</h2>
+                                            </Link>
 
                                             <div className="flex gap-1">
                                                 <i className="fas fa-map-marker-alt pt-1 text-gray-700"></i>
@@ -222,8 +224,8 @@ export default function JobDeatils() {
                                                 <button
                                                     disabled={jobDetails?.applied}
                                                     className={`flex w-full justify-center items-center ${jobDetails?.applied
-                                                            ? 'bg-gray-400 cursor-not-allowed'
-                                                            : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
+                                                        ? 'bg-gray-400 cursor-not-allowed'
+                                                        : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
                                                         } focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 text-white font-semibold px-5 py-2 rounded-full shadow-sm transition-transform transform ${!jobDetails?.applied && 'hover:scale-105'
                                                         } duration-300 ease-in-out`}
                                                 >

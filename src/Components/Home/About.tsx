@@ -10,7 +10,7 @@ export default function About() {
 
             <main className=" px-0 md:px-32 py-5 min-h-screen">
 
-                <BlurFade delay={0.25} duration={0.5} inView>
+                <BlurFade delay={0.25} duration={0.5} inView className='w-full flex justify-center items-center'>
 
                     <div className="grid md:grid-cols-12 grid-cols-1 items-center gap-[80px] w-full max-w-7xl p-2">
 

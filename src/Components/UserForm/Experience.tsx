@@ -10,7 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Checkbox } from "../ui/checkbox";
 import { GetExperience, AddExperience, DeleteExperience } from "@/Hooks/UserProfile";
 import toast from "react-hot-toast";
-
+import { JObTittles, PostJobTittle } from "@/Hooks/Utils";
 
 
 
@@ -30,6 +30,13 @@ export default function Experience() {
     // Get Experience
     const { data, isLoading, isError, isFetching } = GetExperience()
 
+
+    // Post Job Tittle
+    const { mutate: PostJobTittleMutate } = PostJobTittle();
+
+
+    // Get Job Title
+    const { data: JobTitle, isLoading: JobTitleLoading } = JObTittles()
 
 
     // Add Experience
@@ -138,6 +145,31 @@ export default function Experience() {
     };
 
 
+
+
+
+    // Function to handle new job title creation
+    const handleCreate = async (inputValue: string) => {
+
+        PostJobTittleMutate(inputValue, {
+
+            onSuccess: (response) => {
+
+                if (response.status >= 200 && response.status < 300) {
+
+                    toast.success("New Job Tittle Added Successfully");
+
+                } else {
+
+                    toast.error("Something went wrong. Please try again.");
+
+                }
+            },
+
+        })
+
+    };
+
     return (
 
 
@@ -204,13 +236,18 @@ export default function Experience() {
                                             render={({ field: { onChange, value, ref } }) => (
                                                 <CreatableSelect
                                                     ref={ref}
-                                                    options={[]}
-                                                    value={value ? { label: value, value: value } : null}
-                                                    onChange={(option: any) => onChange(option?.label)}
+                                                    options={JobTitle}
+                                                    value={value ? JobTitle?.find((option: any) => option.label === value) : null}
+                                                    onChange={(selectedOption) => onChange(selectedOption?.label)}
                                                     placeholder="Search Your Job Title"
                                                     isSearchable={true}
                                                     className="basic-single"
                                                     isClearable={true}
+                                                    onCreateOption={(inputValue) => {
+                                                        handleCreate(inputValue);
+                                                        onChange(inputValue); // Set the value immediately
+                                                    }}
+                                                    isLoading={JobTitleLoading}
                                                     classNamePrefix="select"
                                                 />
                                             )}
@@ -430,7 +467,7 @@ export default function Experience() {
                                                         {item?.exp_working ? "Present" : formatDate(item?.exp_end_date)}
                                                     </span>
                                                     <span className="ml-2 text-gray-400">
-                                                     {calculateDuration(item?.exp_start_date, item?.exp_end_date)}
+                                                        {calculateDuration(item?.exp_start_date, item?.exp_end_date)}
                                                     </span>
                                                 </div>
 
