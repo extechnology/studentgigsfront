@@ -194,7 +194,7 @@ export default function EmployerDeatils() {
 
                                             <div>
                                                 <img
-                                                    src={EmployerDetails?.logo}
+                                                    src={EmployerDetails?.logo ? EmployerDetails?.logo : "https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg"}
                                                     alt="logo"
                                                     loading="lazy"
                                                     className=" md:w-[80px] w-[60px] shadow-lg rounded-full"
@@ -289,6 +289,7 @@ export default function EmployerDeatils() {
 
                                                     <CompanyOpening
                                                         companyname={EmployerDetails?.company?.company_name}
+                                                        job_id={job?.id}
                                                         jobtype={job?.job_type}
                                                         posteddate={job?.posted_date}
                                                         postion={job?.job_title}

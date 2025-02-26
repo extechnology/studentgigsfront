@@ -1,6 +1,7 @@
 import { MapPin, MousePointerClick } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 
@@ -14,11 +15,12 @@ interface Props {
     logo: string
     jobtype: string
     loaction: string
+    job_id : number
 
 }
 
 
-export default function CompanyOpening({ postion, posteddate, salary, salary_Type, companyname, logo, jobtype, loaction }: Props) {
+export default function CompanyOpening({ job_id, postion, posteddate, salary, salary_Type, companyname, logo, jobtype, loaction }: Props) {
 
 
 
@@ -50,13 +52,17 @@ export default function CompanyOpening({ postion, posteddate, salary, salary_Typ
 
                         <div className="border p-6 rounded-lg  hover:scale-105 duration-300 shadow-sm">
 
-                            <div className="flex gap-10 items-center justify-center">
+                            <div className="flex gap-10 items-center justify-between">
 
                                 <h2 className="font-semibold text-xl pb-3">{postion}</h2>
 
-                                <button className="flex items-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 text-white font-semibold px-3 py-2 rounded-full shadow-sm transition-transform transform hover:scale-105 duration-300 ease-in-out">
-                                    Apply <MousePointerClick size={20} className='ms-2' />
-                                </button>
+                                <Link to={`/jobdeatils/${job_id}/${jobtype}`}>
+
+                                    <button className="flex items-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 text-white font-semibold px-3 py-2 rounded-full shadow-sm transition-transform transform hover:scale-105 duration-300 ease-in-out">
+                                        Apply <MousePointerClick size={20} className='ms-2' />
+                                    </button>
+
+                                </Link>
 
                             </div>
 
@@ -83,7 +89,7 @@ export default function CompanyOpening({ postion, posteddate, salary, salary_Typ
 
                             <div className="flex pt-5">
                                 <img
-                                    src={logo ? logo : 'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'}
+                                    src={logo ? logo : 'https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg'}
                                     className="w-[50px] shadow-md rounded-full"
                                     alt="logo"
                                 />

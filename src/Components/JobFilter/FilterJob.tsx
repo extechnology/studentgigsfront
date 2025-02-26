@@ -32,7 +32,11 @@ const compensationTypes: Option[] = [
     { label: "Daily Rate", value: "daily" },
     { label: "Monthly Salary", value: "monthly" },
     { label: "Annual Salary", value: "annual" },
-    { label: "Project Based", value: "project" }
+    { label: "Project Based", value: "project" },
+    { label: "All-Day Gigs", value: "All-Day Gigs" },
+    { label: "Weekend Gigs", value: "Weekend Gigs" },
+    { label: "Vacation Gigs", value: "Vacation Gigs" }
+    
 ];
 
 

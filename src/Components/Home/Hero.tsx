@@ -114,7 +114,7 @@ const Hero = () => {
                             {activeIndex === index && (
 
                               // display text
-                              <div className="absolute sm:top-72 sm:left-16 top-56 left-5  text-white">
+                              <div className="absolute  sm:top-72 sm:left-16 top-56 left-5  text-white">
 
                                 <motion.h1
                                   initial={{ opacity: 0, y: 20 }}
@@ -143,7 +143,7 @@ const Hero = () => {
                                   transition={{ duration: 0.5, delay: 0.4 }}
                                   className="mt-8 px-8 py-3 flex justify-center items-center bg-orange-500 text-white rounded-md font-semibold hover:bg-orange-600 transition-colors"
                                 >
-                                  <Link to="/findtalent" className='flex items-center'> Explore <Telescope size={20} className="ml-2" /></Link>
+                                  <Link to="/jobfilter" className='flex items-center'> Explore <Telescope size={20} className="ml-2" /></Link>
                                 </motion.button>
 
                               </div>

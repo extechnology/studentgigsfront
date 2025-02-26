@@ -88,7 +88,7 @@ export default function JobCard({ id, applied, employer_id, salaryType, company,
 
                         <div className="w-14 h-14  overflow-hidden shadow-md border border-gray-50 rounded-full">
                             <img
-                                src={logo}
+                                src={logo ? logo : 'https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg'}
                                 alt={company}
                                 className="w-full h-full object-cover"
                             />
