@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Building, Contact, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
+import { Contact, Crown, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
 import {
   Dialog,
   Disclosure,
@@ -308,6 +308,25 @@ export default function Header() {
 
 
 
+                    {/* Premium */}
+                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
+
+                      <div className="flex-auto">
+
+                        <Link to={'/plans'} className="font-semibold text-gray-900 flex items-center">
+
+                          <Crown size={20} className="me-2" />
+
+                          Premium
+
+                        </Link>
+
+                      </div>
+
+                    </div>
+
+
+
 
                     {/* Login Logout */}
                     {
@@ -505,6 +524,19 @@ export default function Header() {
                                     </div>
                                   </Link>
 
+
+                                  {/* Premium */}
+                                  <Link
+                                    to="/plans"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                                  >
+                                    <div className="flex items-center space-x-2">
+                                      <Crown className="h-5 w-5" />
+                                      <span>Premium</span>
+                                    </div>
+                                  </Link>
+
                                   {/* Login/Logout */}
                                   {LoginStatus ? (
                                     <Link
@@ -559,7 +591,7 @@ export default function Header() {
 
                           {/* Contact */}
                           <Link
-                            to="/"
+                            to="/contact"
                             onClick={() => setMobileMenuOpen(false)}
                             className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                           >
@@ -569,15 +601,14 @@ export default function Header() {
 
 
                           {/* Companies */}
-                          <Link
+                          {/* <Link
                             to="/employerlist"
                             onClick={() => setMobileMenuOpen(false)}
                             className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                           >
                             <Building className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
                             <span>Companies</span>
-                          </Link>
-
+                          </Link> */}
 
 
                         </div>
