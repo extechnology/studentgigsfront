@@ -254,14 +254,14 @@ const JobApplicationForm = () => {
                                     <span className="text-green-600 font-medium text-sm">Job Application</span>
 
                                     <h1 className="text-3xl font-bold mt-2 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                                        {jobDetails?.job_title}
+                                        {jobDetails?.job_title.toLocaleUpperCase()}
                                     </h1>
 
                                     <div className="mt-4 flex flex-wrap gap-4">
 
                                         <div className="flex items-center text-gray-600">
                                             <Building2 className="w-4 h-4 mr-2 text-green-600" />
-                                            <span>{jobDetails?.company?.company_name}.</span>
+                                            <span>{jobDetails?.company?.company_name.toUpperCase()}</span>
                                         </div>
 
                                         <div className="flex items-center text-gray-600">

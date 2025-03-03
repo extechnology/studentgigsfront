@@ -85,11 +85,11 @@ const Footer = () => {
                 type="email"
                 id="newsletter"
                 placeholder="Your email"
-                className="p-2 flex-1 rounded-l-md text-black bg-gray-100"
+                className="p-1 sm:p-2 flex-1 rounded-l-md text-black bg-gray-100"
               />
               <button
                 type="submit"
-                className="bg-blue-500 px-4 py-2 rounded-r-md hover:bg-blue-600"
+                className="bg-blue-500 px-2 sm:px-4 py-2 rounded-r-md hover:bg-blue-600"
               >
                 Subscribe
               </button>

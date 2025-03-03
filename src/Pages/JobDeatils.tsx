@@ -99,7 +99,7 @@ export default function JobDeatils() {
 
                         {/* Background image */}
                         <div
-                            className="absolute inset-0 z-0 bg-[url('https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?cs=srgb&dl=pexels-seven11nash-380769.jpg&fm=jpg')] bg-cover bg-no-repeat bg-center opacity-20"
+                            className="absolute inset-0 z-0 bg-[url('/Apply-Job-Img.jpg')] bg-cover bg-no-repeat bg-center opacity-20"
                             aria-hidden="true"
                         />
 
@@ -166,29 +166,31 @@ export default function JobDeatils() {
                             {/* Job Deatils */}
                             <div>
 
-                                <div className="-mt-14 flex flex-col sm:flex-row  md:p-8 p-5 justify-between w-[95%] md:w-3/4 m-auto border-2 shadow-sm bg-white rounded-lg relative top-[-40px] gap-5 sm:gap-0">
+                                <div className="-mt-24 sm:-mt-14 flex flex-col sm:flex-row  md:p-8 p-5 justify-between w-[95%] md:w-3/4 m-auto border-2 shadow-sm bg-white rounded-lg relative top-[-40px] gap-5 sm:gap-0">
 
 
                                     {/* Profile Deatils */}
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-3 flex-col sm:flex-row">
 
-                                        <div>
+
+                                        <div className="rounded-full shadow-lg border border-gray-300">
                                             <img
-                                                src={jobDetails?.company?.logo ? jobDetails?.company?.logo : 'https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg'}
+                                                src={jobDetails?.company?.logo ? jobDetails?.company?.logo : '/Employer-Default.png'}
                                                 alt="logo"
                                                 loading="lazy"
-                                                className=" md:w-[80px] w-[70px] shadow-lg rounded-full"
+                                                className=" md:w-[80px] md:h-[80px] w-[70px] h-[70px] shadow-lg rounded-full"
                                             />
                                         </div>
 
 
                                         <div className="content-center pl-3">
 
-                                            <div className="flex flex-col sm:flex-row justify-between gap-2">
 
-                                                <h2 className="font-semibold text-xl text-gray-700 me-3">{jobDetails?.job_title}</h2>
+                                            <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start sm:justify-between gap-2">
 
-                                                <span className="px-3 py-1 bg-emerald-200 text-gray-600 font-bold rounded-full text-sm me-3">
+                                                <h2 className="font-semibold text-xl text-gray-900 me-3 text-center">{jobDetails?.job_title.toUpperCase()}</h2>
+
+                                                <span className="px-3 py-1 bg-emerald-200 text-gray-600 font-bold rounded-full text-sm me-3 w-16 flex">
                                                     {jobDetails?.job_type}
                                                 </span>
 
@@ -197,13 +199,16 @@ export default function JobDeatils() {
                                                     <IndianRupee size={16} className="text-emerald-500" />
 
                                                     <span className="font-semibold">{jobDetails?.pay_structure} - {jobDetails?.salary_type}</span>
+
                                                 </div>
 
                                             </div>
 
+
                                             <Link to={`/employerdeatils/${jobDetails?.company?.id}`} className="hover:text-emerald-600">
-                                                <h2 className="font-bold text-md">{jobDetails?.company?.company_name}</h2>
+                                                <h2 className="font-bold text-md text-gray-700 text-center sm:text-start hover:text-emerald-600">{jobDetails?.company?.company_name.toUpperCase()}</h2>
                                             </Link>
+
 
                                             <div className="flex gap-1">
                                                 <i className="fas fa-map-marker-alt pt-1 text-gray-700"></i>
@@ -261,107 +266,186 @@ export default function JobDeatils() {
                                     </h1>
 
 
-                                    <p className="text-gray-800 font-bold mb-3 flex items-center"> <BriefcaseBusiness size={18} className="me-2 text-gray-600" />  Postion : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_title}</span></p>
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center text-sm sm:text-[1rem]"> <BriefcaseBusiness size={18} className="me-2 text-gray-600" />  Postion : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_title.toUpperCase()}</span></p>
 
 
-                                    <p className="text-gray-800 font-bold mb-3 flex items-center"><MapPin size={18} className="me-2 text-gray-600" /> Location  : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_location}</span>
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center text-sm sm:text-[1rem]"><MapPin size={18} className="me-2 text-gray-600" /> Location  : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_location}</span>
 
                                     </p>
 
 
-                                    <p className="text-gray-800 font-bold mb-3 flex items-center"> <Briefcase size={18} className="me-2 text-gray-600" /> Job Type  : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_type}</span></p>
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center text-sm sm:text-[1rem]"> <Briefcase size={18} className="me-2 text-gray-600" /> Job Type  : <span className="font-semibold text-gray-500 ms-2">{jobDetails?.job_type}</span></p>
 
 
-                                    <p className="text-gray-800 font-bold mb-3 flex items-center"><Calendar1 className="me-2 text-gray-600" size={18} /> Age Preference <span className="font-semibold text-gray-500 ms-2">{jobDetails?.age_requirement_min}yr - {jobDetails?.age_requirement_max}yr</span></p>
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center text-sm sm:text-[1rem]"><Calendar1 className="me-2 text-gray-600" size={18} /> Age Preference <span className="font-semibold text-gray-500 ms-2">{jobDetails?.age_requirement_min}yr - {jobDetails?.age_requirement_max}yr</span></p>
 
 
-                                    <p className="text-gray-800 font-bold mb-3 flex items-center"> <IndianRupee size={18} className="me-2 text-gray-600" /> Pay: <span className="font-semibold text-gray-500 ms-2">₹{jobDetails?.pay_structure} - {jobDetails?.salary_type}</span></p>
+                                    <p className="text-gray-800 font-bold mb-3 flex items-center text-sm sm:text-[1rem]"> <IndianRupee size={18} className="me-2 text-gray-600" /> Pay: <span className="font-semibold text-gray-500 ms-2">₹{jobDetails?.pay_structure} - {jobDetails?.salary_type}</span></p>
 
 
                                     {/* About */}
-                                    <div className="w-full mx-auto bg-white rounded-lg pb-10 pt-5">
+                                    <div className="w-full mx-auto bg-white rounded-lg pb-10 pt-5 text-md">
                                         <style>
                                             {`
-          .job-description-content {
-            color: #374151;
-            line-height: 1.6;
-          }
+    .job-description-content {
+      color: #374151;
+      line-height: 1.6;
+      padding: 0rem;
+    }
 
-          .job-description-content h1 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #111827;
-          }
+    .job-description-content h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #111827;
+    }
 
-          .job-description-content h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: #1F2937;
-          }
+    .job-description-content h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1F2937;
+    }
 
-          .job-description-content h3 {
-            font-size: 1.25rem;
-            font-weight: 500;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: #374151;
-          }
+    .job-description-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #374151;
+    }
 
-          .job-description-content p {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-          }
+    .job-description-content p {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
 
-          .job-description-content .section {
-            margin-bottom: 2rem;
-          }
+    .job-description-content .section {
+      margin-bottom: 2rem;
+    }
 
-          .job-description-content ul {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            margin-left: 1.5rem;
-          }
+    .job-description-content ul,
+    .job-description-content ol {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      margin-left: 1.5rem;
+    }
 
-          .job-description-content ul li {
-            list-style-type: disc;
-            list-style-position: outside;
-            padding-left: 0.5rem;
-            margin-bottom: 0.5rem;
-          }
+    .job-description-content ul li,
+    .job-description-content ol li {
+      list-style-position: outside;
+      padding-left: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
 
-          .job-description-content ol {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            margin-left: 1.5rem;
-          }
+    .job-description-content ul li {
+      list-style-type: disc;
+    }
 
-          .job-description-content ol li {
-            list-style-type: decimal;
-            list-style-position: outside;
-            padding-left: 0.5rem;
-            margin-bottom: 0.5rem;
-          }
+    .job-description-content ol li {
+      list-style-type: decimal;
+    }
 
-          .job-description-content strong {
-            font-weight: 600;
-            color: #1F2937;
-          }
+    .job-description-content strong {
+      font-weight: 600;
+      color: #1F2937;
+    }
 
-          .job-description-content .keywords {
-            margin-top: 2rem;
-            font-size: 0.875rem;
-            font-style: italic;
-            color: #6B7280;
-          }
+    .job-description-content .keywords {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      font-style: italic;
+      color: #6B7280;
+    }
 
-          .job-description-content div.section + div.section {
-            margin-top: 2rem;
-          }
-        `}
+    .job-description-content div.section + div.section {
+      margin-top: 2rem;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .job-description-content {
+        padding: 0rem;
+      }
+
+      .job-description-content h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .job-description-content h2 {
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+      }
+
+      .job-description-content h3 {
+        font-size: 1.125rem;
+        margin-top: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+
+      .job-description-content ul,
+      .job-description-content ol {
+        margin-left: 1rem;
+      }
+
+      .job-description-content .section {
+        margin-bottom: 1.5rem;
+      }
+
+      .job-description-content .keywords {
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .job-description-content {
+        padding: 0.5rem;
+        
+      }
+
+      .job-description-content h1 {
+        font-size: 1.375rem;
+        font-weight: 700;
+      }
+
+      .job-description-content h2 {
+        font-size: 1.125rem;
+        font-weight: 700;
+      }
+
+      .job-description-content h3 {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .job-description-content p {
+        font-size: 0.875rem;
+        text-align: justify;
+        hyphens: auto;
+        text-justify: inter-word;
+        word-spacing: -0.5px;
+        max-width: 70ch;
+        letter-spacing: 0.2px;
+      }
+
+      .job-description-content ul,
+      .job-description-content ol {
+        margin-left: 0.75rem;
+      }
+
+      .job-description-content .keywords {
+        font-size: 0.7rem;
+      }
+    }
+  `}
                                         </style>
+
                                         <div
                                             className="job-description-content prose prose-lg max-w-none"
                                             dangerouslySetInnerHTML={jobDetails?.job_description ? { __html: jobDetails.job_description } : undefined}

@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, Building2, FileText, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Settings} from "lucide-react";
+import { BriefcaseBusiness, Building2, FileText, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import PersonalInfoLoader from "@/Components/Common/PersonalInfoLoader";
@@ -157,6 +157,30 @@ export default function UserProfile() {
     window.scrollTo({ top: 0, behavior: 'smooth', });
 
 
+
+    // Calculate Duration
+    const calculateDuration = (startDate: any, endDate: any) => {
+        const start = new Date(startDate);
+        const end = endDate ? new Date(endDate) : new Date();
+        const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+        const years = Math.floor(months / 12);
+        const remainingMonths = months % 12;
+
+        if (years === 0) return `${remainingMonths} months`;
+        if (remainingMonths === 0) return `${years} yr${years > 1 ? 's' : ''}`;
+        return `${years} yr${years > 1 ? 's' : ''} ${remainingMonths} months`;
+    };
+
+
+    // Format Date
+    const formatDate = (date: any) => {
+        if (!date) return 'Present';
+        const d = new Date(date);
+        return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    };
+
+
+
     return (
 
 
@@ -189,7 +213,7 @@ export default function UserProfile() {
                                         {/* Banner Image */}
                                         <div className="relative group h-[20vh] md:h-[25vh] lg:h-[40vh] rounded-lg  md:rounded-2xl lg:rounded-3xl">
                                             <img
-                                                src={UserData?.profile?.cover_img || "https://www.paxus.com.au/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbk1HIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0725fc0328bc750a0fcc18a18ffde9bcca5b8dff/img-placeholder.jpg"}
+                                                src={UserData?.profile?.cover_img || "/Cover-def.jpg"}
                                                 alt="banner"
                                                 loading="lazy"
                                                 className="w-full h-full object-cover rounded-lg md:rounded-2xl lg:rounded-3xl"
@@ -208,7 +232,7 @@ export default function UserProfile() {
                                                     <div className="relative group">
                                                         <div className="relative w-24 h-24 md:w-32 md:h-32">
                                                             <img
-                                                                src={UserData?.profile?.profile_img ?? "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="}
+                                                                src={UserData?.profile?.profile_img ?? "/Profile-deaf.jpg"}
                                                                 alt="profile"
                                                                 loading="lazy"
                                                                 className="w-full h-full rounded-full object-cover border-4 border-white shadow-lg"
@@ -370,7 +394,7 @@ export default function UserProfile() {
                                                             </button>
 
                                                         </div>
-                                                        
+
                                                     }
 
                                                 </div>
@@ -473,30 +497,36 @@ export default function UserProfile() {
 
                                         {
                                             UserData?.experiences && UserData.experiences.length > 0 ? (
-                                                <div className="grid grid-cols-1 md:grid-cols-3 py-5 gap-10">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 py-5 gap-10">
                                                     {UserData?.experiences.map((item: any, index: number) => (
-                                                        <div className="flex gap-5" key={index}>
-                                                            <div>
+                                                        <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center" key={index}>
+                                                            {/* Company Logo */}
+                                                            <div className="flex-shrink-0">
                                                                 <img
-                                                                    className="w-14 h-14 object-cover rounded-full"
-                                                                    src="https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg"
+                                                                    className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-full"
+                                                                    src="/Exp-Deaf.png"
                                                                     alt="company-logo"
                                                                     loading="lazy"
                                                                 />
                                                             </div>
 
-                                                            <div>
-                                                                <div className="flex items-center">
-                                                                    <h1 className="text-xl text-gray-900 font-semibold sm:me-5 me-2">
+                                                            {/* Job Details */}
+                                                            <div className="w-full">
+                                                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                                                                    <h1 className="text-lg sm:text-xl text-gray-900 font-semibold">
                                                                         {item?.exp_job_title}
                                                                     </h1>
-                                                                    <p className="text-center font-semibold text-gray-500">
-                                                                        {new Date(item?.exp_start_date).getFullYear()} -{" "}
-                                                                        {item?.exp_working ? "Present" : new Date(item?.exp_end_date).getFullYear()}
+
+                                                                    <p className="text-gray-700 text-md sm:text-base font-medium">
+                                                                        <span>{formatDate(item?.exp_start_date)} -{" "}</span>
+                                                                        <span>{item?.exp_working ? "Present" : formatDate(item?.exp_end_date)}</span>
+                                                                        <span className="ml-2 px-2 py-1 bg-gray-200 text-gray-800 text-sm sm:text-sm rounded-md">
+                                                                            {calculateDuration(item?.exp_start_date, item?.exp_end_date)}
+                                                                        </span>
                                                                     </p>
                                                                 </div>
 
-                                                                <p className="pb-2 font-semibold text-indigo-500">
+                                                                <p className="font-semibold text-indigo-500 text-md sm:text-base">
                                                                     {item?.exp_company_name}
                                                                 </p>
                                                             </div>

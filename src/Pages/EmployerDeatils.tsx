@@ -120,7 +120,7 @@ export default function EmployerDeatils() {
 
                             {/* Background image */}
                             <div
-                                className="absolute inset-0 z-0 bg-[url('https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?cs=srgb&dl=pexels-seven11nash-380769.jpg&fm=jpg')] bg-cover bg-no-repeat bg-center opacity-20"
+                                className="absolute inset-0 z-0 bg-[url('/Apply-Job-Img.jpg')] bg-cover bg-no-repeat bg-center opacity-20"
                                 aria-hidden="true"
                             />
 
@@ -185,30 +185,31 @@ export default function EmployerDeatils() {
 
                             <div>
 
+
                                 {/* Profile card */}
                                 <div>
 
-                                    <div className="-mt-14 flex flex-col sm:flex-row  md:p-8 p-5 justify-between w-[95%] md:w-[83%] m-auto border-2 shadow-sm bg-white rounded-lg relative top-[-40px] gap-5 sm:gap-0">
+                                    <div className="-mt-24 sm:-mt-14 flex flex-col sm:flex-row  md:p-8 p-5 justify-between w-[95%] md:w-[83%] m-auto border-2 shadow-sm bg-white rounded-lg relative top-[-40px] gap-5 sm:gap-0">
 
-                                        <div className="flex">
+                                        <div className="flex items-center gap-3 flex-col sm:flex-row">
 
-                                            <div>
+                                            <div className="rounded-full shadow-lg border border-gray-300">
                                                 <img
-                                                    src={EmployerDetails?.logo ? EmployerDetails?.logo : "https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg"}
+                                                    src={EmployerDetails?.logo ? EmployerDetails?.logo : "/Employer-Default.png"}
                                                     alt="logo"
                                                     loading="lazy"
-                                                    className=" md:w-[80px] w-[60px] shadow-lg rounded-full"
+                                                    className=" md:w-[80px] md:h-[80px] h-[80px]  w-[80px] shadow-lg rounded-full"
                                                 />
                                             </div>
 
 
                                             <div className="content-center pl-4 gap-y-1 flex flex-col">
 
-                                                <h2 className="font-bold text-md sm:text-xl">{EmployerDetails?.company?.company_name}</h2>
+                                                <h2 className="font-bold text-md sm:text-xl text-center sm:text-start">{EmployerDetails?.company?.company_name.toLocaleUpperCase()}</h2>
 
                                                 <div className="flex gap-2">
                                                     <i className="fas fa-map-marker-alt pt-1 text-gray-500"></i>
-                                                    <p className="text-gray-500">
+                                                    <p className="text-gray-500 text-center sm:text-start">
                                                         {EmployerDetails?.company?.country.label ||
                                                             EmployerDetails?.company?.state ||
                                                             EmployerDetails?.company?.city ||
@@ -218,12 +219,12 @@ export default function EmployerDeatils() {
                                                     </p>
                                                 </div>
 
-                                                <div className="flex gap-2">
+                                                <div className="flex gap-2 justify-center sm:justify-start">
                                                     <i className="fas fa-envelope pt-1 text-gray-500"></i>
                                                     <a target="_blank" href={`mailto:${EmployerDetails?.company?.email}`} className="text-gray-500 hover:text-indigo-500 hover:cursor-pointer">{EmployerDetails?.company?.email ? EmployerDetails?.company?.email : "Not Available"}</a>
                                                 </div>
 
-                                                <div className="flex gap-2">
+                                                <div className="flex gap-2 sm:justify-start justify-center">
                                                     <i className="fas pt-1 fa-phone text-gray-500"></i>
                                                     <a target="_blank" href={`tel:${EmployerDetails?.company?.phone_number}`} className="text-gray-500 hover:text-indigo-500 hover:cursor-pointer">{EmployerDetails?.company?.phone_number ? EmployerDetails?.company?.phone_number : "Not Available"}</a>
                                                 </div>
@@ -234,7 +235,7 @@ export default function EmployerDeatils() {
                                         </div>
 
 
-                                        <div className="flex md:gap-4 gap-3 items-center">
+                                        <div className="flex md:gap-4 gap-3 items-center sm:justify-start justify-center">
                                             <div>
                                                 <a href="#see-jobs">
                                                     <button className="rounded-md shadow-md md:px-4 px-2 py-1 bg-gray-200 text-[#059669] font-bold hover:scale-110 duration-300">
@@ -254,15 +255,19 @@ export default function EmployerDeatils() {
                                 {/* Company story */}
                                 <section>
 
-                                    <div className="w-full px-2 sm:px-0 sm:w-[83%] m-auto ">
+                                    <div className="w-full px-2 sm:px-2 sm:w-[83%] m-auto ">
 
                                         <div className="">
                                             <h1 className="text-2xl font-semibold text-gray-800 pb-5">
                                                 About {EmployerDetails?.company?.company_name}
                                             </h1>
-                                            <p className="text-[1rem] text-gray-500 pb-2 text-justify text-pretty">
-                                                {EmployerDetails?.company?.company_info}
-                                            </p>
+
+                                            {EmployerDetails?.company?.company_info?.split("\n").map((paragraph, index) => (
+                                                <p key={index} className={`text-[1rem] text-gray-500 pb-4 text-justify ${paragraph.trim().endsWith(":") || paragraph.length < 40 ? "font-bold text-gray-800" : ""}`}>
+                                                    {paragraph.trim()}
+                                                </p>
+                                            ))}
+
 
                                         </div>
 

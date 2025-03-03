@@ -255,7 +255,7 @@ export default function Header() {
                   className={`flex items-center gap-x-1 text-sm/6 font-semibold text-gray-400 ${color ? "text-white" : ""}`}
                 >
                   <img
-                    src={data[0]?.profile?.profile_img ? data[0]?.profile?.profile_img : "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"}
+                    src={data[0]?.profile?.profile_img ? data[0]?.profile?.profile_img : "/Header-profile.webp"}
                     loading="lazy"
                     alt="User profile"
                     className="w-[30px] h-[30px] rounded-full object-cover"

@@ -84,7 +84,7 @@ export default function JobFilter() {
 
                         {/* Background image */}
                         <div
-                            className="absolute inset-0 z-0 bg-[url('https://media.licdn.com/dms/image/D4E12AQGgCMDfXyQwig/article-cover_image-shrink_720_1280/0/1709630844211?e=2147483647&v=beta&t=B-d5BWY2qZGwQnm8EImAMX131KTJCOtJIA6y5L4N1xM')] bg-cover bg-no-repeat bg-center opacity-20"
+                            className="absolute inset-0 z-0 bg-[url('/Job-Filter-Bg.jpg')] bg-cover bg-no-repeat bg-center opacity-20"
                             aria-hidden="true"
                         />
 

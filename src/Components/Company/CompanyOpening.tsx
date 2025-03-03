@@ -89,8 +89,8 @@ export default function CompanyOpening({ job_id, postion, posteddate, salary, sa
 
                             <div className="flex pt-5">
                                 <img
-                                    src={logo ? logo : 'https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg'}
-                                    className="w-[50px] shadow-md rounded-full"
+                                    src={logo ? logo : '/Employer-Default.png'}
+                                    className=" w-[60px] h-[60px] sm:w-[50px] sm:h-[50px]  shadow-md rounded-full"
                                     alt="logo"
                                 />
                                 <div className="pl-3 items-center">
