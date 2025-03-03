@@ -134,15 +134,15 @@ export default function PopluarJobs() {
                                         <div className="group mx-2 mt-4 grid max-w-7xl grid-cols-12 space-x-8 overflow-hidden rounded-lg border py-6 text-gray-700 shadow transition hover:shadow-lg sm:mx-auto">
 
                                             <div className="order-2 col-span-1 mt-4 -ml-14 text-left text-gray-600 hover:text-gray-700 sm:-order-1 sm:ml-4">
-                                                <div className="group relative h-16 w-16 overflow-hidden rounded-full">
-                                                    <img src={job.company.logo ? job.company.logo : "https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg"} loading='lazy' alt="img" className="h-full w-full object-cover text-gray-700" />
+                                                <div className="group relative h-16 w-16 overflow-hidden rounded-full shadow-lg border border-gray-300">
+                                                    <img src={job.company.logo ? job.company.logo : "/Employer-Default.png"} loading='lazy' alt="img" className="h-full w-full object-cover text-gray-700 rounded-full" />
                                                 </div>
                                             </div>
 
                                             <div className="col-span-9 flex flex-col pr-8 text-left sm:pl-4">
 
-                                                <h3 className="text-md text-gray-600">{job?.company?.company_name}</h3>
-                                                <p className="mb-3 overflow-hidden pr-7 text-lg font-semibold sm:text-xl">{job?.job_title}</p>
+                                                <h3 className="text-sm text-gray-600">{job?.company?.company_name.toLocaleUpperCase()}</h3>
+                                                <p className="mb-3 overflow-hidden pr-7 text-lg font-semibold sm:text-xl">{job?.job_title.toUpperCase()}</p>
                                                 <p className="overflow-hidden pr-7 text-sm flex items-center"><Clock size={16} className='me-2 text-green-500' /> posted {getTimeAgo(job?.posted_date)}</p>
 
                                                 <div className="mt-5 flex flex-col space-y-3 text-sm font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
@@ -154,7 +154,7 @@ export default function PopluarJobs() {
                                                 {/* Apply Button */}
                                                 <div className="block md:gap-4 items-end sm:hidden mt-4">
                                                     <div>
-                                                        <Link to={`/applyjob/${job?.id}/${job?.job_type}`}>
+                                                        <Link to={`/jobdeatils/${job?.id}/${job?.job_type}`}>
                                                             <button
                                                                 disabled={job?.applied}
                                                                 className={`flex w-full justify-center items-center ${job?.applied
@@ -183,7 +183,7 @@ export default function PopluarJobs() {
                                             {/* Apply Button */}
                                             <div className="sm:flex md:gap-4 items-end hidden">
                                                 <div>
-                                                    <Link to={`/applyjob/${job?.id}/${job?.job_type}`}>
+                                                    <Link to={`/jobdeatils/${job?.id}/${job?.job_type}`}>
                                                         <button
                                                             disabled={job?.applied}
                                                             className={`flex w-full justify-center items-center ${job?.applied

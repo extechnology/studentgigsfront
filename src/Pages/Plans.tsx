@@ -37,22 +37,26 @@ const EmployerPlansPage = () => {
         setIsClient(true);
     }, []);
 
+
+
+
+    // Plans
     const plans: Plan[] = [
         {
             id: 'free',
             name: 'Free',
             price: '0',
             features: [
-                { name: 'Profile Access', value: '1 Student' },
+                { name: 'Job Applications', value: '3 Jobs' },
                 { name: 'Validity', value: '1 Month' },
-                { name: 'Job posting', value: '1 Job' },
-                { name: 'Resume Viewing', value: 'Yes' },
-                { name: 'Job Auto-Refreshing', value: 'No' },
-                { name: 'Hot Job Label', value: 'No' },
-                { name: 'Access to Certified Students', value: 'No' },
-                { name: 'Instant Candidate Matching', value: 'No' },
-                { name: 'Direct Chat With Candidate', value: 'No' },
-                { name: 'Company Dashboard Analytics', value: 'No' }
+                { name: 'Profile Visibility to Employers', value: 'Basic' },
+                { name: 'Resume Builder', value: 'No' },
+                { name: 'Job Alerts & Notifications', value: 'No' },
+                { name: 'Saved Jobs', value: 'No' },
+                { name: 'Workplace Essentials Certified Course', value: 'No' },
+                { name: 'Priority Shortlisting by Employers', value: 'No' },
+                { name: 'Premium Profile badge', value: 'No' },
+                { name: 'Live Chat with employers', value: 'No' }
             ],
             color: 'blue',
             icon: (
@@ -71,21 +75,20 @@ const EmployerPlansPage = () => {
         {
             id: 'standard',
             name: 'Standard',
-            price: '399',
+            price: '299',
             features: [
-                { name: 'Profile Access', value: '10 Students' },
+                { name: 'Job Applications', value: '10 Jobs' },
                 { name: 'Validity', value: '3 Months' },
-                { name: 'Job posting', value: '5 Jobs' },
-                { name: 'Resume Viewing', value: 'Yes' },
-                { name: 'Job Auto-Refreshing', value: 'Yes' },
-                { name: 'Hot Job Label', value: 'No' },
-                { name: 'Access to Certified Students', value: 'No' },
-                { name: 'Instant Candidate Matching', value: 'Limited' },
-                { name: 'Direct Chat With Candidate', value: 'Yes' },
-                { name: 'Company Dashboard Analytics', value: 'Basic' }
+                { name: 'Profile Visibility to Employers', value: 'Medium' },
+                { name: 'Resume Builder', value: '3' },
+                { name: 'Job Alerts & Notifications', value: 'No' },
+                { name: 'Saved Jobs', value: 'Yes' },
+                { name: 'Workplace Essentials Certified Course', value: 'No' },
+                { name: 'Priority Shortlisting by Employers', value: 'No' },
+                { name: 'Premium Profile badge', value: 'No' },
+                { name: 'Live Chat with employers', value: 'No' }
             ],
             color: 'purple',
-            recommended: false,
             icon: (
                 <svg viewBox="0 0 24 24" fill="none" className="w-12 h-12">
                     <circle cx="12" cy="12" r="10" fill="url(#standardGradient)" />
@@ -103,18 +106,18 @@ const EmployerPlansPage = () => {
         {
             id: 'premium',
             name: 'Premium',
-            price: '1999',
+            price: '999',
             features: [
-                { name: 'Profile Access', value: '50 Students' },
+                { name: 'Job Applications', value: '30 Jobs' },
                 { name: 'Validity', value: '6 Months' },
-                { name: 'Job posting', value: '25 Jobs' },
-                { name: 'Resume Viewing', value: 'Yes' },
-                { name: 'Job Auto-Refreshing', value: 'Yes' },
-                { name: 'Hot Job Label', value: 'Yes' },
-                { name: 'Access to Certified Students', value: 'Yes' },
-                { name: 'Instant Candidate Matching', value: 'Yes' },
-                { name: 'Direct Chat With Candidate', value: 'Yes' },
-                { name: 'Company Dashboard Analytics', value: 'Yes' }
+                { name: 'Profile Visibility to Employers', value: 'High (Priority Shortlisting)' },
+                { name: 'Resume Builder', value: '10' },
+                { name: 'Job Alerts & Notifications', value: 'Yes' },
+                { name: 'Saved Jobs', value: 'Yes' },
+                { name: 'Workplace Essentials Certified Course', value: 'Yes' },
+                { name: 'Priority Shortlisting by Employers', value: 'Yes' },
+                { name: 'Premium Profile badge', value: 'Yes' },
+                { name: 'Live Chat with employers', value: 'Yes' }
             ],
             color: 'pink',
             recommended: true,
@@ -132,6 +135,7 @@ const EmployerPlansPage = () => {
             )
         }
     ];
+
 
 
 
@@ -269,10 +273,10 @@ const EmployerPlansPage = () => {
                         Membership Plans
                     </div>
                     <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 pb-3">
-                        Upgrade Your Job Posting Experience
+                        Unlock Your Full Potential with Premium
                     </h1>
                     <p className="mt-5 max-w-2xl mx-auto text-xl text-gray-600">
-                        Engage the most talented candidates with our premium features
+                        Access exclusive job opportunities, build your resume, and stand out to top employers.
                     </p>
                 </motion.div>
 

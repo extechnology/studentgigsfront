@@ -53,7 +53,7 @@ export default function JobCard({ id, applied, employer_id, salaryType, company,
                         {/* Header - Company & Time */}
                         <div className="block justify-between items-center mb-4">
 
-                            <h3 className="text-lg font-semibold text-gray-900">{position}</h3>
+                            <h3 className="text-lg font-semibold text-gray-900">{position.toUpperCase()}</h3>
 
                             <div className="flex items-center text-gray-600 text-sm py-3 px-3">
                                 <Clock size={16} className="mr-1 text-green-500 font-semibold" />
@@ -86,23 +86,23 @@ export default function JobCard({ id, applied, employer_id, salaryType, company,
                     {/* Position & Location */}
                     <div className="flex items-center gap-4 border-t pt-7 border-gray-200/55">
 
-                        <div className="w-14 h-14  overflow-hidden shadow-md border border-gray-50 rounded-full">
+                        <div className="w-14 h-14  overflow-hidden shadow-lg  border border-gray-300 rounded-full">
                             <img
-                                src={logo ? logo : 'https://thumbs.dreamstime.com/b/office-building-icon-linear-logo-mark-set-collection-black-white-web-office-building-icon-linear-logo-mark-black-330207065.jpg'}
+                                src={logo ? logo : '/Employer-Default.png'}
                                 alt={company}
-                                className="w-full h-full object-cover"
+                                loading='lazy'
+                                className="w-full h-full object-cover rounded-full"
                             />
                         </div>
 
                         <div>
                             <Link to={`/employerdeatils/${employer_id}`}>
-                                <h4 className="font-semibold text-gray-900 mb-1 hover:text-green-600 hover:cursor-pointer">{company}</h4>
+                                <h4 className="font-semibold text-gray-900 mb-1 text-md hover:text-green-600 hover:cursor-pointer">{company.toUpperCase()}</h4>
                             </Link>
-                            <span className="text-gray-500 flex items-center"><MapPin size={16} className='mr-1' /> {location}</span>
+                            <span className="text-gray-500 flex items-center text-sm"><MapPin size={16} className='mr-1' /> {location}</span>
                         </div>
 
                     </div>
-
 
                 </div>
 
