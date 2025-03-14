@@ -91,7 +91,7 @@ function App() {
 
           <Route path="/jobfilter" element={<JobFilter />} />
 
-          <Route path="/plans" element={<Plans />} />
+          <Route path="/plans" element={<ProtectedRoute> <Plans /> </ProtectedRoute>}/>
 
           <Route path="/termscondition" element={<Terms />} />
 

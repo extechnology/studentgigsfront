@@ -1,12 +1,49 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { UserPlans } from "@/Hooks/Userplans";
+
+
+// Plan & Usage Data Type
+interface PlanData {
+    id: number;
+    name: string;
+    price: number;
+    job_applications: number;
+    validity: string;
+    profile_visibility_to_employers: string;
+    resume_builder: string;
+    job_alert_and_notification: string;
+    saved_jobs: string;
+    essentials_certified: string;
+    priority_shortlisting_by_employers: string;
+    live_chat_with_employers: string;
+}
+
+
+
+// Usage Data Type
+interface UsageData {
+    jobs_applied: number;
+    created_date?: string; // Plan activation date
+    expire_date?: string; // Plan expiration date
+    resume_builder: number;
+}
+
 
 
 
 // Context Type
 interface AuthContextType {
     isAuthenticated: boolean;
+    plan: PlanData | null;
+    currentPlan: string | null;
+    usage: UsageData | null;
+    isPlanExpired: boolean;
+    isLoadingPlan: boolean;
+    isFetchingPlan: boolean;
+    isErrorPlan: boolean;
     login: (token: string) => void;
     logout: () => void;
+    refetchPlan: () => void; // Function to refetch plan when upgraded
 }
 
 
@@ -35,7 +72,35 @@ const checkAuth = (): boolean => {
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 
+    // Authentication State
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(checkAuth());
+
+
+    // Fetch user plans
+    const { data, refetch: refetchPlan, isLoading: isLoadingPlan, isFetching: isFetchingPlan, isError: isErrorPlan } = UserPlans();
+
+
+    // Extract plan and usage details
+    const plan = data?.plan ?? null;
+    const currentPlan = data?.current_plan ?? null;
+    const usage = data?.usage ?? null;
+
+
+
+    // Plan Expiration Check
+    const Expired = (() => {
+        if (!usage?.expire_date) return false; // If no expiration date, assume valid
+        return new Date(usage.expire_date).getTime() < Date.now();
+    })();
+
+
+
+    // Auto-fetch plan data when authentication state changes
+    useEffect(() => {
+        if (isAuthenticated) {
+            refetchPlan();
+        }
+    }, [isAuthenticated]);
 
 
 
@@ -43,7 +108,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
 
 
-        const syncAuth = () => setIsAuthenticated(checkAuth());
+        const syncAuth = () => {
+
+            const authStatus = checkAuth();
+            setIsAuthenticated(checkAuth());
+            if (!authStatus) refetchPlan();
+
+        }
 
         window.addEventListener("storage", syncAuth);
 
@@ -68,6 +139,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const login = (token: string) => {
         localStorage.setItem("token", token);
         setIsAuthenticated(true);
+        refetchPlan(); // Fetch plan immediately after login
         window.dispatchEvent(new Event("storage")); // Manually trigger storage event
     };
 
@@ -77,13 +149,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const logout = () => {
         localStorage.removeItem("token");
         setIsAuthenticated(false);
+        refetchPlan(); // Fetch plan immediately after login
         window.dispatchEvent(new Event("storage")); // Ensure logout syncs across tabs
     };
 
 
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout, plan, refetchPlan, currentPlan, usage, isPlanExpired: Expired, isLoadingPlan, isFetchingPlan, isErrorPlan }}>
             {children}
         </AuthContext.Provider>
     );

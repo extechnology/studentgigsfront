@@ -17,14 +17,15 @@ export default function Landing() {
   const queryclient = useQueryClient();
 
 
-
   // Google AUTH
   const { mutate: mutateGoogleLogin } = GoogleAuth();
 
 
   // Context auth
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, currentPlan, isPlanExpired, plan, usage } = useAuth();
 
+  console.log(currentPlan, isPlanExpired, plan, usage);
+  
 
 
   // Scroll to top when page is loaded
@@ -107,7 +108,7 @@ export default function Landing() {
 
           }
 
-         
+
 
         },
         onError: (error) => {
