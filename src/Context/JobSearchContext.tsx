@@ -32,9 +32,10 @@ const JobSearchContext = createContext<JobSearchContextType | undefined>(undefin
 
 export function JobSearchProvider({ children }: { children: React.ReactNode }) {
 
+
     // To check if the user is authenticated
     const { isAuthenticated } = useAuth();
-
+    
 
     // search params
     const [searchParams, setSearchParams] = useState<SearchParams>({
