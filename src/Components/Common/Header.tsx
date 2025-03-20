@@ -4,15 +4,13 @@ import { Contact, Crown, GraduationCap, House, KeyRound, LogOut, Search, Setting
 import {
   Dialog,
   Disclosure,
-  Popover,
-  PopoverButton,
   PopoverGroup,
-  PopoverPanel,
   Transition
 } from '@headlessui/react'
 import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import ProfileMenu from "./ProfileMenu";
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import toast from "react-hot-toast";
 import { useAuth } from "@/Context/AuthContext";
@@ -247,133 +245,8 @@ export default function Header() {
 
 
 
-              {/* Profile items */}
-              <Popover className="relative">
-
-
-                <PopoverButton
-                  className={`flex items-center gap-x-1 text-sm/6 font-semibold text-gray-400 ${color ? "text-white" : ""}`}
-                >
-                  <img
-                    src={data[0]?.profile?.profile_img ? data[0]?.profile?.profile_img : "/Header-profile.webp"}
-                    loading="lazy"
-                    alt="User profile"
-                    className="w-[30px] h-[30px] rounded-full object-cover"
-                  />
-                </PopoverButton>
-
-                <PopoverPanel
-                  transition
-                  className="absolute -left-32 top-8 z-10 mt-3 w-52 dropdown  rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
-                >
-
-                  <div className="p-4">
-
-
-                    {/* {/* Profile */}
-                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-100" >
-
-                      <div className="flex-auto">
-
-                        <Link to={'/userprofile'} className="font-semibold text-gray-900 flex items-center text-center">
-
-                          <User size={20} className="me-2" />
-
-                          Profile
-
-                        </Link>
-
-
-                      </div>
-
-                    </div>
-
-
-
-                    {/* Settings */}
-                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
-
-                      <div className="flex-auto">
-
-                        <Link to={'/settings'} className="font-semibold text-gray-900 flex items-center">
-
-                          <Settings size={20} className="me-2" />
-                          Settings
-
-                        </Link>
-
-                      </div>
-
-                    </div>
-
-
-
-                    {/* Premium */}
-                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
-
-                      <div className="flex-auto">
-
-                        <Link to={'/plans'} className="font-semibold text-gray-900 flex items-center">
-
-                          <Crown size={20} className="me-2" />
-
-                          Premium
-
-                        </Link>
-
-                      </div>
-
-                    </div>
-
-
-
-
-                    {/* Login Logout */}
-                    {
-
-                      LoginStatus ?
-
-
-
-                        <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
-
-                          <div className="flex-auto">
-
-                            <Link to={'/auth'} className="font-semibold text-gray-900 flex items-center">
-
-                              <KeyRound size={20} className="me-2" />
-                              Login
-
-                            </Link>
-
-                          </div>
-
-                        </div>
-
-                        :
-
-                        <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50" >
-
-                          <div className="flex-auto">
-
-                            <p className=" font-semibold text-gray-900 flex items-center cursor-pointer" onClick={HandleLogOut}>
-
-                              <LogOut size={20} className="me-2" />
-                              Logout
-                            </p>
-
-                          </div>
-
-                        </div>
-
-                    }
-
-                  </div>
-
-                </PopoverPanel>
-
-              </Popover>
-
+              {/* Profile menu items */}
+              <ProfileMenu  HandleLogOut={HandleLogOut} LoginStatus={LoginStatus} data={data} />
 
 
               {/* Search */}
@@ -391,10 +264,18 @@ export default function Header() {
                 </Link>
               </div>
 
+
+
+
             </PopoverGroup>
 
 
           </nav>
+
+
+
+
+
 
 
 
@@ -565,6 +446,8 @@ export default function Header() {
                               </>
                             )}
                           </Disclosure>
+
+
 
                           {/* Search Gigs */}
                           <Link

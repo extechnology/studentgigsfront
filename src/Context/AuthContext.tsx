@@ -4,7 +4,8 @@ import { UserPlans } from "@/Hooks/Userplans";
 
 // Plan & Usage Data Type
 interface PlanData {
-    id: number;
+    plan_id: number;
+    id: string;
     name: string;
     price: number;
     job_applications: number;
@@ -13,8 +14,9 @@ interface PlanData {
     resume_builder: string;
     job_alert_and_notification: string;
     saved_jobs: string;
-    essentials_certified: string;
+    workplace_essentials_certified_course: string;
     priority_shortlisting_by_employers: string;
+    premium_profile_badge : string
     live_chat_with_employers: string;
 }
 
@@ -26,6 +28,7 @@ interface UsageData {
     created_date?: string; // Plan activation date
     expire_date?: string; // Plan expiration date
     resume_builder: number;
+    job_limit:boolean
 }
 
 
@@ -38,6 +41,7 @@ interface AuthContextType {
     currentPlan: string | null;
     usage: UsageData | null;
     isPlanExpired: boolean;
+    isoffer: boolean;
     isLoadingPlan: boolean;
     isFetchingPlan: boolean;
     isErrorPlan: boolean;
@@ -84,6 +88,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const plan = data?.plan ?? null;
     const currentPlan = data?.current_plan ?? null;
     const usage = data?.usage ?? null;
+    const isoffer = data?.is_offer ?? false;
 
 
 
@@ -156,7 +161,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, plan, refetchPlan, currentPlan, usage, isPlanExpired: Expired, isLoadingPlan, isFetchingPlan, isErrorPlan }}>
+        <AuthContext.Provider value={{ isAuthenticated, isoffer, login, logout, plan, refetchPlan, currentPlan, usage, isPlanExpired: Expired, isLoadingPlan, isFetchingPlan, isErrorPlan }}>
             {children}
         </AuthContext.Provider>
     );

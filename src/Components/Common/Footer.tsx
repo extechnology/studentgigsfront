@@ -102,9 +102,11 @@ const Footer = () => {
 
       {/* Call-to-Action */}
       <div className="text-center mt-10">
-        <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">
-          Get Started
-        </button>
+        <Link to={'/plans'}>
+          <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">
+            Get Started
+          </button>
+        </Link>
       </div>
 
 

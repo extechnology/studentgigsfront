@@ -9,12 +9,13 @@ import {
     Clock,
 } from 'lucide-react';
 import { SingleJobData } from '@/Hooks/JobHook';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GetPersonalInfo } from '@/Hooks/UserProfile';
 import { ApplyJob } from '@/Hooks/JobHook';
 import toast from 'react-hot-toast';
 import JobApplicationSuccess from '@/Components/Common/JobApplySuccess';
 import confetti from 'canvas-confetti';
+import { useAuth } from '@/Context/AuthContext';
 
 type Country = {
     value: string;
@@ -59,10 +60,15 @@ type Job = {
 const JobApplicationForm = () => {
 
 
+    const Navigate = useNavigate()
+
+
+    // Get Plans 
+    const { isPlanExpired, usage } = useAuth()
+
 
     // Get Job ID
     const { id, jobType } = useParams<{ id: string; jobType: string }>();
-
 
 
     const [resumeUrl, setResumeUrl] = useState('');
@@ -135,35 +141,52 @@ const JobApplicationForm = () => {
 
         e.preventDefault();
 
-        const formdata = new FormData()
+        if (!isPlanExpired && usage?.job_limit) {
 
-        formdata.append("resume", resumeUrl ? resumeUrl : '')
-        formdata.append("job_id", id ? id : '')
-        formdata.append("job_type", jobDetails?.job_type ? jobDetails?.job_type : '')
+            const formdata = new FormData()
+
+            formdata.append("resume", resumeUrl ? resumeUrl : '')
+            formdata.append("job_id", id ? id : '')
+            formdata.append("job_type", jobDetails?.job_type ? jobDetails?.job_type : '')
 
 
-        ApplyJobMutate({ formData: formdata }, {
+            ApplyJobMutate({ formData: formdata }, {
 
-            onSuccess: (response) => {
+                onSuccess: (response) => {
 
-                if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 300) {
 
-                    toast.success("Application Sent Successfully");
-                    setStatus(true)
-                    handleClick()
-                    window.scrollTo({ top: 0, behavior: 'smooth', });
+                        toast.success("Application Sent Successfully");
+                        setStatus(true)
+                        handleClick()
+                        window.scrollTo({ top: 0, behavior: 'smooth', });
+
+                    }
+                    else {
+
+                        toast.error("Something went wrong. Please try again.");
+                        setStatus(false)
+
+                    }
 
                 }
-                else {
 
-                    toast.error("Something went wrong. Please try again.");
-                    setStatus(false)
+            })
 
-                }
+        } else {
 
+            const handlePlanRedirect = (message: string) => {
+                toast.error(message, { duration: 6000 });
+                Navigate('/plans');
+            };
+
+            if (isPlanExpired) {
+                handlePlanRedirect("Your plan has expired. Please subscribe to continue.");
+            } else if (!usage?.job_limit) {
+                handlePlanRedirect("You have reached your job limit. Please upgrade your plan to continue.");
             }
 
-        })
+        }
 
     }
 

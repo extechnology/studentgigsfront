@@ -12,30 +12,26 @@ const queryclient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
 
+  <QueryClientProvider client={queryclient}>
 
-  <StrictMode>
+    <BrowserRouter>
 
-    <QueryClientProvider client={queryclient}>
+      <GoogleOAuthProvider clientId='15124092057-q7saopofjt97svqnsd47t12n7ckn29qi.apps.googleusercontent.com'>
 
-      <BrowserRouter>
+        <AuthProvider>
 
-        <GoogleOAuthProvider clientId='15124092057-q7saopofjt97svqnsd47t12n7ckn29qi.apps.googleusercontent.com'>
+          <JobSearchProvider>
 
-          <AuthProvider>
+            <App />
 
-            <JobSearchProvider>
+          </JobSearchProvider>
 
-              <App />
+        </AuthProvider>
 
-            </JobSearchProvider>
+      </GoogleOAuthProvider>
 
-          </AuthProvider>
+    </BrowserRouter>
 
-        </GoogleOAuthProvider>
+  </QueryClientProvider>
 
-      </BrowserRouter>
-
-    </QueryClientProvider>
-
-  </StrictMode >,
 )

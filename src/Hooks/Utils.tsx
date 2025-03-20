@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider, GetLocations, GetJobTitle , PostNewJobTitle } from "@/Service/AllApi";
+import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider, GetLocations, GetJobTitle, PostNewJobTitle , GetAllSearchCategory } from "@/Service/AllApi";
 
 
 
@@ -98,6 +98,39 @@ export const JObList = () => {
 
 
 
+
+// Get all search category
+export const AllSearchCategory = () => {
+
+    return useQuery({
+
+        queryKey: ["allsearchcategory"],
+
+        queryFn: async () => {
+
+            try {
+
+                const Response = await GetAllSearchCategory()
+
+                return Response.data
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        staleTime: 1000 * 60 * 10,
+
+    })
+
+}
+
+
+
+
+
 // Get job tittles
 export const JObTittles = () => {
 
@@ -136,7 +169,7 @@ export const PostJobTittle = () => {
 
     return useMutation({
 
-        mutationFn: async ( job_title : string) => {
+        mutationFn: async (job_title: string) => {
 
             try {
 

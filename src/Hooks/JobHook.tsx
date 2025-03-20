@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { GetJobs, GetEmployeer, GetSearchedJobs, PostApplyJob  , GetPopularJobs , GetTrendingJobs} from "@/Service/AllApi";
+import { GetJobs, GetEmployeer, GetSearchedJobs, PostApplyJob, GetPopularJobs, GetTrendingJobs, GetSavedJobs, PostSavedJobs, DeleteSavedJobs } from "@/Service/AllApi";
 import { useAuth } from "@/Context/AuthContext";
 
 
@@ -45,6 +45,8 @@ export const SingleJobData = (id: string, job_type: string) => {
 // Get Popular Jobs
 export const PopularJobsList = () => {
 
+    const { isAuthenticated } = useAuth()
+
     return useQuery({
 
         queryKey: ["popularjobs"],
@@ -53,7 +55,11 @@ export const PopularJobsList = () => {
 
             try {
 
-                const Response = await GetPopularJobs()
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await GetPopularJobs(headers, isAuthenticated)
 
                 return Response.data
 
@@ -220,6 +226,136 @@ export const ApplyJob = () => {
             queryclient.invalidateQueries({ queryKey: ["postedJobs"] });
             queryclient.invalidateQueries({ queryKey: ["serachedjobs"] });
             queryclient.invalidateQueries({ queryKey: ["popularjobs"] });
+        },
+
+    })
+
+}
+
+
+
+
+// Get SavedJobs
+export const SavedJobs = () => {
+
+    return useQuery({
+
+        queryKey: ["savedjobs"],
+        queryFn: async () => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const response = await GetSavedJobs(headers);
+
+                return response.data;
+
+            } catch (err) {
+
+                console.error("Error fetching jobs:", err);
+                throw new Error("Failed to fetch jobs");
+
+            }
+        },
+
+        staleTime: 1000 * 60 * 10,
+
+    });
+
+}
+
+
+
+// Post SavedJobs
+export const SaveSavedJobs = () => {
+
+    interface MutationParams {
+        formData: FormData;
+    }
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async ({ formData }: MutationParams) => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await PostSavedJobs(formData, headers)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onError: (error) => {
+            console.error("Failed to Save Saved Jobs:", error);
+        },
+        onSuccess: () => {
+            queryclient.invalidateQueries({ queryKey: ["savedjobs"] });
+            queryclient.invalidateQueries({ queryKey: ["serachedjobs"] });
+
+        },
+
+    })
+
+}
+
+
+
+
+// Delete SavedJobs
+export const RemoveSavedJobs = () => {
+
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async ({ id, job_type }: { id: number, job_type: string }) => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await DeleteSavedJobs(id, job_type, headers)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onError: (error) => {
+            console.error("Failed to Delete Saved Jobs:", error);
+        },
+        onSuccess: () => {
+            queryclient.invalidateQueries({ queryKey: ["savedjobs"] });
+            queryclient.invalidateQueries({ queryKey: ["serachedjobs"] });
         },
 
     })

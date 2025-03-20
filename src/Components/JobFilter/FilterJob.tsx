@@ -1,5 +1,5 @@
-import { Briefcase, Calendar, MapPin, SearchIcon } from "lucide-react";
-import { JObList } from "@/Hooks/Utils";
+import { SearchIcon } from "lucide-react";
+import { AllSearchCategory } from "@/Hooks/Utils";
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { AllLocations } from "@/Hooks/Utils";
@@ -36,9 +36,121 @@ const compensationTypes: Option[] = [
     { label: "All-Day Gigs", value: "All-Day Gigs" },
     { label: "Weekend Gigs", value: "Weekend Gigs" },
     { label: "Vacation Gigs", value: "Vacation Gigs" }
-    
+
 ];
 
+
+const SelectedStyles = {
+
+    control: (provided: any, state: any) => ({
+        ...provided,
+        border: "none",
+        borderRadius: "8px",
+        backgroundColor: "white",
+        padding: "2px 4px",
+        boxShadow: state.isFocused ? "0 0 0 2px rgba(16, 185, 129, 0.2)" : "none",
+        transition: "all 0.2s ease",
+        width: "100%",
+        minWidth: "250px",
+        maxWidth: "600px",
+        "&:hover": {
+            backgroundColor: "white",
+            boxShadow: "0 0 0 1px rgba(16, 185, 129, 0.15)",
+        },
+    }),
+    valueContainer: (provided: any) => ({
+        ...provided,
+        padding: "6px 12px",
+    }),
+    placeholder: (provided: any) => ({
+        ...provided,
+        color: "#9ca3af",
+        fontSize: "0.95rem",
+    }),
+    input: (provided: any) => ({
+        ...provided,
+        margin: "0",
+        padding: "0",
+        color: "#374151",
+    }),
+    menu: (provided: any) => ({
+        ...provided,
+        borderRadius: "8px",
+        boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+        width: "100%",
+        minWidth: "330px",
+        maxWidth: "700px",
+        overflow: "hidden",
+        marginTop: "8px",
+        zIndex: 10,
+        backgroundColor: "white",
+    }),
+    menuList: (provided: any) => ({
+        ...provided,
+        padding: "6px",
+    }),
+    option: (provided: any, state: any) => ({
+        ...provided,
+        backgroundColor: state.isSelected
+            ? "#10b981"
+            : state.isFocused
+                ? "#ecfdf5"
+                : "transparent",
+        color: state.isSelected ? "white" : "#374151",
+        borderRadius: "6px",
+        padding: "10px 12px",
+        cursor: "pointer",
+        transition: "all 0.2s",
+        "&:active": {
+            backgroundColor: "#059669",
+        }
+    }),
+    dropdownIndicator: (provided: any, state: any) => ({
+        ...provided,
+        color: state.isFocused ? "#10b981" : "#9ca3af",
+        padding: "0 8px",
+        "&:hover": {
+            color: "#10b981",
+        }
+    }),
+    indicatorSeparator: () => ({
+        display: "none",
+    }),
+    clearIndicator: (provided: any) => ({
+        ...provided,
+        color: "#9ca3af",
+        padding: "0 8px",
+        "&:hover": {
+            color: "#ef4444",
+        }
+    }),
+    loadingIndicator: (provided: any) => ({
+        ...provided,
+        color: "#10b981",
+    }),
+    singleValue: (provided: any) => ({
+        ...provided,
+        color: "#374151",
+    }),
+    multiValue: (provided: any) => ({
+        ...provided,
+        backgroundColor: "#ecfdf5",
+        borderRadius: "4px",
+    }),
+    multiValueLabel: (provided: any) => ({
+        ...provided,
+        color: "#065f46",
+    }),
+    multiValueRemove: (provided: any) => ({
+        ...provided,
+        color: "#059669",
+        "&:hover": {
+            backgroundColor: "#d1fae5",
+            color: "#ef4444",
+        },
+    }),
+
+}
 
 
 export default function FilterJob() {
@@ -52,8 +164,8 @@ export default function FilterJob() {
     const { updateSearchParams } = useJobSearch();
 
 
-    // Get Job Category
-    const { data, isLoading, isFetching } = JObList()
+    // Get Job Category and Job Title
+    const { data, isLoading, isFetching } = AllSearchCategory()
 
 
     // Form State
@@ -93,10 +205,11 @@ export default function FilterJob() {
                     <div className="flex flex-col md:flex-row bg-white rounded-lg sm:shadow-lg shadow-xl border sm:border-gray-50 border-gray-300 px-2 py-3 sm:py-0 sm:px-0">
 
 
-                        {/* Keywords Input */}
-                        <div className="flex-1 flex items-center gap-2 p-5 border-b md:border-b-0 md:border-r border-gray-200">
+                        {/* Category and jobtitle */}
+                        <div className="flex-1 flex items-center gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 bg-white rounded-lg shadow-sm">
+                           
 
-                            <Briefcase className="text-emerald-500" size={26} />
+                            {/* <Briefcase className="text-emerald-500 flex-shrink-0" size={24} /> */}
 
                             <div className="w-full">
                                 <Controller
@@ -107,41 +220,25 @@ export default function FilterJob() {
                                             ref={ref}
                                             options={data}
                                             value={data?.find((option: Option) => option?.value === value) || null}
-                                            onChange={(option: any) => onChange(option ? option.value : null)}
-                                            placeholder="Select a Category...."
+                                            onChange={(option) => onChange(option ? option.value : null)}
+                                            placeholder="Search Category or Job title...."
                                             isSearchable={true}
                                             isClearable={true}
                                             isLoading={isLoading || isFetching}
-                                            noOptionsMessage={() => "No options Found..."}
+                                            noOptionsMessage={() => "No options found"}
                                             classNamePrefix="select"
-                                            styles={{
-                                                control: (provided) => ({
-                                                    ...provided,
-                                                    border: "none",
-                                                    boxShadow: "none",
-                                                    "&:hover": { border: "none" },
-                                                }),
-                                                dropdownIndicator: (provided) => ({
-                                                    ...provided,
-                                                    color: "#555",
-                                                }),
-                                                indicatorsContainer: (provided) => ({
-                                                    ...provided,
-                                                    padding: "2px",
-                                                }),
-                                            }}
+                                            styles={SelectedStyles}
                                         />
                                     )}
                                 />
                             </div>
-
                         </div>
 
 
                         {/* Location Dropdown */}
                         <div className="flex-1 flex items-center gap-2 p-5 border-b md:border-b-0 md:border-r border-gray-200">
 
-                            <MapPin className="text-emerald-500" size={26} />
+                            {/* <MapPin className="text-emerald-500" size={26} /> */}
 
                             <div className="w-full">
 
@@ -163,23 +260,7 @@ export default function FilterJob() {
                                                 classNamePrefix="select"
                                                 noOptionsMessage={() => "No Locations Found..."}
                                                 isLoading={LocationLoading}
-                                                styles={{
-                                                    control: (provided) => ({
-                                                        ...provided,
-                                                        border: "none",         // Remove border
-                                                        boxShadow: "none",      // Remove focus ring
-                                                        "&:hover": { border: "none" } // Ensure no border on hover
-                                                    }),
-                                                    dropdownIndicator: (provided) => ({
-                                                        ...provided,
-                                                        color: "#555",          // Optional: Adjust dropdown arrow color
-                                                    }),
-                                                    indicatorsContainer: (provided) => ({
-                                                        ...provided,
-                                                        padding: "2px",         // Optional: Adjust spacing for cleaner look
-                                                    }),
-
-                                                }}
+                                                styles={SelectedStyles}
                                             />
                                         )}
                                     />
@@ -193,7 +274,7 @@ export default function FilterJob() {
                         {/* Category Dropdown */}
                         <div className="flex-1 flex items-center gap-2 p-5 border-b md:border-b-0 md:border-r border-gray-200">
 
-                            <Calendar className="text-emerald-500" size={18} />
+                            {/* <Calendar className="text-emerald-500" size={18} /> */}
 
                             {/* Availability */}
                             <div className="w-full">
@@ -213,24 +294,7 @@ export default function FilterJob() {
                                                 className="basic-single"
                                                 isClearable={true}
                                                 classNamePrefix="select"
-                                                styles={{
-                                                    control: (provided) => ({
-                                                        ...provided,
-                                                        border: "none",         // Remove border
-                                                        boxShadow: "none",      // Remove focus ring
-                                                        "&:hover": { border: "none" } // Ensure no border on hover
-                                                    }),
-                                                    dropdownIndicator: (provided) => ({
-                                                        ...provided,
-                                                        color: "#555",          // Optional: Adjust dropdown arrow color
-                                                    }),
-                                                    indicatorsContainer: (provided) => ({
-                                                        ...provided,
-                                                        padding: "2px",         // Optional: Adjust spacing for cleaner look
-                                                    }),
-
-
-                                                }}
+                                                styles={SelectedStyles}
 
                                             />
                                         )}

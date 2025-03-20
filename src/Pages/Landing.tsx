@@ -22,10 +22,7 @@ export default function Landing() {
 
 
   // Context auth
-  const { login, isAuthenticated, currentPlan, isPlanExpired, plan, usage } = useAuth();
-
-  console.log(currentPlan, isPlanExpired, plan, usage);
-  
+  const { login, isAuthenticated } = useAuth();
 
 
   // Scroll to top when page is loaded
