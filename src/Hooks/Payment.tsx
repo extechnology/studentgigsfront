@@ -6,8 +6,6 @@ import { PostCreateOrder, PostVerifyPayment } from "@/Service/AllApi";
 // Create Payment Order
 export const CreateOrder = () => {
 
-    const queryclient = useQueryClient();
-
 
     interface MutationParams {
         formData: FormData;
