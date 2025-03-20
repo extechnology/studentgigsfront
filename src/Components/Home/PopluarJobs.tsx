@@ -151,7 +151,7 @@ export default function PopluarJobs() {
 
                                                 </div>
 
-                                                {/* Apply Button */}
+                                                {/* Apply Button On Mobile*/}
                                                 <div className="block md:gap-4 items-end sm:hidden mt-4">
                                                     <div>
                                                         <Link to={`/jobdeatils/${job?.id}/${job?.job_type}`}>

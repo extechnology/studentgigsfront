@@ -1,10 +1,12 @@
-import { Clock, IndianRupee, MapPin } from 'lucide-react';
+import { Clock, IndianRupee, MapPin, Bookmark, BookmarkCheck, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { RemoveSavedJobs, SaveSavedJobs } from '@/Hooks/JobHook';
+import { useAuth } from '@/Context/AuthContext';
+import toast from 'react-hot-toast';
 
-
-
+// Job Crad Props
 interface JobCardProps {
     company: string;
     logo: string;
@@ -16,11 +18,13 @@ interface JobCardProps {
     salaryType: string;
     id: number
     applied: boolean
+    saved: boolean
     employer_id: number
 }
 
 
-export default function JobCard({ id, applied, employer_id, salaryType, company, logo, postedTime, jobType, salary, position, location }: JobCardProps) {
+export default function JobCard({ id, applied, saved, employer_id, salaryType, company, logo, postedTime, jobType, salary, position, location }: JobCardProps) {
+
 
 
     // Calculate time ago
@@ -37,6 +41,100 @@ export default function JobCard({ id, applied, employer_id, salaryType, company,
     }, [postedTime]);
 
 
+    // Remove Saved Job
+    const { mutate: DeleteSavedJob, isPending: DeletePending } = RemoveSavedJobs()
+
+
+    // Save Job
+    const { mutate: SaveJob, isPending: SavePending } = SaveSavedJobs()
+
+
+
+    // Auth context
+    const { isAuthenticated, isPlanExpired, plan } = useAuth()
+
+
+
+    // Navigate
+    const navigate = useNavigate()
+
+
+
+    // Handle Saved Jobs
+    const HandleSavedJobs = (id: number, job_type: string, Saved: boolean) => {
+
+        if (isAuthenticated && !isPlanExpired && plan?.saved_jobs.toLowerCase() === "yes") {
+
+            if (Saved) {
+
+                DeleteSavedJob({ id, job_type }, {
+
+                    onSuccess: (response) => {
+
+                        if (response.status >= 200 && response.status < 300) {
+
+                            toast.success("Job Removed from Saved Jobs");
+
+                        } else {
+
+                            toast.error("Something went wrong please try again");
+                            console.log(response)
+
+                        }
+
+                    }
+
+                })
+
+            } else {
+
+                const formData = new FormData()
+
+                formData.append("job_id", id.toString())
+                formData.append("job_type", job_type)
+
+                SaveJob({ formData: formData }, {
+
+                    onSuccess: (response) => {
+
+                        if (response.status >= 200 && response.status < 300) {
+
+                            toast.success("Job Saved Successfully");
+
+                        } else {
+
+                            toast.error("Something went wrong please try again");
+                            console.log(response)
+
+                        }
+
+                    }
+                })
+
+            }
+
+        } else {
+
+            if (!isAuthenticated) {
+                toast.error("Please login to save jobs");
+                navigate("/auth");
+            } else if (isPlanExpired) {
+                toast.error("Your plan has expired. Renew to save jobs");
+                navigate("/plans");
+            } else if (plan?.saved_jobs.toLowerCase() !== "yes") {
+                toast.error("Your current plan does not allow saving jobs Upgrade to save jobs");
+                navigate("/plans");
+            }
+
+        }
+
+    }
+
+
+
+
+
+
 
     return (
 
@@ -48,20 +146,36 @@ export default function JobCard({ id, applied, employer_id, salaryType, company,
                 <div className="bg-white rounded-lg p-6 sm:shadow-sm shadow-md border border-gray-200 hover:shadow-md transition-shadow">
 
 
-                    <Link to={`/jobdeatils/${id}/${jobType}`}>
 
-                        {/* Header - Company & Time */}
-                        <div className="block justify-between items-center mb-4">
+                    {/* Header - Job Title & Time */}
+                    <div className="block justify-between items-center mb-4">
+
+                        <div className='flex justify-between items-center'>
 
                             <h3 className="text-lg font-semibold text-gray-900">{position.toUpperCase()}</h3>
 
-                            <div className="flex items-center text-gray-600 text-sm py-3 px-3">
-                                <Clock size={16} className="mr-1 text-green-500 font-semibold" />
-                                <span>{timeAgo}</span>
-                            </div>
+                            <button onClick={() => { HandleSavedJobs(id, jobType, saved) }} disabled={DeletePending || SavePending}>
+
+                                {DeletePending || SavePending ? (
+                                    <Loader2 className="animate-spin text-gray-400" />
+                                ) : saved ? (
+                                    <BookmarkCheck className="text-green-400 fill-transparent" />
+                                ) : (
+                                    <Bookmark className="text-gray-600" />
+                                )}
+
+                            </button>
 
                         </div>
 
+                        <div className="flex items-center text-gray-600 text-sm py-3">
+                            <Clock size={16} className="mr-1 text-green-500 font-semibold" />
+                            <span>{timeAgo}</span>
+                        </div>
+
+                    </div>
+
+                    <Link to={`/jobdeatils/${id}/${jobType}`}>
 
                         {/* Job Type & Salary */}
                         <div className="flex justify-between items-center mb-6">

@@ -1,7 +1,7 @@
 import { BriefcaseBusiness, Building2, FileText, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
-import PersonalInfoLoader from "@/Components/Common/PersonalInfoLoader";
+import PersonalInfoLoader from "@/Components/Loaders/PersonalInfoLoader";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NoEducation from "@/Components/Loaders/NoEducation";
@@ -15,8 +15,8 @@ import ResumeViewer from "@/Components/Common/ResumeViewer";
 
 
 interface Profile {
-    profile_img: string | null;
-    cover_img: string | null;
+    cover_photo: string | null;
+    profile_pic: string | null;
 }
 
 interface Language {
@@ -213,7 +213,7 @@ export default function UserProfile() {
                                         {/* Banner Image */}
                                         <div className="relative group h-[20vh] md:h-[25vh] lg:h-[40vh] rounded-lg  md:rounded-2xl lg:rounded-3xl">
                                             <img
-                                                src={UserData?.profile?.cover_img || "/Cover-def.jpg"}
+                                                src={UserData?.profile?.cover_photo || "/Cover-def.jpg"}
                                                 alt="banner"
                                                 loading="lazy"
                                                 className="w-full h-full object-cover rounded-lg md:rounded-2xl lg:rounded-3xl"
@@ -232,7 +232,7 @@ export default function UserProfile() {
                                                     <div className="relative group">
                                                         <div className="relative w-24 h-24 md:w-32 md:h-32">
                                                             <img
-                                                                src={UserData?.profile?.profile_img ?? "/Profile-deaf.jpg"}
+                                                                src={UserData?.profile?.profile_pic ?? "/Profile-deaf.jpg"}
                                                                 alt="profile"
                                                                 loading="lazy"
                                                                 className="w-full h-full rounded-full object-cover border-4 border-white shadow-lg"

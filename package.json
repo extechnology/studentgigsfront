@@ -37,6 +37,7 @@
     "react-hot-toast": "^2.5.1",
     "react-multi-carousel": "^2.8.5",
     "react-phone-number-input": "^3.4.11",
+    "react-razorpay": "^3.0.1",
     "react-router-dom": "^7.1.1",
     "react-select": "^5.10.0",
     "react-world-flags": "^1.6.0",

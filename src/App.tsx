@@ -2,10 +2,11 @@ import { lazy, Suspense, useEffect, useState } from "react"
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
 import { useAuth } from "./Context/AuthContext.tsx"
+import ProtectedRouteForSavedJobs from "./Components/Common/ProtectedRouteForSavedJobs.tsx"
 
 
 const Landing = lazy(() => import("./Pages/Landing.tsx"))
-const Loader = lazy(() => import("./Components/Common/Loader.tsx"))
+const Loader = lazy(() => import("./Components/Loaders/Loader.tsx"))
 const Header = lazy(() => import("./Components/Common/Header.tsx"))
 const Footer = lazy(() => import("./Components/Common/Footer.tsx"))
 const Contact = lazy(() => import("./Pages/Contact.tsx"))
@@ -18,6 +19,7 @@ const Auth = lazy(() => import("./Pages/Auth.tsx"))
 const JobFilter = lazy(() => import("./Pages/JobFilter.tsx"))
 const JobDeatils = lazy(() => import("./Pages/JobDeatils.tsx"))
 const ApplyJob = lazy(() => import("./Pages/ApplyJob.tsx"))
+const SavedJobs = lazy(() => import("./Pages/SavedJobs.tsx"))
 const Plans = lazy(() => import("./Pages/Plans.tsx"))
 const Terms = lazy(() => import("./Pages/Terms.tsx"))
 const Refund = lazy(() => import("./Pages/Refund.tsx"))
@@ -62,12 +64,14 @@ function App() {
 
 
 
-  // Protected Route Component
+  // Protected Route Component for Auth
   const ProtectedRoute = ({ children }: any) => {
 
     return isAuthenticated ? children : <Navigate to="/auth" state={{ from: location }} />
 
   };
+
+
 
 
   return (
@@ -91,8 +95,6 @@ function App() {
 
           <Route path="/jobfilter" element={<JobFilter />} />
 
-          <Route path="/plans" element={<ProtectedRoute> <Plans /> </ProtectedRoute>}/>
-
           <Route path="/termscondition" element={<Terms />} />
 
           <Route path="/refundpolicy" element={<Refund />} />
@@ -100,6 +102,10 @@ function App() {
           <Route path="/privacypolicy" element={<Privacy />} />
 
           {/* <Route path="/employerlist" element={<EmployerList />} /> */}
+
+          <Route path="/savedjobs" element={<ProtectedRouteForSavedJobs><SavedJobs /></ProtectedRouteForSavedJobs>} />
+
+          <Route path="/plans" element={<ProtectedRoute> <Plans /> </ProtectedRoute>} />
 
           <Route path="/userprofile" element={<ProtectedRoute> <UserProfile /> </ProtectedRoute>} />
 

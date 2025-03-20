@@ -1,7 +1,8 @@
 import { CommonApi } from "./CommonApi";
 
 
-const Base_Url = "http://localhost:8000/api/employee"
+// Base Url
+const Base_Url = "https://server.studentsgigs.com"
 
 
 
@@ -328,7 +329,7 @@ export const GetHomeSlider = async () => {
 }
 
 
-//GET Jobs
+//GET Single Job data based on id and job type
 export const GetJobs = async (id: string, job_type: string, header: object) => {
 
     const params = new URLSearchParams({ id: id, job_type: job_type })
@@ -387,8 +388,14 @@ export const PostApplyJob = async (data: FormData, header: object) => {
 
 
 
-//GET Poplar Jobs
-export const GetPopularJobs = async () => {
+//GET popular Jobs
+export const GetPopularJobs = async (header: object, isAuthenticated: boolean) => {
+
+    if (isAuthenticated) {
+
+        return await CommonApi("GET", `${Base_Url}/popular-jobs/`, "", header)
+
+    }
 
     return await CommonApi("GET", `${Base_Url}/popular-jobs/`, "", "")
 
@@ -432,6 +439,59 @@ export const GetUserPlans = async (header: object) => {
 //GET All Plans
 export const GetAllPlans = async (header: object) => {
 
-    return await CommonApi("GET", `${Base_Url}/total-plans/`, "", header)
+    return await CommonApi("GET", `${Base_Url}/all-plans/`, "", header)
+
+}
+
+
+// Create Payment Order
+export const PostCreateOrder = async (data: FormData, header: object) => {
+
+    return await CommonApi("POST", `${Base_Url}/create-order-employee/`, data, header)
+
+}
+
+
+
+
+// Create Payment Order
+export const PostVerifyPayment = async (data: any, header: object) => {
+
+    return await CommonApi("POST", `${Base_Url}/verify-payment-employee/`, data, header)
+
+}
+
+
+
+//GET All Search Category
+export const GetAllSearchCategory = async () => {
+
+    return await CommonApi("GET", `${Base_Url}/all-category-job-search/`, "", "")
+
+}
+
+
+//GET Saved Jobs
+export const GetSavedJobs = async (header: object) => {
+
+    return await CommonApi("GET", `${Base_Url}/saved-jobs/`, "", header)
+
+}
+
+
+//Post Saved Jobs
+export const PostSavedJobs = async (data: FormData, header: object) => {
+
+    return await CommonApi("POST", `${Base_Url}/saved-jobs/`, data, header)
+
+}
+
+
+//Delete Saved Jobs
+export const DeleteSavedJobs = async (id: number, job_type : string, header: object) => {
+
+    const params = new URLSearchParams({ job_id: id.toString(), job_type: job_type })
+
+    return await CommonApi("DELETE", `${Base_Url}/saved-jobs/?${params.toString()}`, "", header)
 
 }

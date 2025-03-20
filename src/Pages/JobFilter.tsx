@@ -46,6 +46,7 @@ type Job = {
     posted_date: string;
     job_type: string;
     applied: boolean;
+    saved_job: boolean
 };
 
 
@@ -64,9 +65,6 @@ export default function JobFilter() {
     // Job search
     const { searchResults, isLoading, isError, isFetching, page, setPage, totalPages } = useJobSearch();
 
-
-    // Scroll to top when page is loaded
-    window.scrollTo({ top: 0, behavior: 'smooth', });
 
     return (
 
@@ -166,7 +164,8 @@ export default function JobFilter() {
                                 {searchResults.data.map((item: Job, index: number) => (
                                     <JobCard
                                         company={item?.company?.company_name}
-                                        applied = {item?.applied}
+                                        applied={item?.applied}
+                                        saved={item?.saved_job}
                                         salaryType={item?.salary_type}
                                         jobType={item?.job_type}
                                         location={item?.job_location}
@@ -213,7 +212,7 @@ export default function JobFilter() {
                             <div className="flex justify-center mt-6">
                                 <button
                                     className={`px-4 py-2 mx-1 text-white bg-gray-600 rounded ${page === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-700'}`}
-                                    onClick={() => setPage(page - 1)}
+                                    onClick={() => { setPage(page - 1), window.scrollTo({ top: 0, behavior: 'smooth', }); }}
                                     disabled={page === 1}
                                 >
                                     Previous
@@ -223,7 +222,7 @@ export default function JobFilter() {
                                 </span>
                                 <button
                                     className={`px-4 py-2 mx-1 text-white bg-green-600 rounded ${page === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'}`}
-                                    onClick={() => setPage(page + 1)}
+                                    onClick={() => { setPage(page + 1), window.scrollTo({ top: 0, behavior: 'smooth', }); }}
                                     disabled={page === totalPages}
                                 >
                                     Next
