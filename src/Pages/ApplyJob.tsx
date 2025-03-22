@@ -13,7 +13,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { GetPersonalInfo } from '@/Hooks/UserProfile';
 import { ApplyJob } from '@/Hooks/JobHook';
 import toast from 'react-hot-toast';
-import JobApplicationSuccess from '@/Components/Common/JobApplySuccess';
 import confetti from 'canvas-confetti';
 import { useAuth } from '@/Context/AuthContext';
 
@@ -73,7 +72,6 @@ const JobApplicationForm = () => {
 
     const [resumeUrl, setResumeUrl] = useState('');
     const [isEditing, setIsEditing] = useState(false);
-    const [status, setStatus] = useState(false)
 
 
     // Apply Job
@@ -157,7 +155,7 @@ const JobApplicationForm = () => {
                     if (response.status >= 200 && response.status < 300) {
 
                         toast.success("Application Sent Successfully");
-                        setStatus(true)
+                        Navigate('/jobapplysuccess')
                         handleClick()
                         window.scrollTo({ top: 0, behavior: 'smooth', });
 
@@ -165,7 +163,6 @@ const JobApplicationForm = () => {
                     else {
 
                         toast.error("Something went wrong. Please try again.");
-                        setStatus(false)
 
                     }
 
@@ -234,8 +231,6 @@ const JobApplicationForm = () => {
         <div className="min-h-screen to-white p-0 sm:py-3 mt-24 sm:mt-16 bg-slate-50/10">
 
             {
-
-                status ? <JobApplicationSuccess /> :
 
                     isLoading || isFetching || isError ? (
 

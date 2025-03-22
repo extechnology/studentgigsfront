@@ -1,5 +1,5 @@
 import { CheckCircle, ArrowRight } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../Components/ui/button";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 

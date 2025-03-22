@@ -19,6 +19,7 @@ const Auth = lazy(() => import("./Pages/Auth.tsx"))
 const JobFilter = lazy(() => import("./Pages/JobFilter.tsx"))
 const JobDeatils = lazy(() => import("./Pages/JobDeatils.tsx"))
 const ApplyJob = lazy(() => import("./Pages/ApplyJob.tsx"))
+const JobApplySucces = lazy(()=> import ("./Pages/JobApplySuccess.tsx"))
 const SavedJobs = lazy(() => import("./Pages/SavedJobs.tsx"))
 const Plans = lazy(() => import("./Pages/Plans.tsx"))
 const Terms = lazy(() => import("./Pages/Terms.tsx"))
@@ -107,6 +108,8 @@ function App() {
 
           <Route path="/plans" element={<ProtectedRoute> <Plans /> </ProtectedRoute>} />
 
+          <Route path="/jobapplysuccess" element={<ProtectedRoute> <JobApplySucces /> </ProtectedRoute>} />
+
           <Route path="/userprofile" element={<ProtectedRoute> <UserProfile /> </ProtectedRoute>} />
 
           <Route path="/employerdeatils/:id" element={<ProtectedRoute> <EmployerDeatils /> </ProtectedRoute>} />
@@ -126,12 +129,7 @@ function App() {
       </Suspense>
 
 
-
-
     </>
-
-
-
 
   )
 

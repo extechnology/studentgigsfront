@@ -16,20 +16,18 @@ import toast from "react-hot-toast";
 import { useAuth } from "@/Context/AuthContext";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import { useQueryClient } from "@tanstack/react-query";
+import NotificationPopover from "@/Components/Common/Notifications";
 
 
 export default function Header() {
 
 
+  // for navigation
   const Navigate = useNavigate()
 
 
   // Get User Personal Information
   const { data } = GetPersonalInfo()
-
-
-  // Set Login and logout status
-  const [LoginStatus, SetLoginStatus] = useState(false)
 
 
   // To check if the user is scrolled
@@ -52,7 +50,7 @@ export default function Header() {
 
 
   // To use auth context logout
-  const { logout } = useAuth()
+  const { logout, isAuthenticated, isPlanExpired, plan } = useAuth()
 
 
 
@@ -73,22 +71,6 @@ export default function Header() {
       }
 
     };
-
-    const handleCheck = () => {
-
-      if (!localStorage.getItem("token")) {
-
-        SetLoginStatus(true)
-
-      } else {
-
-        SetLoginStatus(false)
-
-      }
-
-    }
-
-    handleCheck()
 
     window.addEventListener("scroll", handleScroll);
 
@@ -116,8 +98,6 @@ export default function Header() {
 
     Navigate("/")
 
-    SetLoginStatus(true)
-
   }
 
 
@@ -137,6 +117,8 @@ export default function Header() {
 
             <div className="flex items-center justify-between">
 
+
+
               <div className="flex lg:flex-1">
                 <Link to={'/'} className="-m-1.5 p-1.5">
                   <span className="sr-only">Your Company</span>
@@ -150,10 +132,14 @@ export default function Header() {
               </div>
 
 
+
+
               {/* Home for mobile view */}
               <Link to={'/'} className={`ms-1 text-md font-semibold text-gray-400 hover:text-green-600 sm:hidden block ${color ? "text-white" : ""}`}>
                 <House size={24} />
               </Link>
+
+
 
               {/* Search  for mobile view */}
               <div className="flex items-center border rounded-full px-1 overflow-hidden  sm:hidden mx-1">
@@ -172,6 +158,7 @@ export default function Header() {
               </div>
 
 
+
               <div className="flex lg:hidden">
                 <button
                   type="button"
@@ -185,6 +172,7 @@ export default function Header() {
                 </button>
 
               </div>
+
 
             </div>
 
@@ -231,7 +219,7 @@ export default function Header() {
               {/* Find Student Talents */}
               <a href={'https://gigs.studentsgigs.com'} target="_blank">
 
-                <button className={`flex items-center gap-x-2 bg-[#eb8125] text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                <button className={`flex items-center gap-x-2 bg-[#eb8125] text-white font-semibold text-md px-12 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
                   Find Student Talents <GraduationCap size={24} />
                 </button>
 
@@ -246,7 +234,11 @@ export default function Header() {
 
 
               {/* Profile menu items */}
-              <ProfileMenu  HandleLogOut={HandleLogOut} LoginStatus={LoginStatus} data={data} />
+              <ProfileMenu HandleLogOut={HandleLogOut} LoginStatus={isAuthenticated} data={data} />
+
+
+              {/* Notifications */}
+              <NotificationPopover color={color} isAuthenticated={isAuthenticated} isPlanExpired={isPlanExpired} plan={plan} />
 
 
               {/* Search */}
@@ -263,8 +255,6 @@ export default function Header() {
                   <Search className={`${color ? 'text-white' : 'text-gray-400'}`} />
                 </Link>
               </div>
-
-
 
 
             </PopoverGroup>
@@ -419,7 +409,7 @@ export default function Header() {
                                   </Link>
 
                                   {/* Login/Logout */}
-                                  {LoginStatus ? (
+                                  {!isAuthenticated ? (
                                     <Link
                                       to="/auth"
                                       className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"

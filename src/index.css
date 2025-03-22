@@ -68,7 +68,6 @@ html {
 
   display: block;
 
-
 }
 
 .dropdown::before {
@@ -87,6 +86,29 @@ html {
 }
 
 
+.notification-dropdown {
+
+  display: block;
+  overflow: visible;
+
+}
+
+
+.notification-dropdown::before {
+
+  content: '';
+  position: absolute;
+  top: -0.7rem;
+  right: 2.2rem;
+  width: 25px;
+  height: 25px;
+  transform: rotate(45deg);
+  background-color: white;
+  border-top: 1px solid #d1d5db;
+  border-left: 1px solid #d1d5db;
+
+}
+
 
 
 
@@ -101,6 +123,7 @@ html {
   background-size: 800px 100%;
   animation: shimmer 1.5s infinite linear;
 }
+
 /* 
 @keyframes shimmer {
   0% {
@@ -116,5 +139,60 @@ html {
 @keyframes shimmer {
   100% {
     left: 100%;
+  }
+}
+
+
+
+/* premium badge shimmer */
+.premium-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%);
+  animation: shimmer 2s infinite;
+  transform: skewX(-20deg);
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-20deg);
+  }
+
+  100% {
+    transform: translateX(300%) skewX(-20deg);
+  }
+}
+
+.border-shimmer {
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  margin: -4px;
+  border-radius: 9999px;
+  background: conic-gradient(from 0deg,
+      #f59e0b,
+      #f472b6,
+      #60a5fa,
+      #f59e0b);
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

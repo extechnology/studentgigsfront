@@ -101,13 +101,13 @@ export default function SavedJobCard({ id, index, applied, company_name, jobType
                     {/* Job details */}
                     <div className="flex-grow">
 
-                        <h3 className="font-semibold text-lg text-gray-800">{job_title}</h3>
+                        <h3 className="font-semibold text-lg text-gray-800">{job_title.toUpperCase()}</h3>
 
                         <div className="flex flex-wrap gap-y-3 mt-2">
 
                             <div className="flex items-center text-gray-600 text-sm mr-4">
                                 <Building size={16} className="mr-1.5 text-gray-400" />
-                                {company_name}
+                                {company_name.toUpperCase()}
                             </div>
 
                             <div className="flex items-center text-gray-600 text-sm mr-4">

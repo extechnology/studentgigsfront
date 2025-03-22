@@ -4,7 +4,7 @@ import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { GetProfilePicture, EditProfilePicture } from "@/Hooks/UserProfile";
 import toast from "react-hot-toast";
-
+import { useAuth } from "@/Context/AuthContext";
 
 
 
@@ -25,6 +25,9 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 const ProfileEditor: React.FC = () => {
 
+
+    // Plan Details
+    const { plan, isPlanExpired } = useAuth()
 
 
     // Form State 
@@ -182,7 +185,7 @@ const ProfileEditor: React.FC = () => {
                 toast.error("An error occurred: " + error.message);
                 setTempBannerSrc('');
 
-            
+
             }
         })
 
@@ -276,14 +279,41 @@ const ProfileEditor: React.FC = () => {
                         <div className="flex justify-start space-x-4 -mt-6 sm:-mt-10 sm:ms-8 ms-2">
 
                             <div className="flex items-center gap-4">
+
+
                                 <div className="relative group">
+
+                                    {/* Shimmer border effect for premium users */}
+                                    {!isPlanExpired && plan?.premium_profile_badge.toLowerCase() === "yes" && (
+                                        <div className="absolute inset-0 rounded-full border-shimmer"></div>
+                                    )}
+
                                     <div className="relative w-24 h-24 md:w-32 md:h-32">
+
                                         <img
                                             src={profileSrc || "/Profile-deaf.jpg"}
                                             alt="profile"
                                             loading="lazy"
                                             className="w-full h-full rounded-full object-cover border-4 border-white shadow-lg"
                                         />
+
+                                        {/* Premium Badge */}
+                                        {!isPlanExpired && plan?.premium_profile_badge.toLowerCase() === "yes" && (
+
+                                            <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-3 overflow-hidden rounded-full shadow-lg border-2 border-white">
+                                                <div className="premium-badge bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs font-bold py-1 px-3 flex items-center gap-1 relative overflow-hidden">
+                                                    {/* Shimmer effect overlay */}
+                                                    <div className="shimmer-effect"></div>
+
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fillRule="evenodd" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" clipRule="evenodd" />
+                                                    </svg>
+                                                    PREMIUM
+                                                </div>
+                                            </div>
+
+                                        )}
+
                                         <label htmlFor="profile-upload" className="absolute inset-0 rounded-full flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all cursor-pointer">
                                             <div className="opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all">
                                                 <Pencil className="sm:w-8 sm:h-8 w-6 h-6 text-white" />
@@ -291,7 +321,11 @@ const ProfileEditor: React.FC = () => {
                                         </label>
                                         <input type="file" id="profile-upload" accept="image/*" className="hidden" onChange={(e) => handleFileUpload(e, 'profile')} />
                                     </div>
+
+
                                 </div>
+
+
                             </div>
 
                             <div className="md:pt-12 pt-8">
