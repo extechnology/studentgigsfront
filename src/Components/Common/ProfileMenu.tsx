@@ -53,7 +53,7 @@ const PopoverContent: React.FC<PopoverContentProps> = ({ LoginStatus, HandleLogO
         <MenuItem link="/plans" icon={<Crown size={20} />} text="Premium" />
         <MenuItem link="/savedjobs" icon={<Bookmark size={20} />} text="Saved Jobs" />
 
-        {LoginStatus ? (
+        {!LoginStatus ? (
             <MenuItem link="/auth" icon={<KeyRound size={20} />} text="Login" />
         ) : (
             <MenuItemLogout icon={<LogOut size={20} />} text="Logout" HandleLogOut={HandleLogOut} />

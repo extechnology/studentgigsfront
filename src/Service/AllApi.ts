@@ -2,7 +2,7 @@ import { CommonApi } from "./CommonApi";
 
 
 // Base Url
-const Base_Url = "https://server.studentsgigs.com/api/employee"
+export const Base_Url = "https://server.studentsgigs.com/api/employee"
 
 
 
@@ -488,7 +488,7 @@ export const PostSavedJobs = async (data: FormData, header: object) => {
 
 
 //Delete Saved Jobs
-export const DeleteSavedJobs = async (id: number, job_type : string, header: object) => {
+export const DeleteSavedJobs = async (id: number, job_type: string, header: object) => {
 
     const params = new URLSearchParams({ job_id: id.toString(), job_type: job_type })
 

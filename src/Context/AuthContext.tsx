@@ -3,7 +3,7 @@ import { UserPlans } from "@/Hooks/Userplans";
 
 
 // Plan & Usage Data Type
-interface PlanData {
+export interface PlanData {
     plan_id: number;
     id: string;
     name: string;
@@ -12,7 +12,7 @@ interface PlanData {
     validity: string;
     profile_visibility_to_employers: string;
     resume_builder: string;
-    job_alert_and_notification: string;
+    job_alerts_and_notifications: string;
     saved_jobs: string;
     workplace_essentials_certified_course: string;
     priority_shortlisting_by_employers: string;
