@@ -21,8 +21,10 @@ const JobDeatils = lazy(() => import("./Pages/JobDeatils.tsx"))
 const ApplyJob = lazy(() => import("./Pages/ApplyJob.tsx"))
 const JobApplySucces = lazy(()=> import ("./Pages/JobApplySuccess.tsx"))
 const SavedJobs = lazy(() => import("./Pages/SavedJobs.tsx"))
+const GigsAcademy = lazy(() => import("./Pages/GigsAcademy.tsx"))
 const Plans = lazy(() => import("./Pages/Plans.tsx"))
 const Terms = lazy(() => import("./Pages/Terms.tsx"))
+const LoginTerms = lazy(() => import("./Pages/LoginTerms.tsx"))
 const Refund = lazy(() => import("./Pages/Refund.tsx"))
 const Privacy = lazy(() => import("./Pages/Privacy.tsx"))
 
@@ -96,11 +98,15 @@ function App() {
 
           <Route path="/jobfilter" element={<JobFilter />} />
 
+          <Route path="/gigsskillacademy" element={<GigsAcademy />} />
+
           <Route path="/termscondition" element={<Terms />} />
 
           <Route path="/refundpolicy" element={<Refund />} />
 
           <Route path="/privacypolicy" element={<Privacy />} />
+
+          <Route path="/loginterms" element={<LoginTerms />} />
 
           {/* <Route path="/employerlist" element={<EmployerList />} /> */}
 

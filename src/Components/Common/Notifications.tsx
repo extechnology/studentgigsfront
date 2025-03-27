@@ -1,38 +1,53 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
 import { Bell, AlertCircle, ChevronRight, Briefcase, MapPin, Calendar } from "lucide-react";
 import { PlanData } from "@/Context/AuthContext";
 import { motion } from "framer-motion";
+import { MarkAsRead, ClearAllNotifications, NotificationAlert } from "@/Hooks/Utils";
+import toast from "react-hot-toast";
+import NotificationLoader from "../Loaders/NotificationLoader";
+
 
 
 // Interface for notification items
 interface BaseNotification {
     id: number;
-    postedAt: string;
-    isRead: boolean;
+    posted_at: string;
+    is_read: boolean;
+    employee: number
 }
 
+
+// Job notification Types
 interface JobNotification extends BaseNotification {
-    type: 'job';
+    notification_type: 'job';
     title: string;
     company: string;
     location: string;
+    job_id: number;
+    job_type: string
+    description: string
+
 }
 
+
+// Plan notification Types
 interface PlanNotification extends BaseNotification {
-    type: 'plan';
+    notification_type: 'plan';
     title: string;
     description: string;
 }
 
+
 type NotificationItem = JobNotification | PlanNotification;
+
 
 
 // Interface for Crown component
 interface CrownProps {
     className?: string;
 }
+
 
 // Interface for NotificationPopover component
 interface NotificationPopoverProps {
@@ -51,93 +66,77 @@ const NotificationPopover: React.FC<NotificationPopoverProps> = ({
 
 
 
-    // Sample notifications data
-    const [notifications, setNotifications] = useState<NotificationItem[]>([
-        {
-            id: 2,
-            type: 'job',
-            title: 'UX Designer',
-            company: 'Creative Solutions',
-            location: 'Remote',
-            postedAt: '2 hours ago',
-            isRead: false,
-        },
-        {
-            id: 3,
-            type: 'plan',
-            title: 'Premium Plan Expiring',
-            description: 'Your premium plan will expire in 3 days',
-            postedAt: '1 day ago',
-            isRead: false,
-        },
-        {
-            id: 4,
-            type: 'job',
-            title: 'Frontend Developer',
-            company: 'Tech Innovators',
-            location: 'New York, NY',
-            postedAt: '3 hours ago',
-            isRead: true,
-        },
-        {
-            id: 5,
-            type: 'job',
-            title: 'Product Manager',
-            company: 'Global Systems',
-            location: 'San Francisco, CA',
-            postedAt: '1 day ago',
-            isRead: true,
-        },
-        {
-            id: 6,
-            type: 'plan',
-            title: 'New Features Available',
-            description: 'Check out new premium features in your plan',
-            postedAt: '2 days ago',
-            isRead: true,
-        }
-    ]);
+    // Get notifications Data
+    const { data, isLoading, isError, isFetching } = NotificationAlert();
 
 
- 
+    // Clear notifications
+    const { mutate: clearNotifications } = ClearAllNotifications();
 
-    const unreadCount = notifications.filter(n => !n.isRead).length;
+
+    // Mark notification as read
+    const { mutate: markAsRead } = MarkAsRead();
+
+
+    // Count unread notifications
+    const unreadCount = data?.filter((n: NotificationItem) => !n.is_read).length;
 
 
 
+    // Clear notifications
     const handleClearNotifications = () => {
-        setNotifications([]);
+
         // API call to clear notifications
+        clearNotifications("delete", {
+
+            onSuccess: (response) => {
+
+                if (response.status >= 200 && response.status < 300) {
+
+                    toast.success("All notifications cleared");
+
+                } else {
+
+                    toast.error("Something went wrong. Please try again Later.");
+
+                }
+
+            }
+
+        })
+
     };
 
 
 
+    // Mark Notification as readed
     const handleMarkAllAsRead = () => {
-        setNotifications(prev =>
-            prev.map(notification => ({
-                ...notification,
-                isRead: true
-            }))
-        );
-        // API call to mark all as read
-    };
 
+        // API call to mark all notifications as read
+        markAsRead("mark", {
 
+            onSuccess: (response) => {
 
-    const handleNotificationClick = (id: number) => {
-        setNotifications(prev =>
-            prev.map(notification =>
-                notification.id === id
-                    ? { ...notification, isRead: true }
-                    : notification
-            )
-        );
-        // API call to mark notification as read
+                if (response.status >= 200 && response.status < 300) {
+
+                    toast.success("All notifications marked as read");
+
+                } else {
+
+                    toast.error("Something went wrong. Please try again Later.");
+
+                }
+
+            }
+
+        });
+
     };
 
 
 
     const renderNotificationContent = () => {
+
 
 
         // Not authenticated
@@ -205,40 +204,51 @@ const NotificationPopover: React.FC<NotificationPopoverProps> = ({
             );
         }
 
-        
+
 
         // Show notifications
         return (
             <>
-                <div className="flex items-center rounded-lg justify-between p-4 border-b border-gray-100 sticky top-0 bg-white z-10 backdrop-blur-sm bg-white/90">
+
+                <div className="flex items-center rounded-lg justify-between p-4 border-b border-gray-100 sticky top-0 bg-[#eb8125] z-10 backdrop-blur-sm ">
 
 
-                    <h3 className="font-semibold text-gray-900">Notifications</h3>
+                    <h3 className="font-semibold text-white">Notifications {unreadCount > 0 && `(${unreadCount})`}</h3>
 
 
                     <div className="flex space-x-2">
-                        {notifications.length > 0 && unreadCount > 0 && (
+                        {data?.length > 0 && unreadCount > 0 && (
                             <button
                                 onClick={handleMarkAllAsRead}
-                                className="text-xs text-gray-600 hover:text-gray-800 font-medium"
+                                className="text-xs text-gray-100 hover:text-gray-600 font-bold"
                             >
                                 Mark all as read
                             </button>
                         )}
-                        {notifications.length > 0 && (
+                        {data?.length > 0 && (
                             <button
                                 onClick={handleClearNotifications}
-                                className="text-xs text-blue-600 hover:text-blue-800 font-medium"
+                                className="text-xs text-white hover:text-gray-600 font-bold"
                             >
                                 Clear All
                             </button>
                         )}
                     </div>
+
                 </div>
 
+
                 <div className="max-h-96 overflow-y-auto custom-scrollbar">
-                    {notifications.length === 0 ? (
+
+
+                    {isLoading || isFetching || isError ? (
+
+                        <NotificationLoader />
+
+                    ) : data?.length === 0 ? (
+
                         <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+
                             <motion.div
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
@@ -256,8 +266,9 @@ const NotificationPopover: React.FC<NotificationPopoverProps> = ({
                                         repeatType: "loop"
                                     }}
                                 >
-                                    <Bell className="h-16 w-16 text-blue-300" />
+                                    <Bell className="h-16 w-16 text-amber-500" />
                                 </motion.div>
+
                                 <motion.div
                                     className="absolute top-0 left-1/2 -ml-8 w-16 h-16"
                                     initial={{ opacity: 0.3 }}
@@ -273,7 +284,10 @@ const NotificationPopover: React.FC<NotificationPopoverProps> = ({
                                 >
                                     <div className="w-full h-full rounded-full bg-gray-200 opacity-30"></div>
                                 </motion.div>
+
                             </motion.div>
+
+
                             <motion.p
                                 initial={{ y: 10, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
@@ -282,6 +296,8 @@ const NotificationPopover: React.FC<NotificationPopoverProps> = ({
                             >
                                 No notifications yet
                             </motion.p>
+
+
                             <motion.p
                                 initial={{ y: 10, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
@@ -290,27 +306,33 @@ const NotificationPopover: React.FC<NotificationPopoverProps> = ({
                             >
                                 We'll notify you when something important happens
                             </motion.p>
+
                         </div>
+
                     ) : (
+
                         <div className="divide-y divide-gray-100">
-                            {notifications.map((notification, index) => (
+                            {data?.map((notification: NotificationItem, index: number) => (
                                 <motion.div
                                     key={notification.id}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.2, delay: index * 0.05 }}
-                                    onClick={() => handleNotificationClick(notification.id)}
                                 >
                                     <Notification notification={notification} />
                                 </motion.div>
                             ))}
                         </div>
+
                     )}
+
                 </div>
             </>
         );
     };
 
+
+    // Render popover
     return (
 
         <Popover className="relative">
@@ -355,13 +377,14 @@ interface NotificationProps {
 }
 
 
-
+// Notification 
 const Notification: React.FC<NotificationProps> = ({ notification }) => {
 
 
+    // Notification Link
     const getNotificationLink = (notification: NotificationItem) => {
-        if (notification.type === 'job') {
-            return `/jobs/${notification.title.toLowerCase().replace(/\s+/g, '-')}`;
+        if (notification.notification_type === 'job') {
+            return `/jobdeatils/${notification.job_id}/${notification.job_type}`;
         } else {
             return '/plans';
         }
@@ -369,9 +392,10 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
 
 
 
+    // Notification Icon
     const getNotificationIcon = (notification: NotificationItem) => {
-        if (notification.type === 'job') {
-            return <Briefcase className="h-10 w-10 p-2 bg-blue-100 text-blue-600 rounded-full" />;
+        if (notification.notification_type === 'job') {
+            return <Briefcase className="h-10 w-10 p-2 bg-amber-100 text-amber-600 rounded-full" />;
         } else {
             return <Calendar className="h-10 w-10 p-2 bg-amber-100 text-amber-600 rounded-full" />;
         }
@@ -382,21 +406,29 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
     return (
         <Link
             to={getNotificationLink(notification)}
-            className={`flex items-start p-4 hover:bg-gray-50 transition-all ${!notification.isRead ? 'bg-blue-50/70 hover:bg-blue-50' : ''
+            className={`flex items-start p-4 hover:bg-gray-50 transition-all ${!notification.is_read ? 'bg-blue-50/70 hover:bg-blue-50' : ''
                 }`}
         >
             <div className="flex-shrink-0 mr-3">
                 {getNotificationIcon(notification)}
             </div>
+
             <div className="flex-1 min-w-0">
+
+
                 <div className="flex justify-between items-start">
-                    <h4 className={`text-sm font-medium ${!notification.isRead ? 'text-blue-900' : 'text-gray-900'}`}>
+                    <h4 className={`text-sm font-medium ${!notification.is_read ? 'text-amber-600' : 'text-gray-900'}`}>
                         {notification.title}
                     </h4>
-                    <span className="text-xs text-gray-500 ml-2 whitespace-nowrap">{notification.postedAt}</span>
+                    <span className="text-xs text-gray-500 ml-2 whitespace-nowrap">
+                        {new Date(notification.posted_at).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }).replace(",", "-")}
+                    </span>
+
                 </div>
 
-                {notification.type === 'job' ? (
+
+                {notification.notification_type === 'job' ? (
+
                     <div className="mt-1">
                         <div className="flex items-center text-xs text-gray-600 mt-1">
                             <span className="font-medium">{notification.company}</span>
@@ -406,14 +438,17 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
                             <span>{notification.location}</span>
                         </div>
                     </div>
+                    
                 ) : (
                     <p className="text-xs text-gray-600 mt-1">{notification.description}</p>
                 )}
 
-                <div className={`mt-2 text-xs ${!notification.isRead ? 'text-blue-600' : 'text-gray-500'} font-medium flex items-center`}>
+
+                <div className={`mt-2 text-xs ${!notification.is_read ? 'text-amber-600' : 'text-gray-500'} font-medium flex items-center`}>
                     View details
                     <ChevronRight className="h-3 w-3 ml-1" />
                 </div>
+
             </div>
         </Link>
     );
