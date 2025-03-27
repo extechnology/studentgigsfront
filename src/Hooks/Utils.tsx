@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider, GetLocations, GetJobTitle, PostNewJobTitle , GetAllSearchCategory } from "@/Service/AllApi";
+import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider, GetLocations, GetJobTitle, PostNewJobTitle, GetAllSearchCategory, GetNotifications, PutMarkAllAsRead, DeleteAllNotifications , GetCourseData } from "@/Service/AllApi";
 
 
 
@@ -274,3 +274,161 @@ export const AllLocations = (search: string) => {
 };
 
 
+
+
+// Get Notification
+export const NotificationAlert = () => {
+
+    return useQuery({
+
+        queryKey: ["NotificationAlert"],
+        queryFn: async () => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const response = await GetNotifications(headers);
+
+                return response.data;
+
+            } catch (err) {
+
+                console.error("Error fetching Notifications:", err);
+                throw new Error("Failed to fetch Notifications");
+
+            }
+        },
+
+        staleTime: 1000 * 60 * 10,
+
+    });
+
+}
+
+
+
+// Mark As Read Notification
+export const MarkAsRead = () => {
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async (data: string) => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await PutMarkAllAsRead(data, headers)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["NotificationAlert"] });
+
+        },
+        onError: (error) => {
+            console.error("Failed to Mark As Read Notification:", error);
+            queryclient.invalidateQueries({ queryKey: ["NotificationAlert"] });
+        },
+
+    })
+
+}
+
+
+
+
+
+
+// Clear all Notification
+export const ClearAllNotifications = () => {
+
+    const queryclient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: async (data: string) => {
+
+            try {
+
+                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+                const token = localStorage.getItem("token")
+
+                const headers = { Authorization: `Bearer ${token}` }
+
+                const Response = await DeleteAllNotifications(data, headers)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onSuccess: () => {
+
+            queryclient.invalidateQueries({ queryKey: ["NotificationAlert"] });
+
+        },
+        onError: (error) => {
+            console.error("Failed to Clear All Notifications:", error);
+            queryclient.invalidateQueries({ queryKey: ["NotificationAlert"] });
+        },
+
+    })
+
+}
+
+
+
+// Get Course Data
+export const CourseData = () => {
+
+    return useQuery({
+
+        queryKey: ["CourseData"],
+        queryFn: async () => {
+
+            try {
+
+                const response = await GetCourseData();
+
+                return response.data;
+
+            } catch (err) {
+
+                console.error("Error fetching Course Data:", err);
+                throw new Error("Failed to fetch Course Data");
+
+            }
+        },
+
+        staleTime: 1000 * 60 * 10,
+
+    });
+
+}

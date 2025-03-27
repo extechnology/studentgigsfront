@@ -2,6 +2,7 @@ import Hero from "@/Components/Home/Hero";
 import TrendingJobs from "@/Components/Home/TrendingJobs";
 import PopluarJobs from "@/Components/Home/PopluarJobs";
 import About from "@/Components/Home/About";
+import WelcomeModal from "@/Components/GigsAcademy/WelcomeModal.tsx";
 import { useGoogleOneTapLogin, CredentialResponse } from '@react-oauth/google';
 import { useAuth } from "@/Context/AuthContext";
 import { GoogleAuth } from "@/Hooks/UserLogin";
@@ -167,6 +168,9 @@ export default function Landing() {
 
         {/* About */}
         <div><About /></div>
+
+        {/* Welcome Modal */}
+        <WelcomeModal />
 
       </main>
 

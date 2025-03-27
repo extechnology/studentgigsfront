@@ -454,7 +454,7 @@ export const PostCreateOrder = async (data: FormData, header: object) => {
 
 
 
-// Create Payment Order
+// Verify payment
 export const PostVerifyPayment = async (data: any, header: object) => {
 
     return await CommonApi("POST", `${Base_Url}/verify-payment-employee/`, data, header)
@@ -493,5 +493,52 @@ export const DeleteSavedJobs = async (id: number, job_type: string, header: obje
     const params = new URLSearchParams({ job_id: id.toString(), job_type: job_type })
 
     return await CommonApi("DELETE", `${Base_Url}/saved-jobs/?${params.toString()}`, "", header)
+
+}
+
+
+
+// Get Notifications
+export const GetNotifications = async (header: object) => {
+
+    return await CommonApi("GET", `${Base_Url}/notification/`, "", header)
+
+}
+
+
+// Mark all as read
+export const PutMarkAllAsRead = async (data: string, header: object) => {
+
+    const params = new URLSearchParams({ mark: data })
+
+    return await CommonApi("PUT", `${Base_Url}/notification/?${params.toString()}`, "", header)
+
+}
+
+
+
+// clear all notifications
+export const DeleteAllNotifications = async (data: string, header: object) => {
+
+    const params = new URLSearchParams({ delete: data })
+
+    return await CommonApi("DELETE", `${Base_Url}/notification/?${params.toString()}`, "", header)
+
+}
+
+
+
+// Post Entroll Form
+export const PostEnrollForm = async (data: FormData) => {
+
+    return await CommonApi("POST", `${Base_Url}/skills-academy-enquiry/`, data, "")
+
+}
+
+
+// Get Course Data
+export const GetCourseData = async () => {
+
+    return await CommonApi("GET", `${Base_Url}/skills-academy-info/`, "", "")
 
 }

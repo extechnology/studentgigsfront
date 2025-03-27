@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Contact, Crown, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
+import { Bookmark, Contact, Crown, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, Trophy, User } from 'lucide-react';
 import {
   Dialog,
   Disclosure,
@@ -112,11 +112,10 @@ export default function Header() {
 
         <header className="">
 
-          <nav aria-label="Global" className="mx-auto flex flex-col sm:flex-row max-w-7xl items-center justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-0 md:px-8">
+          <nav aria-label="Global" className="mx-auto flex flex-col sm:flex-row max-w-7xl justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-0 md:px-8">
 
 
-            <div className="flex items-center justify-between">
-
+            <div className="flex items-center justify-between pb-2">
 
 
               <div className="flex lg:flex-1">
@@ -132,98 +131,117 @@ export default function Header() {
               </div>
 
 
+              <div className="flex items-center justify-between">
 
 
-              {/* Home for mobile view */}
-              <Link to={'/'} className={`ms-1 text-md font-semibold text-gray-400 hover:text-green-600 sm:hidden block ${color ? "text-white" : ""}`}>
-                <House size={24} />
-              </Link>
+                {/* Home for mobile view */}
+                <Link to={'/'} className={`ms-1 text-md  font-semibold text-gray-400 hover:text-green-600 sm:hidden block ${color ? "text-white" : ""}`}>
+                  <House size={24} />
+                </Link>
 
 
-
-              {/* Search  for mobile view */}
-              <div className="flex items-center border rounded-full px-1 overflow-hidden  sm:hidden mx-1">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className={`w-full px-2 py-1 text-xs focus:outline-none  ${color ? 'bg-transparent text-white placeholder-white' : 'text-gray-900'}`}
-                />
+                {/* Search  for mobile view */}
                 <Link
-                  to={'/search'}
-                  className={`p-2 flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
+                  to={'/jobfilter'}
+                  className={`p-2 me-2 ms-2 sm:hidden flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
                 >
                   <Search size={16} className={`${color ? 'text-white' : 'text-gray-400'}`} />
 
                 </Link>
+
+
+                <div className="flex lg:hidden">
+                  <button
+                    type="button"
+                    onClick={() => setMobileMenuOpen(true)}
+                    className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 ${color ? "text-white" : "text-black"}`}
+                  >
+                    <span className="sr-only">Open main menu</span>
+
+                    <Text aria-hidden="true" className="size-6" />
+
+                  </button>
+
+                </div>
+
               </div>
-
-
-
-              <div className="flex lg:hidden">
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(true)}
-                  className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 ${color ? "text-white" : "text-black"}`}
-                >
-                  <span className="sr-only">Open main menu</span>
-
-                  <Text aria-hidden="true" className="size-6" />
-
-                </button>
-
-              </div>
-
 
             </div>
 
 
 
             {/* Buttons */}
-            <div className='flex justify-center items-center gap-x-1 mb-2 sm:hidden'>
+            <div className='flex flex-col justify-center items-center gap-x-1 mb-2 sm:hidden'>
 
-              {/* Find Student Talents for mobile view */}
-              <a href={'https://gigs.studentsgigs.com'} target="_blank">
 
-                <button className={`bg-[#eb8125] text-white font-semibold text-xs px-5 py-2 flex items-center sm:hidden`}>
-                  <GraduationCap size={16} /> Find Student Talents
-                </button>
+              <div className="flex justify-center items-center gap-x-1 mb-2 sm:hidden">
 
-              </a>
+                {/* Find Student Talents for mobile view */}
+                <a href={'https://gigs.studentsgigs.com/findtalent'} target="_blank">
 
-              {/* Explore Gigs */}
-              <Link to={'/jobfilter'}>
+                  <button className={`bg-[#eb8125] text-white font-semibold text-xs px-5 py-2 flex items-center sm:hidden`}>
+                    <GraduationCap size={16} className="me-2" /> Hire Student Talents
+                  </button>
 
-                <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-xs px-5 py-2  sm:hidden`}>
-                  Explore Gigs <Telescope size={16} />
+                </a>
+
+                {/* Explore Gigs */}
+                <Link to={'/jobfilter'}>
+
+                  <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-xs px-5 py-2  sm:hidden`}>
+                    Explore Jobs <Telescope size={16} />
+                  </button>
+
+                </Link>
+
+              </div>
+
+              {/* Skills Academy  */}
+              <Link to={'/gigsskillacademy'}>
+
+                <button className={` flex items-center gap-x-2 bg-red-600 ms-2 text-white font-semibold text-xs px-8 py-1 sm:hidden`}>
+                  Skills Academy  <Trophy size={24} />
                 </button>
 
               </Link>
+
 
             </div>
 
 
             {/* Navbar items */}
-            <PopoverGroup className="hidden lg:flex lg:gap-x-4 items-center">
+            <PopoverGroup className="hidden lg:flex lg:gap-x-4 items-center mx-auto">
 
 
               {/* Explore Gigs */}
               <Link to={'/jobfilter'}>
 
-                <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-md px-16 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
-                  Explore Gigs <Telescope size={24} />
+                <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-md md:px-2 lg:px-8  xl:px-14 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                  Explore Jobs <Telescope size={24} />
                 </button>
 
               </Link>
 
 
               {/* Find Student Talents */}
-              <a href={'https://gigs.studentsgigs.com'} target="_blank">
+              <a href={'https://gigs.studentsgigs.com/findtalent'} target="_blank">
 
-                <button className={`flex items-center gap-x-2 bg-[#eb8125] text-white font-semibold text-md px-12 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
-                  Find Student Talents <GraduationCap size={24} />
+                <button className={`flex items-center gap-x-2 bg-[#eb8125] text-white font-semibold text-md md:px-2 lg:px-6  xl:px-14 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                  Hire Students <GraduationCap size={24} />
                 </button>
 
               </ a>
+
+
+              {/* Skills Academy  */}
+              <Link to={'/gigsskillacademy'}>
+
+                <button className={` flex items-center gap-x-2 bg-red-600 ms-2 text-white font-semibold text-md md:px-2 lg:px-8  xl:px-12 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                  Skills Academy  <Trophy size={24} />
+                </button>
+
+              </Link>
+
 
 
               {/* Home */}
@@ -237,24 +255,19 @@ export default function Header() {
               <ProfileMenu HandleLogOut={HandleLogOut} LoginStatus={isAuthenticated} data={data} />
 
 
+
               {/* Notifications */}
               <NotificationPopover color={color} isAuthenticated={isAuthenticated} isPlanExpired={isPlanExpired} plan={plan} />
 
 
+
               {/* Search */}
-              <div className="flex items-center border rounded-full px-2 overflow-hidden">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className={`w-full px-4 py-2 text-md focus:outline-none  ${color ? 'bg-transparent text-white placeholder-white' : 'text-gray-900 bg-transparent'}`}
-                />
-                <Link
-                  to={'/jobfilter'}
-                  className={`p-2 flex items-center justify-center ${color ? 'bg-transparent' : ""} text-md font-semibold`}
-                >
-                  <Search className={`${color ? 'text-white' : 'text-gray-400'}`} />
-                </Link>
-              </div>
+              <Link
+                to={'/jobfilter'}
+                className={`p-2 flex items-center justify-center ${color ? 'bg-transparent' : ""} text-md font-semibold`}
+              >
+                <Search className={`${color ? 'text-white' : 'text-gray-400'}`} />
+              </Link>
 
 
             </PopoverGroup>
@@ -408,6 +421,21 @@ export default function Header() {
                                     </div>
                                   </Link>
 
+
+                                  {/* Saved Job */}
+                                  <Link
+                                    to="/savedjobs"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                                  >
+                                    <div className="flex items-center space-x-2">
+                                      <Bookmark className="h-5 w-5" />
+                                      <span>Saved Jobs</span>
+                                    </div>
+                                  </Link>
+
+
+
                                   {/* Login/Logout */}
                                   {!isAuthenticated ? (
                                     <Link
@@ -446,19 +474,19 @@ export default function Header() {
                             className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                           >
                             <Telescope className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
-                            <span>Search Gig Jobs</span>
+                            <span>Explore Student Jobs</span>
                           </Link>
 
 
 
                           {/* Find Student Talents */}
                           <a
-                            href={'https://gigs.studentsgigs.com'}
+                            href={'https://gigs.studentsgigs.com/findtalent'}
                             onClick={() => setMobileMenuOpen(false)}
                             className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                           >
                             <GraduationCap className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
-                            <span>Find Student Talents</span>
+                            <span>Hire Students</span>
                           </a>
 
 

@@ -86,13 +86,13 @@ html {
 }
 
 
+/* Notification dropdown */
 .notification-dropdown {
 
   display: block;
   overflow: visible;
 
 }
-
 
 .notification-dropdown::before {
 
@@ -103,9 +103,9 @@ html {
   width: 25px;
   height: 25px;
   transform: rotate(45deg);
-  background-color: white;
-  border-top: 1px solid #d1d5db;
-  border-left: 1px solid #d1d5db;
+  background-color: #eb8125;
+  /* border-top: 1px solid #d1d5db;
+  border-left: 1px solid #d1d5db; */
 
 }
 
@@ -124,16 +124,7 @@ html {
   animation: shimmer 1.5s infinite linear;
 }
 
-/* 
-@keyframes shimmer {
-  0% {
-    background-position: -468px 0;
-  }
 
-  100% {
-    background-position: 468px 0;
-  }
-} */
 
 
 @keyframes shimmer {
@@ -195,4 +186,28 @@ html {
   to {
     transform: rotate(360deg);
   }
+}
+
+.text-gradient {
+  @apply bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent;
+}
+
+
+
+
+/* Button hover shine effect */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: '';
+  @apply absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform;
+  transition: all 0.5s ease;
+  transform: skew(-15deg);
+}
+
+.btn-shine:hover::after {
+  @apply left-[100%];
 }

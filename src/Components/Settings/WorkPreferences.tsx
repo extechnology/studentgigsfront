@@ -8,7 +8,7 @@ import PreferedCategory from "./PreferedCategory";
 import { Button } from "../ui/button";
 
 
-
+// Form inputs
 interface Inputs {
 
     interested_job_type: string;
@@ -19,7 +19,7 @@ interface Inputs {
 }
 
 
-
+// Job Types
 const JobTypes = [
 
     { value: 'Online', label: 'Online' },
@@ -30,21 +30,19 @@ const JobTypes = [
 
 
 
+// Compensation Types
 const Availability = [
 
     { label: "Hourly Rate", value: "hourly" },
-    { label: "Daily Rate", value: "daily" },
-    { label: "Monthly Salary", value: "monthly" },
-    { label: "Annual Salary", value: "annual" },
-    { label: "Project Based", value: "project" },
     { label: "All-Day Gigs", value: "All-Day Gigs" },
     { label: "Weekend Gigs", value: "Weekend Gigs" },
-    { label: "Vacation Gigs", value: "Vacation Gigs" }
+    { label: "Vacation Gigs", value: "Vacation Gigs" },
+    { label: "Project Based", value: "project" },
 
 ];
 
 
-
+// Transportation Types
 const TransportationAvailability = [
 
     { value: 'Own Vehicle', label: 'Own Vehicle' },
@@ -214,23 +212,37 @@ export default function WorkPreferences() {
                                     </div>
 
 
+
+                                    {/* Transportation Availability */}
                                     <div className="sm:col-span-3">
                                         <label
-                                            htmlFor="expected-pay-range"
+                                            htmlFor="feild-of-study"
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
-                                            Expected Pay Range (LPA)
+                                            Transportation Availability
                                         </label>
-                                        <input
-                                            id="expected-pay-range"
-                                            autoComplete="Off"
-                                            type="number"
-                                            {...register("expected_salary_range")}
-                                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            placeholder="e.g., 10 LPA"
-                                        />
-                                    </div>
+                                        <div>
+                                            <Controller
+                                                name="transportation_availability"
+                                                control={control}
+                                                render={({ field: { onChange, value, ref } }) => (
+                                                    <Selecet
+                                                        ref={ref}
+                                                        options={TransportationAvailability}
+                                                        value={value ? TransportationAvailability.find((option) => option.label === value) : null}
+                                                        onChange={(option) => { onChange(option?.label) }}
+                                                        placeholder={"Search Your Categories"}
+                                                        isSearchable={true}
+                                                        className="basic-single"
+                                                        isClearable={true}
+                                                        classNamePrefix="select"
 
+                                                    />
+                                                )}
+                                            />
+                                        </div>
+
+                                    </div>
 
 
                                     {/* Availability */}
@@ -265,38 +277,30 @@ export default function WorkPreferences() {
                                     </div>
 
 
-
-                                    {/* Transportation Availability */}
+                                    {/* Salary Range */}
                                     <div className="sm:col-span-3">
                                         <label
-                                            htmlFor="feild-of-study"
+                                            htmlFor="expected-pay-range"
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
-                                            Transportation Availability
+                                            Expected Pay Range
                                         </label>
-                                        <div>
-                                            <Controller
-                                                name="transportation_availability"
-                                                control={control}
-                                                render={({ field: { onChange, value, ref } }) => (
-                                                    <Selecet
-                                                        ref={ref}
-                                                        options={TransportationAvailability}
-                                                        value={value ? TransportationAvailability.find((option) => option.label === value) : null}
-                                                        onChange={(option) => { onChange(option?.label) }}
-                                                        placeholder={"Search Your Categories"}
-                                                        isSearchable={true}
-                                                        className="basic-single"
-                                                        isClearable={true}
-                                                        classNamePrefix="select"
-
-                                                    />
-                                                )}
-                                            />
-                                        </div>
-
+                                        <input
+                                            id="expected-pay-range"
+                                            type="text"
+                                            {...register("expected_salary_range")}
+                                            onChange={(e) => {
+                                                let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                                                if (value) {
+                                                    e.target.value = Number(value).toLocaleString(); // Format with commas
+                                                } else {
+                                                    e.target.value = ""; // Keep input empty if cleared
+                                                }
+                                            }}
+                                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            placeholder="e.g., 50,000"
+                                        />
                                     </div>
-
 
                                 </div>
 

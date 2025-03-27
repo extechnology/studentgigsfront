@@ -29,13 +29,10 @@ interface Option {
 const compensationTypes: Option[] = [
 
     { label: "Hourly Rate", value: "hourly" },
-    { label: "Daily Rate", value: "daily" },
-    { label: "Monthly Salary", value: "monthly" },
-    { label: "Annual Salary", value: "annual" },
-    { label: "Project Based", value: "project" },
     { label: "All-Day Gigs", value: "All-Day Gigs" },
     { label: "Weekend Gigs", value: "Weekend Gigs" },
-    { label: "Vacation Gigs", value: "Vacation Gigs" }
+    { label: "Vacation Gigs", value: "Vacation Gigs" },
+    { label: "Project Based", value: "project" },
 
 ];
 
@@ -207,7 +204,7 @@ export default function FilterJob() {
 
                         {/* Category and jobtitle */}
                         <div className="flex-1 flex items-center gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 bg-white rounded-lg shadow-sm">
-                           
+
 
                             {/* <Briefcase className="text-emerald-500 flex-shrink-0" size={24} /> */}
 

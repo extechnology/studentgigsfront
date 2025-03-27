@@ -408,7 +408,7 @@ export default function Auth() {
                         )}
                       </label>
                       <label htmlFor="terms" className="ml-2 block text-sm text-gray-600">
-                        I accept the <Link to={'/terms'} className="text-gray-900 underline">Terms and Conditions</Link>
+                        I accept the <Link to={'/loginterms'} className="text-gray-900 underline">Terms and Conditions</Link>
                       </label>
                     </div>
 
@@ -543,7 +543,7 @@ export default function Auth() {
                         )}
                       </label>
                       <label htmlFor="terms" className="ml-2 block text-sm text-gray-600">
-                        I accept the <Link to={'/terms'} className="text-gray-900 underline">Terms and Conditions</Link>
+                        I accept the <Link to={'/loginterms'} className="text-gray-900 underline">Terms and Conditions</Link>
                       </label>
                     </div>
 

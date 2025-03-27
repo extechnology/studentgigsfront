@@ -21,13 +21,13 @@ const Footer = () => {
           <h3 className="text-lg font-bold mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <Link to={'/findtalent'} className="hover:text-gray-400">
-                Hire Talent
-              </Link>
+              <a href="https://gigs.studentsgigs.com/findtalent" className="hover:text-gray-400">
+                Hire Students
+              </a>
             </li>
             <li>
-              <Link to={'/'} className="hover:text-gray-400">
-                Explore Gigs
+              <Link to={'/jobfilter'} className="hover:text-gray-400">
+                Explore Jobs
               </Link>
             </li>
             <li>
@@ -78,7 +78,7 @@ const Footer = () => {
             </a>
           </div>
 
-          <form className="flex flex-col">
+          {/* <form className="flex flex-col">
             <label htmlFor="newsletter" className="mb-2">Subscribe to our Newsletter</label>
             <div className="flex">
               <input
@@ -94,7 +94,9 @@ const Footer = () => {
                 Subscribe
               </button>
             </div>
-          </form>
+          </form> */}
+
+
         </div>
       </div>
 
