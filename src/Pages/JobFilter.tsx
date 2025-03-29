@@ -62,7 +62,7 @@ export default function JobFilter() {
     const { isAuthenticated } = useAuth();
 
 
-    // Job search
+    // Job search context
     const { searchResults, isLoading, isError, isFetching, page, setPage, totalPages } = useJobSearch();
 
 
