@@ -46,7 +46,7 @@ type Job = {
 const SavedJobsPage = () => {
 
 
-    // Search term
+    // Search State
     const [searchTerm, setSearchTerm] = useState('');
 
 
