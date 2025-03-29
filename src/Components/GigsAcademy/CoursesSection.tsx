@@ -2,6 +2,7 @@ import BlurFade from '../ui/blur-fade';
 import CourseCard from './CourseCard';
 import { CourseData } from '@/Hooks/Utils';
 import CourseCardLoader from '../Loaders/CourseCardLoader';
+import NoCourseLoader from '../Loaders/NoCourseLoader';
 
 
 
@@ -53,8 +54,16 @@ const CoursesSection = () => {
                             Designed to provide practical, hands-on training that prepares you for real-world success.
                         </p>
                     </div>
+                    
+
+                    {/* No Course */}
+                    {data?.length === 0 && (
+
+                        <NoCourseLoader />
+                    )}
 
 
+                    {/* Course Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
 
                         {isLoading || isFetching || isError ? (

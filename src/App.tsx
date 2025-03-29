@@ -1,80 +1,63 @@
-import { lazy, Suspense, useEffect, useState } from "react"
-import { Navigate, Route, Routes, useLocation } from "react-router-dom"
-import { Toaster } from "react-hot-toast"
-import { useAuth } from "./Context/AuthContext.tsx"
-import ProtectedRouteForSavedJobs from "./Components/Common/ProtectedRouteForSavedJobs.tsx"
+import { lazy, Suspense, ReactNode } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { useAuth } from "./Context/AuthContext";
+import ProtectedRouteForSavedJobs from "./Components/Common/ProtectedRouteForSavedJobs";
+import Loader from "./Components/Loaders/Loader";
 
 
-const Landing = lazy(() => import("./Pages/Landing.tsx"))
-const Loader = lazy(() => import("./Components/Loaders/Loader.tsx"))
-const Header = lazy(() => import("./Components/Common/Header.tsx"))
-const Footer = lazy(() => import("./Components/Common/Footer.tsx"))
-const Contact = lazy(() => import("./Pages/Contact.tsx"))
-const UserProfile = lazy(() => import("./Pages/UserProfile.tsx"))
-// const EmployerList = lazy(() => import("./Pages/EmployerList.tsx"))
-const EmployerDeatils = lazy(() => import("./Pages/EmployerDeatils.tsx"))
-const Settings = lazy(() => import("./Pages/Settings.tsx"))
-const NotFound = lazy(() => import("./Pages/NotFound.tsx"))
-const Auth = lazy(() => import("./Pages/Auth.tsx"))
-const JobFilter = lazy(() => import("./Pages/JobFilter.tsx"))
-const JobDeatils = lazy(() => import("./Pages/JobDeatils.tsx"))
-const ApplyJob = lazy(() => import("./Pages/ApplyJob.tsx"))
-const JobApplySucces = lazy(()=> import ("./Pages/JobApplySuccess.tsx"))
-const SavedJobs = lazy(() => import("./Pages/SavedJobs.tsx"))
-const GigsAcademy = lazy(() => import("./Pages/GigsAcademy.tsx"))
-const Plans = lazy(() => import("./Pages/Plans.tsx"))
-const Terms = lazy(() => import("./Pages/Terms.tsx"))
-const LoginTerms = lazy(() => import("./Pages/LoginTerms.tsx"))
-const Refund = lazy(() => import("./Pages/Refund.tsx"))
-const Privacy = lazy(() => import("./Pages/Privacy.tsx"))
 
+// Lazy Loaded Pages
+const Layout = lazy(() => import("./Pages/Layout"));
+const Auth = lazy(() => import("./Pages/Auth"));
+const NotFound = lazy(() => import("./Pages/NotFound"));
+const Landing = lazy(() => import("./Pages/Landing"));
+const Contact = lazy(() => import("./Pages/Contact"));
+const Settings = lazy(() => import("./Pages/Settings"));
+const UserProfile = lazy(() => import("./Pages/UserProfile"));
+const Plans = lazy(() => import("./Pages/Plans"));
+const GigsAcademy = lazy(() => import("./Pages/GigsAcademy"));
+
+
+
+// Job-Related Pages
+const JobPages = {
+  JobFilter: lazy(() => import("./Pages/JobFilter")),
+  JobDetails: lazy(() => import("./Pages/JobDeatils")),
+  ApplyJob: lazy(() => import("./Pages/ApplyJob")),
+  JobApplySuccess: lazy(() => import("./Pages/JobApplySuccess")),
+  SavedJobs: lazy(() => import("./Pages/SavedJobs")),
+};
+
+
+
+// Employer Pages
+const EmployerPages = {
+  EmployerDetails: lazy(() => import("./Pages/EmployerDeatils")),
+};
+
+
+
+// Legal Pages
+const LegalPages = {
+  Terms: lazy(() => import("./Pages/Terms")),
+  LoginTerms: lazy(() => import("./Pages/LoginTerms")),
+  Refund: lazy(() => import("./Pages/Refund")),
+  Privacy: lazy(() => import("./Pages/Privacy")),
+};
+
+
+
+// Protected Route Wrapper
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+  return isAuthenticated ? children : <Navigate to="/auth" state={{ from: location }} />;
+};
 
 
 
 function App() {
-
-
-
-  // To get the current path
-  const location = useLocation()
-
-
-  // To check if the user is authenticated
-  const { isAuthenticated } = useAuth()
-
-
-
-  // To hide the header and footer
-  const [Hide, SetHide] = useState(false)
-
-
-
-
-  // To hide the header and footer
-  useEffect(() => {
-
-    if (location.pathname === "/auth") {
-      SetHide(true)
-    }
-    else {
-
-      SetHide(false)
-
-    }
-
-  }, [location])
-
-
-
-
-  // Protected Route Component for Auth
-  const ProtectedRoute = ({ children }: any) => {
-
-    return isAuthenticated ? children : <Navigate to="/auth" state={{ from: location }} />
-
-  };
-
-
 
 
   return (
@@ -82,65 +65,94 @@ function App() {
 
     <>
 
-      <Suspense fallback={<Loader />}>
 
-        {!Hide && <Header />}
 
-        <Routes>
+      <Routes>
 
-          <Route path="/" element={<Landing />} />
+        {/* Public Routes */}
+        <Route path="/auth" element={<Suspense fallback={<Loader />}><Auth /></Suspense>} />
+        <Route path="*" element={<Suspense fallback={<Loader />}><NotFound /></Suspense>} />
 
-          <Route path="*" element={<NotFound />} />
 
-          <Route path="/contact" element={<Contact />} />
+        <Route element={<Suspense fallback={<Loader />}><Layout /></Suspense>}>
 
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/" element={<Suspense fallback={<Loader />}><Landing /></Suspense>} />
+          <Route path="/contact" element={<Suspense fallback={<Loader />}><Contact /></Suspense>} />
+          <Route path="/jobfilter" element={<Suspense fallback={<Loader />}><JobPages.JobFilter /></Suspense>} />
+          <Route path="/gigsskillacademy" element={<Suspense fallback={<Loader />}><GigsAcademy /></Suspense>} />
+          <Route path="/termscondition" element={<Suspense fallback={<Loader />}><LegalPages.Terms /></Suspense>} />
+          <Route path="/refundpolicy" element={<Suspense fallback={<Loader />}><LegalPages.Refund /></Suspense>} />
+          <Route path="/privacypolicy" element={<Suspense fallback={<Loader />}><LegalPages.Privacy /></Suspense>} />
+          <Route path="/loginterms" element={<Suspense fallback={<Loader />}><LegalPages.LoginTerms /></Suspense>} />
 
-          <Route path="/jobfilter" element={<JobFilter />} />
 
-          <Route path="/gigsskillacademy" element={<GigsAcademy />} />
+          {/* Protected Routes */}
+          <Route path="/savedjobs" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRouteForSavedJobs><JobPages.SavedJobs /></ProtectedRouteForSavedJobs>
+            </Suspense>
+          } />
 
-          <Route path="/termscondition" element={<Terms />} />
 
-          <Route path="/refundpolicy" element={<Refund />} />
+          <Route path="/plans" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute><Plans /></ProtectedRoute>
+            </Suspense>
+          } />
 
-          <Route path="/privacypolicy" element={<Privacy />} />
 
-          <Route path="/loginterms" element={<LoginTerms />} />
+          <Route path="/jobapplysuccess" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute><JobPages.JobApplySuccess /></ProtectedRoute>
+            </Suspense>
+          } />
 
-          {/* <Route path="/employerlist" element={<EmployerList />} /> */}
 
-          <Route path="/savedjobs" element={<ProtectedRouteForSavedJobs><SavedJobs /></ProtectedRouteForSavedJobs>} />
+          <Route path="/userprofile" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute><UserProfile /></ProtectedRoute>
+            </Suspense>
+          } />
 
-          <Route path="/plans" element={<ProtectedRoute> <Plans /> </ProtectedRoute>} />
 
-          <Route path="/jobapplysuccess" element={<ProtectedRoute> <JobApplySucces /> </ProtectedRoute>} />
+          <Route path="/employerdeatils/:id" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute><EmployerPages.EmployerDetails /></ProtectedRoute>
+            </Suspense>
+          } />
 
-          <Route path="/userprofile" element={<ProtectedRoute> <UserProfile /> </ProtectedRoute>} />
 
-          <Route path="/employerdeatils/:id" element={<ProtectedRoute> <EmployerDeatils /> </ProtectedRoute>} />
+          <Route path="/settings" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute><Settings /></ProtectedRoute>
+            </Suspense>
+          } />
 
-          <Route path="/settings" element={<ProtectedRoute> <Settings /> </ProtectedRoute>} />
 
-          <Route path="/applyjob/:id/:jobType" element={<ProtectedRoute> <ApplyJob /> </ProtectedRoute>} />
+          <Route path="/applyjob/:id/:jobType" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute><JobPages.ApplyJob /></ProtectedRoute>
+            </Suspense>
+          } />
 
-          <Route path="/jobdeatils/:id/:jobType" element={<ProtectedRoute> <JobDeatils /> </ProtectedRoute>} />
 
-        </Routes>
+          <Route path="/jobdeatils/:id/:jobType" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute><JobPages.JobDetails /></ProtectedRoute>
+            </Suspense>
+          } />
 
-        {!Hide && <Footer />}
 
-        <Toaster position="top-center" />
+        </Route>
 
-      </Suspense>
+      </Routes>
 
+
+      <Toaster position="top-center" />
 
     </>
 
-  )
-
-
-
+  );
 }
 
-export default App
+export default App;

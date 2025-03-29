@@ -140,10 +140,23 @@ export default function Header() {
                 </Link>
 
 
+                {/* Profile image */}
+                <Link to={'/userprofile'} className="ms-2 sm:hidden">
+
+                  <img
+                    src={data[0]?.profile?.profile_pic ?? "/Header-profile.webp"}
+                    loading="lazy"
+                    alt="User profile"
+                    className="w-[25px] h-[25px] rounded-full object-cover "
+                  />
+
+                </Link>
+
+
                 {/* Search  for mobile view */}
                 <Link
                   to={'/jobfilter'}
-                  className={`p-2 me-2 ms-2 sm:hidden flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
+                  className={`p-2 me-1 ms-1 sm:hidden flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
                 >
                   <Search size={16} className={`${color ? 'text-white' : 'text-gray-400'}`} />
 

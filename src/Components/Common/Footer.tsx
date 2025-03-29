@@ -8,7 +8,7 @@ const Footer = () => {
 
         {/* Left Section */}
         <div>
-          <h3 className="text-lg font-bold mb-4">Student Gigs</h3>
+          <h3 className="text-lg font-bold mb-4">Students Gigs</h3>
           <p>
             Join us in creating a smarter, more independent generation by
             connecting students with real-world opportunities!
