@@ -58,11 +58,11 @@ export default function JobFilter() {
     // Location
     const location = useLocation();
 
-    // Auth context
+    // Auth 
     const { isAuthenticated } = useAuth();
 
 
-    // Job search
+    // Job search context
     const { searchResults, isLoading, isError, isFetching, page, setPage, totalPages } = useJobSearch();
 
 

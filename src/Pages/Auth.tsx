@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/Context/AuthContext";
+import { Eye, EyeOff } from "lucide-react";
 
 
 export default function Auth() {
@@ -17,6 +18,10 @@ export default function Auth() {
     username: string
     termsAccepted: boolean
   }
+
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRePassword, setShowRePassword] = useState(false);
 
 
   const Navigate = useNavigate()
@@ -355,6 +360,8 @@ export default function Auth() {
 
                   <form className="flex flex-col pt-3 md:pt-8" onSubmit={handleSubmit(SubmitLogin)}>
 
+
+
                     {/* Username */}
                     <div className="flex flex-col pt-4">
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
@@ -368,17 +375,30 @@ export default function Auth() {
                     </div>
 
 
+
+
                     {/*Password */}
                     <div className="mb-6 flex flex-col pt-4">
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
-                        <input type="password" id="login-password" className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password"
+                        <input type={showPassword ? "text" : "password"} id="login-password" className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password"
 
                           {...register("password", { required: "Password is required" })}
 
                         />
+
+                        <button
+                          type="button"
+                          className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                        </button>
+
                         {errors.password && <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>}
                       </div>
                     </div>
+
+
 
                     {/* Terms and Conditions Checkbox */}
                     <div className="flex items-center mb-6">
@@ -413,6 +433,7 @@ export default function Auth() {
                     </div>
 
 
+
                     <button
                       type="submit"
                       className={`w-full rounded-lg ${!termsAccepted ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2`}
@@ -420,12 +441,14 @@ export default function Auth() {
                       Log in
                     </button>
 
+
                   </form>
 
 
                   <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
                     <div className="absolute left-1/2 h-6 w-14 -translate-x-1/2 bg-white text-center text-sm text-gray-500">or</div>
                   </div>
+
 
 
                   <button
@@ -444,18 +467,23 @@ export default function Auth() {
                     </p>
                   </div>
 
+
                 </div>
+
 
                 :
 
+
                 // Register Section
                 <div className="lg:w-[28rem] w-[19rem] mx-auto my-auto flex flex-col justify-center pt-8 md:justify-start md:px-6 md:pt-0">
+
 
                   <p className="text-left text-3xl font-bold">Register Here</p>
                   <p className="mt-2 text-left text-gray-500">please enter your details.</p>
 
 
                   <form className="flex flex-col pt-3 md:pt-8" onSubmit={handleSubmit(SubmitRegister)}>
+
 
                     {/* Username */}
                     <div className="flex flex-col pt-4">
@@ -468,6 +496,8 @@ export default function Auth() {
                         {errors.username && <p role="alert" className="text-red-500 text-sm">{errors.username.message}</p>}
                       </div>
                     </div>
+
+
 
                     {/* Email */}
                     <div className="flex flex-col pt-4">
@@ -491,29 +521,54 @@ export default function Auth() {
 
 
                     {/* Password */}
-                    <div className=" flex flex-col pt-4">
+                    <div className="flex flex-col pt-4">
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
-                        <input type="password" id="login-password" className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password"
-
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          id="login-password"
+                          className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
+                          placeholder="Password"
                           {...register("password", { required: "Password is required" })}
-
                         />
-                        {errors.password && <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>}
+                        <button
+                          type="button"
+                          className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                        </button>
                       </div>
+                      {errors.password && (
+                        <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>
+                      )}
                     </div>
+
 
 
                     {/* Re-enter Password */}
                     <div className="mb-6 flex flex-col pt-4">
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
-                        <input type="password" id="login-password" className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Re-enter Password"
-
+                        <input
+                          type={showRePassword ? "text" : "password"}
+                          id="repassword"
+                          className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
+                          placeholder="Re-enter Password"
                           {...register("repassword", { required: "Re-enter Password is required" })}
-
                         />
-                        {errors.repassword && <p role="alert" className="text-red-500 text-sm">{errors.repassword.message}</p>}
+                        <button
+                          type="button"
+                          className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                          onClick={() => setShowRePassword(!showRePassword)}
+                        >
+                          {showRePassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                        </button>
                       </div>
+                      {errors.repassword && (
+                        <p role="alert" className="text-red-500 text-sm">{errors.repassword.message}</p>
+                      )}
                     </div>
+
+
 
                     {/* Terms and Conditions Checkbox */}
                     <div className="flex items-center mb-6">
@@ -547,6 +602,8 @@ export default function Auth() {
                       </label>
                     </div>
 
+
+
                     <button
                       type="submit"
                       className={`w-full rounded-lg ${!termsAccepted ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2`}
@@ -554,7 +611,9 @@ export default function Auth() {
                       Sign Up
                     </button>
 
+
                   </form>
+
 
                   <div className="py-12 text-center">
                     <p className="whitespace-nowrap text-gray-600">
@@ -562,6 +621,7 @@ export default function Auth() {
                       <a onClick={() => SetStatus(!Status)} className="underline-offset-4 font-semibold text-gray-900 underline ms-3 cursor-pointer">Log In.</a>
                     </p>
                   </div>
+
 
                 </div>
 

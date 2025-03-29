@@ -6,6 +6,9 @@ import { AllLocations } from "@/Hooks/Utils";
 import { useState } from "react";
 import Selecet from 'react-select';
 import { useJobSearch } from "@/Context/JobSearchContext";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@/Context/AuthContext";
+import toast from "react-hot-toast";
 
 
 // form inputs
@@ -152,6 +155,16 @@ const SelectedStyles = {
 
 export default function FilterJob() {
 
+    
+    // Get the current path
+    const location = useLocation();
+
+
+    const navigate = useNavigate();
+
+    // Auth Context
+    const { isAuthenticated } = useAuth()
+
 
     // Search keyword
     const [Search, setSearch] = useState<string>("")
@@ -177,6 +190,15 @@ export default function FilterJob() {
     // On Submit
     const Onsubmit = (data: Inputs) => {
 
+        if (!isAuthenticated) {
+
+            toast.error("Please Login to Search Students");
+
+            navigate("/auth", { state: { from: location } })
+
+            return
+
+        }
         updateSearchParams({
             category: data.category,
             location: data.location,
@@ -187,8 +209,6 @@ export default function FilterJob() {
 
 
     return (
-
-
 
         <>
 

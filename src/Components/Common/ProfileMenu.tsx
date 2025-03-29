@@ -9,6 +9,7 @@ interface ProfileMenuProps {
     color?: boolean;
 }
 
+
 const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, data, color }) => {
 
     return (
